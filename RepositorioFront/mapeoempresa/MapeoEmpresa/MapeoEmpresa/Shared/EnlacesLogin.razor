@@ -1,0 +1,24 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <span class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <span id="user">@context.User.Identity.Name</span>
+                    <i class="fa-solid fa-user"></i>
+                </span>
+                <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/index_user">Perfil</a>
+                    @* <a class="dropdown-item" href="#">Cambiar contraseña</a> *@
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/cerrarSesion">Cerrar sesión</a>
+                </div>
+            </li>
+        </ul>
+    </Authorized>
+    @* <NotAuthorized>
+        <a href="Registro"> Registrarse</a>
+        <a href="Login" class="nav-link btn btn-link">Ingresar</a>
+    </NotAuthorized> *@
+
+</AuthorizeView>

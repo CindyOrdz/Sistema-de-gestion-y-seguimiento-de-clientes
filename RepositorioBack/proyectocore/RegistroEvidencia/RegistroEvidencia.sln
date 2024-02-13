@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegistroEvidencia", "RegistroEvidencia.csproj", "{C3557DCF-A959-4F1B-AEEF-57979B5AD129}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3557DCF-A959-4F1B-AEEF-57979B5AD129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3557DCF-A959-4F1B-AEEF-57979B5AD129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3557DCF-A959-4F1B-AEEF-57979B5AD129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3557DCF-A959-4F1B-AEEF-57979B5AD129}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85E51A73-D66F-4B1D-8964-11B0CD8B0FE7}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,187 @@
+﻿@page "/AsociarVenta"
+@attribute [Authorize(Roles = "EMPLEADO", Policy = "PoliticaAsociarVentaVisita")]
+
+@using System.Numerics;
+@using MapeoEmpresa.Services;
+@using EntidadesNegocio.EntidadesDto;
+@inject PlantaService PlantaService;
+@inject VisitaService VisitaService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<h1><b>Asociar venta a visita</b></h1>
+<div class="col-lg-10 contact-form__wrapper">
+    <div class="row">
+        <p>Realice la b&uacute;squeda de la visita de su inter&eacute;s por el nombre de la empresa cliente</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text input-title">Empresa </span>
+            <input type="search" class="form-control custom-input" id="busqueda" @bind="ValorBusqueda" placeholder="Ingrese el nombre de la empresa">
+            <button class="btn btn-sm btn-secondary" type="button" @onclick="BuscarVisita">
+                <i class="oi oi-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Información encontrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ListVisitas == null)
+                {
+                    <tr>
+                        <td>
+                            Realice una b&uacute;squeda para ver la informaci&oacute;n
+                        </td>
+                    </tr>
+                }
+                else if (ListVisitas.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            <strong>No se ha encontrado información, intente nuevamente</strong>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var p in ListVisitas)
+                    {
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <strong>ID visita: </strong> @p.id <br />
+                                        <strong>Inicio: </strong> @p.fechaInicio <br />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <strong>Sede cliente: </strong> @p.sedeCliente <br />
+                                        <strong>Planta cliente: </strong> @p.plantaCliente<br />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-success my-2" @onclick="() =>  SeleccionarVisita(p)"><i class="oi oi-check"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+
+        <div class="col-auto">
+            <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+        </div>
+    </div>
+</div>
+
+<div class="pt-2">
+    @foreach (var item in types)
+    {
+        if (Array.IndexOf(types, item) == selected)
+        {
+            <button class="btn btn-secondary">@item.Name</button>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" @onclick="() => selected = Array.IndexOf(types, item)">@item.Name</button>
+        }
+    }
+</div>
+
+<div class="contenedor-bloque p-4 ">
+    @GetRenderFragment(types[selected],key)
+</div>
+
+@code {
+    private String ValorBusqueda;
+    List<VisitaDTO> ListVisitas;
+
+    private long idResponsable = 0;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    int selected;
+    ComponentBase[] components = { new DetalleVisita(), new AsociarVenta() };
+    Type[] types => components.Select(c => c.GetType()).ToArray();
+
+    int key = 0; // Parámetro para el componente hijo
+
+    private void BuscarVisita()
+    {
+        totalPaginas = calcularPaginasTotales();
+        ListVisitas = PlantaService.BuscarPorEmpresa(ValorBusqueda, idResponsable, paginaActual, elementosPorPagina);
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+
+        if (rolEmpleado)
+        {
+            idResponsable = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario); //Obtiene id empleado logueado
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoListadoVisitas"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        VisitaService.VisitaSeleccionadaAsociarVenta = null;
+
+    }
+
+    private void SeleccionarVisita(VisitaDTO visita)
+    {
+        VisitaService.VisitaSeleccionadaAsociarVenta = visita;
+        RecargarComponenteHijo();
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)PlantaService.ObtenerTotalVisitasPorEmpresa(ValorBusqueda, idResponsable);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListVisitas = PlantaService.BuscarPorEmpresa(ValorBusqueda, idResponsable, paginaActual, elementosPorPagina);
+    }
+
+    private void RecargarComponenteHijo()
+    {
+        // Cambia el valor de 'key' para actualizar el componente hijo
+        key++;
+    }
+    RenderFragment GetRenderFragment(Type type, int key)
+    {
+        RenderFragment renderFragment = renderTreeBuilder =>
+        {
+            renderTreeBuilder.OpenComponent(0, type);
+            renderTreeBuilder.AddAttribute(1, "key", key); // Pasa el parámetro 'key' al componente hijo
+            renderTreeBuilder.CloseComponent();
+        };
+        return renderFragment;
+    }
+}
+

@@ -1,0 +1,166 @@
+﻿
+@inject CatalogoService catalogoService
+@inherits ComponenteTab
+@inject IConfiguration Configuration
+<style>
+    .card {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        pointer-events: painted;
+    }
+
+    .card-img-top {
+        object-fit: cover;
+        height: 150px;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .card-title {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #FF6B6B;
+        border-color: #FF6B6B;
+    }
+
+        .btn-primary:hover {
+            background-color: #FF4444;
+            border-color: #FF4444;
+        }
+
+    .carrito-banner {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .carrito-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 24px;
+        line-height: 50px;
+        transition: background-color 0.3s ease;
+    }
+
+        .carrito-button:hover {
+            background-color: #0056b3;
+        }
+
+    .carrito-icon {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+
+
+<div class="carrito-banner">
+    <a href="/carrito_compras">
+        <button class="btn btn-primary ml-3 carrito-button">
+            <i class="fas fa-shopping-cart"></i>
+        </button>
+    </a>
+</div>
+
+<div>
+    <Paginacion PaginasTotales="paginasTotales" PaginaActual="paginaActual" Radio="2"
+                PaginaSeleccionada="PaginaSeleccionada"></Paginacion>
+</div>
+
+<h3>Catálogo @Name</h3>
+<div class="container mt-12">
+    <div class="row">
+        @foreach (var elemento in elementosCatalogo)
+        {
+            <div class="col-md-12 mb-12">
+                <div class="card">
+                    <a href="/informacionelemento/@elemento.CodigoArticulo">
+                        <img src="https://depor.com/resizer/_OhmOvp0Z733fq8TlDCTF0OwpOQ=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/CCMDPJXKNFC3HF7JDMOZ55UKKM.jpg" class="card-img-top" alt="Imagen del elemento">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@elemento.Nombre</h5>
+                        <p>Marca: @elemento.Marca</p>
+                        <p class="text-muted">
+                            <strong>Valor unitario:</strong>
+                            <span class="text-success">$@elemento.Valor</span>
+                        </p>
+                        <p class="card-text">
+                            <strong class="text-muted small">Referencia: @elemento.Ref1@elemento.Ref2@elemento.Ref3@elemento.Ref4@elemento.Ref5</strong>
+                        </p>
+                        <a href="/informacionelemento/@elemento.CodigoArticulo">
+                            <i>Ver más información...</i>
+                        </a>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button class="btn btn-primary btn-block ml-auto">
+                            <i class="fas fa-shopping-cart"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br />
+        }
+    </div>
+</div>
+<ComponenteCarrito origen=@("InformacionElemento") @ref="componenteCarrito" />
+@code {
+    private List<ElementoInterfazGraficaVentaDTO>? elementosCatalogo;
+    private String textoBusqueda = string.Empty;
+    private ComponenteCarrito componenteCarrito;
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public String Name { get; set; }
+    private int paginaActual = 1;
+    private int paginasTotales = 0;
+    private int paginarPor = 0;
+
+    protected override Task OnInitializedAsync()
+    {
+        try {
+            paginarPor = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoElementosSegunCatalogo"]);
+        }
+        catch (Exception e){
+            Console.WriteLine(e);
+        }
+        elementosCatalogo = catalogoService.ObtenerElementosSegunCatalogosPaginado(Id, 1, paginarPor);
+        paginasTotales = calcularPaginasTotales();
+        return base.OnInitializedAsync();
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double cantElemen = (double)(catalogoService.ObtenerCantidadElementosSegunCatalogos(Id));
+        double divi = cantElemen / paginarPor;
+        bool tieneParteDecimal = divi != Math.Floor(divi);
+        if (tieneParteDecimal)
+        {
+            divi += 1;
+        }
+        return (int)divi;
+    }
+
+    private void Refrescar()
+    {
+        Mostrar();
+    }
+
+    private async Task PaginaSeleccionada(int pagina)
+    {
+        paginaActual = pagina;
+        elementosCatalogo = catalogoService.ObtenerElementosSegunCatalogosPaginado(Id, paginaActual, paginarPor);
+    }
+}

@@ -1,0 +1,195 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject VisitaService VisitaService;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject UsuarioService usuarioService;
+
+<div class="pt-4">
+    <h4>Elementos revisados este mes</h4>
+
+    @if (ListaElementos == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListaElementos.Count == 0)
+    {
+        <p class="pt-3">No se han revisado elementos este mes</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Elemento</th>
+                    <th>Referencia</th>
+                    <th>Visita</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elemento in ListaElementos)
+                {
+                    <tr>
+                        <td>@elemento.CodigoElemento</td>
+                        <td>@elemento.Nombre</td>
+                        <td>@elemento.Referencia</td>
+                        <td><a class="node-text" @onclick="() => AbrirModalInformacion(elemento.IdRevision)">@elemento.IdRevision</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+</div>
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información de la revision</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="idVista">ID visita: </label>
+                            <input type="text" class="form-control" id="idVisita" value="@ID" readonly>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaInicio">Fecha de inicio: </label>
+                                <input type="text" class="form-control" id="fechaInicio" value="@visita.fechaInicio" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaFinaliza">Fecha de finalización: </label>
+                                <input type="text" class="form-control" id="fechaFinaliza" value="@visita.fechaFinaliza" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaCreacion">Fecha de creación: </label>
+                                <input type="text" class="form-control" id="fechaCreacion" value="@visita.fechaCreacion" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="cantidadDias">Cantidad de días: </label>
+                                <input type="text" class="form-control" id="cantidadDias" value="@visita.cantidadDias" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="contactoEmpresa">Contacto de empresa: </label>
+                                <input type="text" class="form-control" id="contactoEmpresa" value="@visita.contactoEmpresa" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="empresaCliente">Nombre empresa cliente: </label>
+                                <input type="text" class="form-control" id="empresaCliente" value="@visita.empresaCliente" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="sedeCliente">Nombre sede cliente: </label>
+                                <input type="text" class="form-control" id="sedeCliente" value="@visita.sedeCliente" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="plantaCliente">Nombre planta cliente: </label>
+                                <input type="text" class="form-control" id="plantaCliente" value="@visita.plantaCliente" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="estado">Estado: </label>
+                                <input type="text" class="form-control" id="estado" value="@visita.estado" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="asociada">Venta asociada: </label>
+                                <input type="text" class="form-control" id="asociada" value="@(visita.idVentaAsociada == 0 ? "Pendiente" : visita.idVentaAsociada)" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private List<ElementoInventarioDTO> ListaElementos;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    VisitaDTO visita = new VisitaDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        ListaElementos = await VisitaService.ObtenerElementosInspeccionados(identificacionEmpresa);
+    }
+
+    private void CerrarModal()
+    {
+        modalInformacion = false;
+    }
+
+    private void AbrirModalInformacion(BigInteger idVisita)
+    {
+        modalInformacion = true;
+        ID = idVisita;
+        visita = VisitaService.ObtenerVisitaPorID(idVisita);
+    }
+}
+
+

@@ -1,0 +1,158 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject UsuarioService usuarioService;
+
+<div class="pt-4">
+    <h4>Elementos con anomal&iacute;as encontradas este mes</h4>
+
+    @if (ListaElementos == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListaElementos.Count == 0)
+    {
+        <p class="pt-3">No se han presentando anomal&iacute;as este mes</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Elemento</th>
+                    <th>Referencia</th>
+                    <th>Revision</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elemento in ListaElementos)
+                {
+                    <tr>
+                        <td>@elemento.CodigoElemento</td>
+                        <td>@elemento.Nombre</td>
+                        <td>@elemento.Referencia</td>
+                        <td><a class="node-text" @onclick="() => AbrirModalInformacion(elemento.IdRevision)">@elemento.IdRevision</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+</div>
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información de la revision</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@ID" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="creacion">Fecha creación: </label>
+                                <input type="text" class="form-control" id="creacion" value="@revisionDTO.fechaCreacion" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="inicio">Fecha inicio: </label>
+                                <input type="text" class="form-control" id="inicio" value="@revisionDTO.fechaInicio" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="finalizacion">Fecha finalización: </label>
+                                <input type="text" class="form-control" id="finalizacion" value="@revisionDTO.fechaFinalizacion" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="idResponsable">ID responsable: </label>
+                                <input type="text" class="form-control" id="idResponsable" value="@revisionDTO.idResponsable" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="responsable">Nombre: </label>
+                                <input type="text" class="form-control" id="responsable" value="@revisionDTO.nombreResponsable" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@revisionDTO.descripcion" readonly />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private List<ElementoInventarioDTO> ListaElementos;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    RevisionInventarioDTO revisionDTO = new RevisionInventarioDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        ListaElementos = await inventarioService.ObtenerElementosAnomalias(identificacionEmpresa);
+    }
+
+    private void CerrarModal()
+    {
+        modalInformacion = false;
+    }
+
+    private void AbrirModalInformacion(BigInteger idRevision)
+    {
+        modalInformacion = true;
+        ID = idRevision;
+        revisionDTO = inventarioService.ObtenerRevisionPorID(idRevision);
+    }
+}
+
+

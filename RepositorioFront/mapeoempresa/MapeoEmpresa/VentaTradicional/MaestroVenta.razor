@@ -1,0 +1,46 @@
+﻿@inject VentaTradicionalService ventaTradicionalService
+
+<CascadingValue Name="ventaDTO" Value="@ventaDTO">
+    <InformacionVenta @ref="informacionVenta" InicializarDetallesImpuestoDescuentosYTotalesVentaEvent="InicializarDetallesImpuestosDescuentosYTotalesVenta" InicializarDatosPaginacionEvent="InicializarDatosPaginado" />
+    <TabsControls @ref="tabsControls"/>
+</CascadingValue>
+
+<button  @onclick="VerificarVenta" class="mt-5">verificar venta</button>
+
+
+@code{
+    private TabsControls tabsControls;
+    private InformacionVenta informacionVenta;
+    private VentaInterfazGraficaVentaDTO ventaDTO = new VentaInterfazGraficaVentaDTO();
+
+
+    protected override Task OnInitializedAsync()
+    {
+        ventaDTO.PC = Environment.MachineName;
+        ventaDTO.Origen = "---";
+        ventaDTO.IdVentaTransaccion = ventaTradicionalService.GenerarIdVenta();
+
+        return base.OnInitializedAsync();
+    }
+
+    public void InicializarDetallesImpuestosDescuentosYTotalesVenta()
+    {
+        tabsControls.InicializarDetallesImpuestosDescuentosYTotalesVenta();
+    }
+
+
+
+    public void InicializarDatosPaginado()
+    {
+
+        tabsControls.InicializarDatosPaginado();    
+
+    }
+
+
+    private void VerificarVenta()
+    {
+        var venta = ventaDTO;
+        var d = 3;
+    }
+}

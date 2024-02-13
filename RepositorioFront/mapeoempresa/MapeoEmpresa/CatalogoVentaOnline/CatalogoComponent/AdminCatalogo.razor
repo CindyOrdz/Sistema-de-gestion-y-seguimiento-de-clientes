@@ -1,0 +1,78 @@
+﻿@inject CatalogoService catalogoService
+@inherits ComponenteTab
+@using Microsoft.AspNetCore.Components.Forms
+
+<br />
+<br />
+<br />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="border p-4 rounded">
+                <h3 class="text-center">Creación del catálogo</h3>
+
+                <EditForm Model="catalogoDTO" OnValidSubmit="GuardarCuandoSeaValido">
+                    <DataAnnotationsValidator />
+
+                    <div class="form-group">
+                        <label for="rating">Clasificación:</label>
+                        <InputText id="rating" class="form-control" @bind-Value="catalogoDTO.clasificacion" />
+                        <ValidationMessage For="@(() => catalogoDTO.clasificacion)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Descripción:</label>
+                        <InputText id="description" class="form-control" @bind-Value="catalogoDTO.descripcion" />
+                        <ValidationMessage For="@(() => catalogoDTO.descripcion)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Imagen de Catálogo:</label>
+                        <InputFile id="image" class="form-control" OnChange="HandleFileChange" accept="image/*" />
+                        <ValidationMessage For="@(() => catalogoDTO.url_imagen)" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (isFormSubmitted)
+{
+    <p class="text-success">Formulario enviado con éxito.</p>
+}
+
+@code {
+    private List<CatalogoInterfazGraficaVentaDTO>? catalogos;
+    private CatalogoInterfazGraficaVentaDTO catalogoDTO = new CatalogoInterfazGraficaVentaDTO();
+    private bool isFormSubmitted = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        catalogos = catalogoService.ObtenerCatalogos();
+        return base.OnInitializedAsync();
+    }
+    private void Refrescar()
+    {
+        Mostrar();
+    }
+
+
+
+    private async Task GuardarCuandoSeaValido()
+    {
+        catalogoService.InsertarCatalogo(catalogoDTO);
+        isFormSubmitted = true;
+    }
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        var imageBytes = new byte[e.File.Size];
+        await e.File.OpenReadStream().ReadAsync(imageBytes);
+    }
+
+
+}

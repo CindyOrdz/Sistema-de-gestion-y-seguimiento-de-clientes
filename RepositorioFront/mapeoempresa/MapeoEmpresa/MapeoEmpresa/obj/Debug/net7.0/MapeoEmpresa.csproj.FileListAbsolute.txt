@@ -1,0 +1,388 @@
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\sharo\source\repos\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\sharo\OneDrive\Escritorio\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO ACTUAL\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Bootstrap.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Icons.FontAwesome.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.TreeView.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Hash.xxHash.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MySql.Data.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ZstdSharp.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Bootstrap.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Icons.FontAwesome.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.TreeView.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Hash.xxHash.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MySql.Data.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ZstdSharp.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Config.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Bootstrap.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Icons.FontAwesome.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.TreeView.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\K4os.Hash.xxHash.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MySql.Data.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Configuration.ConfigurationManager.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Drawing.Common.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Security.Permissions.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\System.Windows.Extensions.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ZstdSharp.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+C:\Users\sharo\OneDrive\Escritorio\MAPEO CLONE RAMA2\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\MapeoEmpresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Config.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.Development.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\appsettings.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Config.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.staticwebassets.runtime.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.exe
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.deps.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.runtimeconfig.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MapeoEmpresa.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Bootstrap.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Icons.FontAwesome.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.Licensing.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Blazorise.TreeView.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\DeepCloner.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Components.Forms.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Components.Web.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.JSInterop.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\MySqlConnector.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\CatalogoVentaOnline.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ComponentesGenerales.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ImpuestosDescuentos.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Inventario.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ServiciosComponentes.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Terceros.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\VentaTradicional.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\CatalogoVentaOnline.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ComponentesGenerales.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\EntidadesNegocio.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ImpuestosDescuentos.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Inventario.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\RegistroEvidencia.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ServiciosComponentes.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Terceros.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\VentaTradicional.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.AssemblyReference.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfoInputs.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.AssemblyInfo.cs
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CoreCompileInputs.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.MvcApplicationPartsAssemblyInfo.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.RazorAssemblyInfo.cs
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.MapeoEmpresa.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.build.MapeoEmpresa.props
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.MapeoEmpresa.props
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.MapeoEmpresa.props
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.pack.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.build.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\staticwebassets.development.json
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\bundle\MapeoEmpresa.styles.css
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\scopedcss\projectbundle\MapeoEmpresa.bundle.scp.css
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.csproj.CopyComplete
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\refint\MapeoEmpresa.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.pdb
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\MapeoEmpresa.genruntimeconfig.cache
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\obj\Debug\net7.0\ref\MapeoEmpresa.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\BCrypt.Net-Next.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\ChartJs.Blazor.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.SignalR.Client.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.SignalR.Common.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Microsoft.Extensions.Features.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\Newtonsoft.Json.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\GestionDeUsuarios.dll
+D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\bin\Debug\net7.0\GestionDeUsuarios.pdb

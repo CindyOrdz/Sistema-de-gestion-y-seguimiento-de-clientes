@@ -1,0 +1,232 @@
+﻿<div class="top-row ps-3 navbar navbar-dark" >
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Menú Principal</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable"  @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Inicio
+            </NavLink>
+        </div>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaDefinirEmpresa">
+            <Authorized>
+                <div class="nav-item px-3 me-0">
+                    <NavLink class="nav-link" href="empresa">
+                        <span class="fa-solid fa-building fas-menu me-2" aria-hidden="true"></span>Definir empresa
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaVerMapaProcesos">
+            <Authorized>
+                <div class="nav-item px-3 me-0">
+                    <NavLink class="nav-link" href="mapadeprocesos">
+                        <span class="fa-solid fa-location-dot fas-menu me-2" aria-hidden="true"></span>Mapa de procesos
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaAgendarVisita">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="CrearVisita">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Agendar Visita
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPLEADO" Policy="PoliticaRealizarVisita">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="gestionarVisitas">
+                        <span class="fa-solid fa-pencil fas-menu me-2" aria-hidden="true"></span> Realizar Visita
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaInformesVisita">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="InformesVisita">
+                        <span class="fa-solid fa-chart-simple fas-menu me-2" aria-hidden="true"></span>Informes visita
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPLEADO" Policy="PoliticaAsociarVentaVisita">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="AsociarVenta">
+                        <span class="fa-solid fa-paperclip fas-menu me-2" aria-hidden="true"></span> Asociar venta a visita
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaVerInventario">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Inventario">
+                        <span class="oi oi-eye" aria-hidden="true"></span>Ver Inventario
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaAgendarRevisionInventario">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="ProgramarRevision">
+                        <span class="oi oi-clipboard" aria-hidden="true"></span>Agendar revision
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPLEADO" Policy="PoliticaRealizarRevisionInventario">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="GestionarRevision">
+                        <span class="oi oi-task" aria-hidden="true"></span>Realizar revision
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaInformesRevisionInventario">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="InformesInventario">
+                        <span class="oi oi-pie-chart" aria-hidden="true"></span>Informes inventario
+                    </NavLink>
+
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+
+       @*  <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaRealizacionVentas">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="maestro_venta">
+                        <span class="fa-solid fa-shop fas-menu me-2" aria-hidden="true"></span> Ventas
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView> *@
+
+        <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaFiltradoClientes">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mis_clientes">
+                        <span class="fa-solid fa-users fas-menu me-2" aria-hidden="true"></span> Mis Clientes
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA" Policy="PoliticaFiltradoEmpleados">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mis_empleados">
+                        <span class="fa-solid fa-building-user fas-menu me-2" aria-hidden="true"></span> Mis Empleados
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="EMPRESA" Policy="PoliticaConfiguracionPermisosEmpleados">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="permisos_empleados">
+                        <span class="fa-solid fa-user-gear fas-menu me-2" aria-hidden="true"></span> Permisos Empleados
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+       @*  <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaConfiguracionImpuestos">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="impuestos_cliente">
+                        <span class="fa-solid fa-money-check-dollar fas-menu me-2" aria-hidden="true"></span> Configurar impuestos
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView> *@
+
+        <AuthorizeView Roles="ADMINISTRADOR"  Policy="PoliticaConfiguracionPermisosEmpresas">
+            <Authorized>
+     
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="permisos_empresas">
+                        <span class="fa-solid fa-gears fas-menu me-2" aria-hidden="true"></span> Permisos Empresas
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="ADMINISTRADOR" Policy="PoliticaFiltradoEmpresas">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="mis_empresas">
+                        <span class="fa-solid fa-building-wheat fas-menu me-2" aria-hidden="true"></span> Mis Empresas
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        @* <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaFiltradoElementos">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="elementos_disponibles">
+                        <span class="fa-solid fa-dolly fas-menu me-2" aria-hidden="true"></span> Elementos disponibles
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView> *@
+
+        
+        
+       @*  <div class="nav-item px-3">
+            <NavLink class="nav-link" href="catalogos">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Productos
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="chat_users">
+                <span class="fa-solid fa-comments fas-menu me-2" aria-hidden="true"></span> Chat en vivo
+            </NavLink>
+        </div> *@
+
+        
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

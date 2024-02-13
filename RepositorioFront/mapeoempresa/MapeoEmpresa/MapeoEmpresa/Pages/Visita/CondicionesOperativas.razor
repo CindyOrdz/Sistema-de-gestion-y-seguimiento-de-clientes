@@ -1,0 +1,308 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject ParteService ParteService;
+@inject RegistroEvidenciaService RegistroService;
+@inject NavigationManager NavigationManager;
+
+<div class="col-lg-10 contact-form__wrapper">
+    <h4><b>Condiciones operativas</b></h4>
+    <div class="row">
+        <p>Ingrese el nombre de la parte para consultar y registrar las condiciones operativas respectivas </p>
+        <div class="input-group mb-3">
+            <span class="input-group-text input-title">Parte </span>
+            <input type="search" class="form-control custom-input" id="busqueda" @bind="ValorBusqueda" placeholder="Nombre de la parte">
+            <button class="btn btn-sm btn-secondary" type="button" @onclick="BuscarParte">
+                <i class="oi oi-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Información encontrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ListPartes == null)
+                {
+                    <tr>
+                        <td>
+                            Realice una b&uacute;squeda para ver la informaci&oacute;n
+                        </td>
+                    </tr>
+                }
+                else if (ListPartes.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            No se ha encontrado información, intente nuevamente
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var p in ListPartes)
+                    {
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>Parte: </strong> @p.NombreElemento <br />
+                                        <strong>Equipo: </strong> @p.NombreEquipo <br />
+                                        <div class="d-grid gap-2 d-md-block pt-2">
+                                            <button type="button" class="btn btn-primary" @onclick="() =>  CondicionesIniciales(p)">Condiciones iniciales</button>
+                                            <button type="button" class="btn btn-secondary" @onclick="() =>  VerCondicionesReales(p)">Condiciones reales</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Componente: </strong> @p.NombreComponente <br />
+                                        <strong>Área: </strong> @p.NombreArea <br />                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+@if (MostrarCondicionesIniciales)
+{
+    <div class="contenedor-bloque pt-3">
+        <h4><b>Condiciones iniciales registradas</b></h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="col-titulo">
+                    <th colspan="2">Información </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td class="col-nombre">Elemento</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreElemento : "")</td>
+
+                </tr>
+                <tr>
+                    <td class="col-nombre">Equipo</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreEquipo : "")</td>
+                </tr>
+                <tr>
+                    <td class="col-nombre">Componente</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreComponente : "")</td>
+                </tr>
+                <tr>
+                    <td class="col-nombre">Área</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreArea : "")</td>
+                </tr>                
+
+            </tbody>
+        </table>
+
+        @if (ListCondicionesIniciales.Count == 0)
+        {
+            <p class="pt-3">Aún no se han registrado condiciones iniciales para el elemento seleccionado.</p>
+        }
+        else
+        {
+            foreach (var condicionInicial in ListCondicionesIniciales)
+            {
+                <div class="accordion" id="accordionHistorial">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@condicionInicial.id" aria-expanded="false" aria-controls="collapse_@condicionInicial.id">
+                                <div class="contenedor-info-sm-top col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>Descripcion: </strong> @condicionInicial.descripcion<br />
+                                            <strong>Responsable: </strong> @condicionInicial.nombreResponsable <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapse_@condicionInicial.id" class="accordion-collapse collapse" data-bs-parent=".accordion">
+                            <div class="accordion-body">
+                                <div class="contenedor-info-sm-top pt-4">
+                                    <label class="txt-top font-txt">Detalle de venta</label>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Valor fijo</th>
+                                                <th>Rango</th>
+                                                <th>Unidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var operativa in condicionInicial.condicionesOperativas)
+                                            {
+                                                <tr>
+                                                    <td>@operativa.nombre</td>
+                                                    <td>@operativa.valorFijo</td>
+                                                    <td>@operativa.rangoCompleto</td>
+                                                    <td>@operativa.codigoUnidad</td>
+                                                </tr>
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        }
+    </div>
+}
+
+@if (MostrarCondicionesReales)
+{
+    <div class="contenedor-bloque pt-3">
+        <h4><b>Condiciones reales registradas</b></h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr class="col-titulo">
+                    <th colspan="2">Información</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td class="col-nombre">Elemento</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreElemento : "")</td>
+
+                </tr>
+                <tr>
+                    <td class="col-nombre">Equipo</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreEquipo : "")</td>
+                </tr>
+                <tr>
+                    <td class="col-nombre">Componente</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreComponente : "")</td>
+                </tr>
+                <tr>
+                    <td class="col-nombre">Área</td>
+                    <td>@(parteSeleccionada != null ? parteSeleccionada.NombreArea : "")</td>
+                </tr>
+
+            </tbody>
+        </table>
+        
+
+        @if (ListCondicionesReales.Count == 0)
+        {
+            <p class="pt-3">Aún no se han registrado condiciones reales para el elemento seleccionado.</p>
+        }
+        else
+        {
+            foreach (var condicionReal in ListCondicionesReales)
+            {
+                <div class="accordion" id="accordionHistorial">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@condicionReal.id" aria-expanded="false" aria-controls="collapse_@condicionReal.id">
+                                <div class="contenedor-info-sm-top col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>Descripcion: </strong> @condicionReal.descripcion<br />
+                                            <strong>Responsable: </strong> @condicionReal.nombreResponsable <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapse_@condicionReal.id" class="accordion-collapse collapse" data-bs-parent=".accordion">
+                            <div class="accordion-body">
+                                <div class="contenedor-info-sm-top pt-4">
+                                    <label class="txt-top font-txt">Detalle de venta</label>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Valor fijo</th>
+                                                <th>Rango</th>
+                                                <th>Unidad</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var operativa in condicionReal.condicionesOperativas)
+                                            {
+                                                <tr>
+                                                    <td>@operativa.nombre</td>
+                                                    <td>@operativa.valorFijo</td>
+                                                    <td>@operativa.rangoCompleto</td>
+                                                    <td>@operativa.codigoUnidad</td>
+                                                </tr>
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        }
+
+        <div class="pt-3">
+            <button type="button" class="btn btn-success" @onclick="() =>  EditarCondicionesReales()">Editar</button>
+        </div>
+
+    </div>
+}
+
+@code {
+    private String ValorBusqueda;
+    private bool MostrarCondicionesIniciales = false;
+    private bool MostrarCondicionesReales = false;
+    private List<ParteDTO> ListPartes;
+    private List<CondicionInicialDTO> ListCondicionesIniciales;
+    private List<CondicionRealDTO> ListCondicionesReales;
+    private ParteDTO parteSeleccionada;
+
+    private async Task BuscarParte()
+    {
+        MostrarCondicionesIniciales = false;
+        MostrarCondicionesReales = false;
+        ListPartes = await ParteService.ListarPartesRegistroCondicionesVisita(ValorBusqueda, RegistroService.VisitaSeleccionada.idPlantaCliente);
+    }
+
+    private void CondicionesIniciales(ParteDTO parte)
+    {
+        MostrarCondicionesIniciales = true;
+        MostrarCondicionesReales = false;
+        ListCondicionesIniciales = ParteService.ObtenerCondicionesInicialesConOperativas(parte.Id);
+        parteSeleccionada = parte;
+    }
+
+    private void VerCondicionesReales(ParteDTO parte)
+    {
+        MostrarCondicionesReales = true;
+        MostrarCondicionesIniciales = false;
+        ListCondicionesReales = ParteService.ObtenerCondicionesRealesConOperativas(parte.Id);
+        parteSeleccionada = parte;
+    }
+
+    private void EditarCondicionesReales()
+    {
+        ParteService.ParteDTOSeleccionada = parteSeleccionada;
+        NavigationManager.NavigateTo("/PagCondicionesReales");
+    }
+}

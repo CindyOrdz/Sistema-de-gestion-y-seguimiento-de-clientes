@@ -1,0 +1,49 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = CatalogoVentaOnline
+build_property.RootNamespace = CatalogoVentaOnline
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\CatalogoVentaOnline\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\CatalogoVentaOnline
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CarritoCompras/BodyComponenteCarrito.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2Fycml0b0NvbXByYXNcQm9keUNvbXBvbmVudGVDYXJyaXRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CarritoCompras/ComponenteCarrito.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2Fycml0b0NvbXByYXNcQ29tcG9uZW50ZUNhcnJpdG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CarritoCompras/ModalConfirmarEliminarDeCarrito.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2Fycml0b0NvbXByYXNcTW9kYWxDb25maXJtYXJFbGltaW5hckRlQ2Fycml0by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CatalogoComponent/AdminCatalogo.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2F0YWxvZ29Db21wb25lbnRcQWRtaW5DYXRhbG9nby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CatalogoComponent/CatalogoComponente.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2F0YWxvZ29Db21wb25lbnRcQ2F0YWxvZ29Db21wb25lbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CatalogoComponent/ElementosSegunCatalogo.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2F0YWxvZ29Db21wb25lbnRcRWxlbWVudG9zU2VndW5DYXRhbG9nby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/CatalogoComponent/InformacionElementoComponente.razor]
+build_metadata.AdditionalFiles.TargetPath = Q2F0YWxvZ29Db21wb25lbnRcSW5mb3JtYWNpb25FbGVtZW50b0NvbXBvbmVudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/CatalogoVentaOnline/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

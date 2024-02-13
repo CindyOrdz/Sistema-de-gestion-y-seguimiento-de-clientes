@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "gijkdAsFgazOcx/dXZAuH9Z3nZ0t0/9WTUV6UyujwmQ=",
+  "Source": "CatalogoVentaOnline",
+  "BasePath": "_content/CatalogoVentaOnline",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "CatalogoVentaOnline\\wwwroot",
+      "Source": "CatalogoVentaOnline",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\",
+      "BasePath": "_content/CatalogoVentaOnline",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\background.png",
+      "SourceId": "CatalogoVentaOnline",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\",
+      "BasePath": "_content/CatalogoVentaOnline",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "CatalogoVentaOnline",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\",
+      "BasePath": "_content/CatalogoVentaOnline",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

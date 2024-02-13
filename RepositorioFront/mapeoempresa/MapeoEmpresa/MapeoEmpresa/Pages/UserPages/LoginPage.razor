@@ -1,0 +1,12 @@
+﻿@page "/login"
+@page "/login/{ErrorMessage}"
+
+<LoginBlazor ErrorMessage="@ErrorMessage"></LoginBlazor>
+
+@code {
+
+    [Parameter]
+    public string ErrorMessage { get; set; }
+
+
+}

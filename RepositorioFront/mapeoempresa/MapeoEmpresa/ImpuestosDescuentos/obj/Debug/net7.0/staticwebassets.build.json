@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "c47xqigLnL587Lt0tU31XemRJ7NhzfO932aFVQ+z3bA=",
+  "Source": "ImpuestosDescuentos",
+  "BasePath": "_content/ImpuestosDescuentos",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ImpuestosDescuentos\\wwwroot",
+      "Source": "ImpuestosDescuentos",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\",
+      "BasePath": "_content/ImpuestosDescuentos",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\background.png",
+      "SourceId": "ImpuestosDescuentos",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\",
+      "BasePath": "_content/ImpuestosDescuentos",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "ImpuestosDescuentos",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\",
+      "BasePath": "_content/ImpuestosDescuentos",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

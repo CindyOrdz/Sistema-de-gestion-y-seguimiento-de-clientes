@@ -1,0 +1,273 @@
+﻿@inherits ComponenteTab
+@inject VentaService ventaService
+
+@if (display)
+{
+    <div class="modal fade show" tabindex="-2" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Resumen de la venta</h5>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="resumenVentaDTO" OnValidSubmit="ConfirmarAccion">
+                        <DataAnnotationsValidator />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">ID venta</label>
+                                    <label class="form-control">@VentaDTO.IdVentaTransaccion</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Fecha</label>
+                                    <label class="form-control">@VentaDTO.FechaVenta</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Hora</label>
+                                    <label class="form-control">@VentaDTO.Hora</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h5>Empresa</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">Tipo Documento</label>
+                                    <label class="form-control">@VentaDTO.Empresa.TipoDocumento.Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">Identificacion</label>
+                                    <label class="form-control">@VentaDTO.Empresa.Identificacion</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <label class="input-group-text">Nombre Empresa</label>
+                                    <label class="form-control">@VentaDTO.Empresa.RazonSocial</label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <h5>Ubicación</h5>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Pais</label>
+                                    <label class="form-control">@VentaDTO.Empresa.Ubicacion.Pais.Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Departamento</label>
+                                    <label class="form-control">@VentaDTO.Empresa.Ubicacion.DepartamentoProvincia.Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Ciudad</label>
+                                    <label class="form-control">@VentaDTO.Empresa.Ubicacion.Ciudad.Nombre</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <label class="input-group-text">Dirección</label>
+                                    <label class="form-control">@VentaDTO.Empresa.Direccion</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">$ Descuento</label>
+                                    <InputNumber @bind-Value="resumenVentaDTO.Descuento" @onblur="CalcularPorcentajeDescuento" class="form-control"></InputNumber>
+                                    <ValidationMessage For="()=>VentaDTO.Descuento" class="font-error font-txt"></ValidationMessage>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">Porcentaje </label>
+                                    <label class="form-control">@($"{resumenVentaDTO.PorcentajeDescuento} %")</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (VentaDTO.TipoPago.Equals(ParametrosTiposVenta.PAGO_CONTADO))
+                        {
+                            <hr />
+                            <div class="row mt-3">
+
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <label class="input-group-text">Valor cheque</label>
+                                        <InputNumber @bind-Value="resumenVentaDTO.ValorCheque" @onblur="CalcularDevolucion" class="form-control" />
+                                        <ValidationMessage For="()=>resumenVentaDTO.ValorCheque" class="font-error font-txt"></ValidationMessage>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <label class="input-group-text">Valor Tarjeta</label>
+                                        <InputNumber @bind-Value="resumenVentaDTO.ValorTarjeta" @onblur="CalcularDevolucion" class="form-control" />
+                                        <ValidationMessage For="()=>resumenVentaDTO.ValorTarjeta" class="font-error font-txt"></ValidationMessage>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <label class="input-group-text">Valor Efectivo</label>
+                                        <InputNumber @bind-Value="resumenVentaDTO.ValorEfectivo" @onblur="CalcularDevolucion" class="form-control" />
+                                        <ValidationMessage For="()=>resumenVentaDTO.ValorEfectivo" class="font-error font-txt"></ValidationMessage>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        @if (VentaDTO.TipoPago.Equals(ParametrosTiposVenta.PAGO_CREDITO))
+                        {
+                            <hr />
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <label class="input-group-text">Valor credito </label>
+                                        <label class="form-control">@resumenVentaDTO.Total.ToString("C")</label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">Total </label>
+                                    <label class="form-control">@resumenVentaDTO.Total.ToString("C")</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">SubTotal </label>
+                                    <label class="form-control">@resumenVentaDTO.SubTotal.ToString("C")</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text">Devolución </label>
+                                    <label class="form-control">@resumenVentaDTO.Devolucion.ToString("C")</label>
+                                    @if (resumenVentaDTO.Devolucion < 0)
+                                    {
+                                        <ValidationMessage For="()=>resumenVentaDTO.Devolucion" class="font-error font-txt"></ValidationMessage>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <span class="btn btn-danger" @onclick="CancelarAccion">Cancelar</span>
+                            <button type="submit" class="btn btn-success">Aceptar</button>
+                        </div>
+
+                    </EditForm>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public EventCallback<bool> ConfirmarAccionEvent { get; set; }
+    [Parameter]
+    public VentaInterfazGraficaVentaDTO VentaDTO { get; set; }
+    public bool Seleccion { get; set; }
+    private ResumenVentaDTO resumenVentaDTO = new ResumenVentaDTO();
+
+    public void InicializarResumenVenta()
+    {
+        resumenVentaDTO.Descuento = VentaDTO.Descuento;
+        resumenVentaDTO.PorcentajeDescuento = VentaDTO.PorcentajeDescuento;
+        resumenVentaDTO.ValorEfectivo = VentaDTO.ValorEfectivo;
+        resumenVentaDTO.ValorCheque = VentaDTO.ValorCheque;
+        resumenVentaDTO.ValorTarjeta = VentaDTO.ValorTarjeta;
+        resumenVentaDTO.ValorCredito = VentaDTO.ValorCredito;
+        resumenVentaDTO.SubTotal = VentaDTO.SubTotal;
+        resumenVentaDTO.Total = VentaDTO.Total;
+        if (VentaDTO.TipoPago.Equals(ParametrosTiposVenta.PAGO_CONTADO))
+        {
+            resumenVentaDTO.Devolucion = resumenVentaDTO.ValorEfectivo + resumenVentaDTO.ValorCheque + resumenVentaDTO.ValorTarjeta - resumenVentaDTO.Total;
+
+        }
+        else if (VentaDTO.TipoPago.Equals(ParametrosTiposVenta.PAGO_CREDITO))
+        {
+            resumenVentaDTO.Devolucion = 0;
+
+        }
+        
+
+    }
+
+    private void ConfirmarAccion()
+    {
+        Seleccion = true;
+        VentaDTO.Descuento = resumenVentaDTO.Descuento;
+        VentaDTO.PorcentajeDescuento = resumenVentaDTO.PorcentajeDescuento;
+        VentaDTO.ValorEfectivo = resumenVentaDTO.ValorEfectivo;
+        VentaDTO.ValorTarjeta = resumenVentaDTO.ValorTarjeta;
+        VentaDTO.ValorCheque = resumenVentaDTO.ValorCheque;
+        if (VentaDTO.TipoPago.Equals(ParametrosTiposVenta.PAGO_CREDITO))
+        {
+            VentaDTO.ValorCredito = resumenVentaDTO.Total;
+
+        }
+
+        VentaDTO.SubTotal = resumenVentaDTO.SubTotal;
+        VentaDTO.Total = resumenVentaDTO.Total;
+
+        ConfirmarAccionEvent.InvokeAsync(Seleccion);
+        Dispose();
+    }
+
+    private void CancelarAccion()
+    {
+        ventaService.CancelarDescuentoVenta();
+        Seleccion = false;
+        ConfirmarAccionEvent.InvokeAsync(Seleccion);
+        Dispose();
+
+    }
+
+    private void CalcularPorcentajeDescuento()
+    {
+
+        ventaService.CalcularDescuentoVenta(resumenVentaDTO);
+
+    }
+
+    private void CalcularDevolucion()
+    {
+        resumenVentaDTO.Devolucion = resumenVentaDTO.ValorEfectivo + resumenVentaDTO.ValorCheque + resumenVentaDTO.ValorTarjeta - resumenVentaDTO.Total;
+
+    }
+}

@@ -1,0 +1,81 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@using EntidadesNegocio.InterfazGraficaBlazorDTO.InterfazGraficaVentaDTO.Inventario;
+@inject EquipoService EquipoService;
+
+<div class="col-lg-9 contact-form__wrapper p-5 order-lg-1 border border-3 formDesign">
+
+    <EditForm Model="parte">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-sm-10 mb-3">
+                <div class="form-group">
+                    <label for="elemento">Elemento: </label>
+                    <input type="text" class="form-control" id="elemento" name="elemento" @bind="parte.NombreElemento" readonly>
+                </div>
+            </div>
+
+            <div class="col-sm-2 mb-3">
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-light" @onclick="ObtenerElemento"><i class="oi oi-magnifying-glass"></i></button>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="equipo">Equipo del Componente: </label>
+                    <input type="text" class="form-control" id="equipo" value="@EquipoService.EquipoDTOSeleccionado.nombre" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <button type="submit" class="btn btn-primary" @onclick="GuardarParte">Guardar</button>
+            </div>
+
+        </div>
+
+    </EditForm>
+    
+</div>
+<br />
+
+<ModalPersonalizado @ref="modalMensaje" />
+<ComponenteElemento origen=@("detalleventa") @ref="componenteElemento" TraerElementoEvent="CargarElementoSeleccionado" />
+@code {
+    private ModalPersonalizado modalMensaje;
+    private ComponenteElemento componenteElemento;
+    private ElementoInterfazGraficaVentaDTO elementoSeleccionado;    
+    private bool botonElementoPresionado = false;
+    private ParteDTO parte = new ParteDTO();
+
+    protected async Task GuardarParte()
+    {
+        if (botonElementoPresionado)
+        {
+            await EquipoService.AgregarParte(elementoSeleccionado.CodigoArticulo);
+
+            // Limpiar los campos del formulario
+            parte = new ParteDTO();
+            botonElementoPresionado = false;
+
+            modalMensaje.Mostrar("El registro se realizo correctamente");
+        }
+        else
+        {
+            modalMensaje.Mostrar("Por favor seleccione un elemento");
+        }
+    }
+
+    private void ObtenerElemento()
+    {
+        componenteElemento.Mostrar();
+    }
+
+    private void CargarElementoSeleccionado()
+    {
+        elementoSeleccionado = componenteElemento.elementoActual;
+        parte.NombreElemento = $"{elementoSeleccionado.CodigoArticulo} - {elementoSeleccionado.Nombre}";
+        botonElementoPresionado = true;
+    }
+
+}

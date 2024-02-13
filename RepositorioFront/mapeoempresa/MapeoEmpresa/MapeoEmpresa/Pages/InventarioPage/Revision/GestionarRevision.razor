@@ -1,0 +1,105 @@
+﻿@page "/GestionarRevision"
+@attribute [Authorize(Roles = "EMPLEADO", Policy = "PoliticaRealizarRevisionInventario")]
+
+@using System.Numerics;
+@using MapeoEmpresa.Services;
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService InventarioService;
+@inject NavigationManager NavigationManager;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+
+<h1><b>Gestionar revisiones de inventario</b></h1>
+<div class="col-lg-9 contact-form__wrapper">
+    <div class="row">
+        <p>Ingrese la fecha de inicio de la revision para realizar la busqueda</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text input-title">Fecha inicio</span>
+            <input type="date" class="form-control" id="fechaInicio" @bind="FechaInicio">
+            <button class="btn btn-sm btn-secondary" type="button" @onclick="BuscarVisita">
+                <i class="oi oi-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Información encontrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ListRevisiones == null)
+                {
+                    <tr>
+                        <td>
+                            Realice una b&uacute;squeda para ver la informaci&oacute;n
+                        </td>
+                    </tr>
+                }
+                else if (ListRevisiones.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            No se ha encontrado información, intente nuevamente
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var p in ListRevisiones)
+                    {
+                        <tr>
+                            <td>
+                                <strong>ID Revision: </strong> @p.id <br />
+                                <strong>Estado: </strong> @p.estado <br />
+                                <strong>Inicio: </strong> @p.fechaInicio <br />
+                                <strong>Responsable: </strong> @p.nombreResponsable <br />
+                                @if (p.estado != "Finalizada")
+                                {
+                                    <button type="button" class="btn btn-primary my-2" @onclick="() => SeleccionarRevision(p)">Seleccionar</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+@code {
+    private String ValorBusqueda;
+    private DateOnly FechaInicio;
+    List<RevisionInventarioDTO> ListRevisiones;
+
+    private long idResponsable = 0;
+    private bool rolEmpleado = false;
+
+    protected async Task BuscarVisita()
+    {
+        ListRevisiones = await InventarioService.BuscarPorFecha(FechaInicio, idResponsable);
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+
+        if (rolEmpleado)
+        {
+            idResponsable = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario); //Obtiene id empleado logueado
+        }
+        
+        FechaInicio = DateOnly.FromDateTime(DateTime.Today);
+    }
+
+    private void SeleccionarRevision(RevisionInventarioDTO revision)
+    {
+        InventarioService.RevisionSeleccionada = revision;
+        NavigationManager.NavigateTo("/pagRevision");
+    }
+}

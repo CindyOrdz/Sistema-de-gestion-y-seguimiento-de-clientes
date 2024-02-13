@@ -1,0 +1,82 @@
+﻿@inherits ComponenteTab
+
+@if (display)
+{
+    <div class="modal fade show" tabindex="-1" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulario Departamento o Estado</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarVentana"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="Departamento" OnValidSubmit="GuardarDepartamento" OnInvalidSubmit="InvalidarFormulario">
+                        <DataAnnotationsValidator />
+                        
+                        <div class="row">
+                            <div class="col">
+                                <label class="label-info-venta font-txt" for="codigo_dpto">Código Departamento: </label>
+                                <InputText @bind-Value="Departamento.Codigo" class="font-txt" id="codigo_dpto" @onblur="CompletarDatos"></InputText>
+                            </div>
+
+                            <div class="col">
+                                <label class="label-info-venta font-txt" for="nombre_dpto">Nombre Departamento: </label>
+                                <InputText @bind-Value="Departamento.Nombre" class="font-txt" id="nombre_dpto" @onblur="CompletarDatos"></InputText>
+                            </div>
+
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col">
+                                <ValidationMessage For="()=>Departamento.Codigo" class="font-error"></ValidationMessage>
+                            </div>
+                            <div class="col">
+                                <ValidationMessage For="()=>Departamento.Nombre" class="font-error"></ValidationMessage>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info">Guardar</button>
+                        </div>
+
+                    </EditForm>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    public DepartamentoProvinciaInterfazGraficaVentaDTO Departamento { get; set; } = new DepartamentoProvinciaInterfazGraficaVentaDTO();
+    public string Accion { get; set; } = string.Empty;
+    public bool FormularioValido { get; set; } = false;
+    [Parameter]
+    public EventCallback AgregarDepartamentoEvent { get; set; }
+
+    public void GuardarDepartamento()
+    {
+        FormularioValido = true;
+        Dispose();
+        AgregarDepartamentoEvent.InvokeAsync();
+    }
+
+    public void InvalidarFormulario()
+    {
+        FormularioValido = false;
+    }
+
+    private void CompletarDatos()
+    {
+        if (Accion.Equals(ParametrosComponenteTerceros.NUEVO_DEPARTAMENTO))
+        {
+            Departamento.CodigoIso = "---";
+        }
+        
+    }
+
+    public void CerrarVentana()
+    {
+        Departamento = new DepartamentoProvinciaInterfazGraficaVentaDTO();
+        Dispose();
+    }
+}

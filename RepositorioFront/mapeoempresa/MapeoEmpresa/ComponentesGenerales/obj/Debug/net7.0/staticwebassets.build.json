@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "daYVJ7cCOMzo78QqD8q+oMwxXTJ7bFOJodF0H6DVCcc=",
+  "Source": "ComponentesGenerales",
+  "BasePath": "_content/ComponentesGenerales",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ComponentesGenerales\\wwwroot",
+      "Source": "ComponentesGenerales",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ComponentesGenerales\\wwwroot\\",
+      "BasePath": "_content/ComponentesGenerales",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ComponentesGenerales\\wwwroot\\background.png",
+      "SourceId": "ComponentesGenerales",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ComponentesGenerales\\wwwroot\\",
+      "BasePath": "_content/ComponentesGenerales",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ComponentesGenerales\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "ComponentesGenerales",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ComponentesGenerales\\wwwroot\\",
+      "BasePath": "_content/ComponentesGenerales",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

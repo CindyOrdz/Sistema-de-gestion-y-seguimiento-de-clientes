@@ -1,0 +1,4 @@
+﻿@page "/impuestos_cliente"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaConfiguracionImpuestos")]
+
+<ImpuestosCliente />

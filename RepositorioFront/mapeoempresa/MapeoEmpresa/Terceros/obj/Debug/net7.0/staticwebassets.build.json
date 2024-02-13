@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "anQykC5YF/Qz2AscLd8aYbSuqFH/BJ0XroWpE8LRDVo=",
+  "Source": "Terceros",
+  "BasePath": "_content/Terceros",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Terceros\\wwwroot",
+      "Source": "Terceros",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Terceros\\wwwroot\\",
+      "BasePath": "_content/Terceros",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Terceros\\wwwroot\\background.png",
+      "SourceId": "Terceros",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Terceros\\wwwroot\\",
+      "BasePath": "_content/Terceros",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Terceros\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "Terceros",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Terceros\\wwwroot\\",
+      "BasePath": "_content/Terceros",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

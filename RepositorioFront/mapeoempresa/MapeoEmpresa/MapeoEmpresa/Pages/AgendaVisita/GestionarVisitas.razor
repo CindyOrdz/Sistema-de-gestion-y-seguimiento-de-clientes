@@ -1,0 +1,176 @@
+﻿@page "/gestionarVisitas"
+@attribute [Authorize(Roles = "EMPLEADO", Policy = "PoliticaRealizarVisita")]
+
+@using System.Numerics;
+@using MapeoEmpresa.Services;
+@using EntidadesNegocio.EntidadesDto;
+@inject PlantaService PlantaService;
+@inject RegistroEvidenciaService RegistroService;
+@inject NavigationManager NavigationManager;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<h1><b>Gestionar visitas</b></h1>
+<div class="col-lg-9 contact-form__wrapper">
+    <div class="row">
+        <p>Seleccione un filtro e ingrese la informacion solicitada para buscar la visita</p>
+        <div class="input-group mb-3">
+            <select class="form-select fw-bold" @bind="FiltroSeleccionado">
+                <option value="Empresa">Filtrar por empresa</option>
+                <option value="Fecha">Filtrar por fecha de inicio</option>
+            </select>
+            @if (FiltroSeleccionado == "Empresa")
+            {
+                <input type="search" class="form-control custom-input" id="busqueda" @bind="ValorBusqueda" placeholder="Ingrese el nombre de la empresa">
+            }
+            else if (FiltroSeleccionado == "Fecha")
+            {
+                <input type="date" class="form-control" id="fechaFinaliza" @bind="FechaInicio">
+            }
+            <button class="btn btn-sm btn-secondary" type="button" @onclick="BuscarVisita">
+                <i class="oi oi-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Información encontrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ListVisitas == null)
+                {
+                    <tr>
+                        <td>
+                            Realice una b&uacute;squeda para ver la informaci&oacute;n
+                        </td>
+                    </tr>
+                }
+                else if (ListVisitas.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            No se ha encontrado información, intente nuevamente
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var p in ListVisitas)
+                    {
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>ID visita: </strong> @p.id <br />
+                                        <strong>Inicio: </strong> @p.fechaInicio <br />
+                                        <strong>Finalización: </strong> @p.fechaFinaliza <br />
+                                        @if (p.estado != "Finalizada")
+                                        {
+                                            <button type="button" class="btn btn-primary my-2" @onclick="() => SeleccionarVisita(p)">Seleccionar</button>
+                                        }
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Empresa cliente: </strong> @p.empresaCliente <br />
+                                        <strong>Sede cliente: </strong> @p.sedeCliente <br />
+                                        <strong>Planta cliente: </strong> @p.plantaCliente<br />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+
+        @if (FiltroSeleccionado == "Empresa")
+        {
+            <div class="col-auto">
+                <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    private String ValorBusqueda;
+    private DateOnly FechaInicio; 
+    List<VisitaDTO> ListVisitas ;
+    private string FiltroSeleccionado = "Fecha"; 
+
+    private long idResponsable = 0;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    protected async Task BuscarVisita()
+    {
+        if (FiltroSeleccionado == "Empresa")
+        {
+            totalPaginas = calcularPaginasTotales();
+            ListVisitas = PlantaService.BuscarPorEmpresa(ValorBusqueda, idResponsable, paginaActual, elementosPorPagina);
+        }
+        else if (FiltroSeleccionado == "Fecha")
+        {
+            ListVisitas = await PlantaService.BuscarPorFecha(FechaInicio, idResponsable);
+            totalPaginas = 0;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+
+        if (rolEmpleado)
+        {
+            idResponsable = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario); //Obtiene id empleado logueado
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoListadoVisitas"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        
+        FechaInicio = DateOnly.FromDateTime(DateTime.Today);
+    }
+
+    private void SeleccionarVisita(VisitaDTO visita)
+    {
+        RegistroService.VisitaSeleccionada = visita;
+        NavigationManager.NavigateTo("/pagVisita");
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)PlantaService.ObtenerTotalVisitasPorEmpresa(ValorBusqueda, idResponsable);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListVisitas = PlantaService.BuscarPorEmpresa(ValorBusqueda, idResponsable, paginaActual, elementosPorPagina);
+    }
+
+}

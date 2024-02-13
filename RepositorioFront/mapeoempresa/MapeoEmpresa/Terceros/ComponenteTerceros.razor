@@ -1,0 +1,60 @@
+﻿@inherits ComponenteTab
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO")]
+@if (display)
+{
+    @if (Origen.Equals(ParametrosComponenteTerceros.PAGE))
+    {
+        <BodyComponenteTerceros @ref="bodyComponenteTerceros" TipoTercero="@TipoTercero" />
+    }
+    else
+    {
+        <div class="modal fade show" tabindex="-1" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog modal-dialog-scrollable modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Componente Terceros</h5>
+                        <button type="button" class="btn-close" @onclick="Dispose"></button>
+                    </div>
+                    <div class="modal-body">
+                        <BodyComponenteTerceros @ref="bodyComponenteTerceros" TipoTercero="@TipoTercero" />
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success me-2" @onclick="RetornarTercero">Seleccionar</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    }
+}
+@code {
+    public TerceroInterfazGraficaDTO TerceroSeleccionado { get; set; } = new TerceroInterfazGraficaDTO();
+    private BodyComponenteTerceros bodyComponenteTerceros;
+    [Parameter]
+    public string TipoTercero { get; set; }
+    [Parameter]
+    public string Origen { get; set; } = string.Empty;
+    [Parameter]
+    public EventCallback CargarTerceroEvent { get; set; }
+    protected override Task OnInitializedAsync()
+    {
+        if (Origen.Equals(ParametrosComponenteTerceros.PAGE))
+        {
+            display = true;
+        }
+
+        return base.OnInitializedAsync();
+    }
+
+    private void RetornarTercero()
+    {
+        TerceroSeleccionado = bodyComponenteTerceros.ObtenerTerceroSeleccionado();
+        
+        if (TerceroSeleccionado is not null)
+        {
+            TerceroSeleccionado.ClaseCss = string.Empty;
+            CargarTerceroEvent.InvokeAsync();
+            Dispose();
+        }
+    }
+
+}

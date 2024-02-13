@@ -1,0 +1,269 @@
+﻿@inject ParteService ParteService;
+@using EntidadesNegocio.EntidadesDto;
+@using EntidadesNegocio.Terceros;
+@using System.Numerics;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject RegistroEvidenciaService RegistroService;
+
+<!-- Formulario para crear el listado  -->
+
+<div class="col-lg-9 contact-form__wrapper p-4 order-lg-1 border border-3 formDesign">
+    <EditForm Model="CondicionRealDTO" OnValidSubmit="GuardarCondicionOperativaReal">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <br />
+            <h4>Registrar listado de condiciones operativas reales</h4>
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="parte">Parte: </label>
+                    <input type="text" class="form-control" id="parte" value="@ParteService.ParteDTOSeleccionada.NombreElemento" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="descripcion">Descripcion</label>
+                    <textarea class="form-control" rows="3" id="descripcion" @bind="CondicionRealDTO.descripcion" required></textarea>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 d-md-block">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </div>
+    </EditForm>
+</div>
+
+<div class="pt-4">
+    <div class="p-4 contenedor-bloque">
+        <h4>Listado de condiciones operativas reales</h4>
+        @if (ListaCondicionesRealesRegistradas == null)
+        {
+            <p>Cargando...</p>
+        }
+        else if (ListaCondicionesRealesRegistradas.Count == 0)
+        {
+            <p class="pt-3">No se han registrado condiciones reales para la parte seleccionada</p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var condicion in ListaCondicionesRealesRegistradas)
+                    {
+                        <tr>
+                            <td>@condicion.id</td>
+                            <td>@condicion.descripcion</td>
+                            <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(condicion)"><i class="oi oi-pencil"></i></button></td>
+                            <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(condicion.id)"><i class="oi oi-x"></i></button></td>
+                            <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(condicion)"><i class="oi oi-info"></i></buton></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<br />
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Desea eliminar el listado de condiciones reales con ID @ID?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarCondicionInicial>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Condicion real con ID @condicionRealDTOModal.id</strong></h5>
+
+                    <EditForm Model="condicionRealDTOModal">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label for="descripcion">Descripción: </label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="condicionRealDTOModal.descripcion"></textarea>
+                        </div>
+
+
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Editar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@condicionRealDTOModal.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="parte">Parte: </label>
+                                <input type="text" class="form-control" id="parte" value="@ParteService.ParteDTOSeleccionada.NombreElemento" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="responsable">Responsable: </label>
+                        <input type="text" class="form-control" id="responsable" value="@condicionRealDTOModal.nombreResponsable" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="visita">ID visita: </label>
+                        <input type="text" class="form-control" id="visita" value="@condicionRealDTOModal.idVisita" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@condicionRealDTOModal.descripcion" readonly />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+<ModalPersonalizado @ref="modalRegistroExitoso" />
+
+@code {
+    private ModalPersonalizado modalRegistroExitoso;
+    private ComponenteTerceros componenteTerceros;
+    private TerceroInterfazGraficaDTO empleado;
+    VisitaDTO visita = new VisitaDTO();
+
+    private long idResponsable = 0;
+    private bool rolEmpleado = false;
+
+    //DTO para capturar informacion de formulario
+    CondicionRealDTO CondicionRealDTO = new CondicionRealDTO();
+
+    List<CondicionRealDTO> ListaCondicionesRealesRegistradas;
+    CondicionRealDTO condicionRealDTOModal = new CondicionRealDTO(); //DTO para modales
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    protected async Task GuardarCondicionOperativaReal()
+    {
+        CondicionRealDTO.idResponsable = idResponsable;
+        CondicionRealDTO.idVisita = visita.id;
+        await ParteService.AdicionarCondicionReal(CondicionRealDTO);
+
+        //Limpiar form
+        CondicionRealDTO = new CondicionRealDTO();
+
+        modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+        ListaCondicionesRealesRegistradas = ParteService.ListarCondicionesReales();
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+
+        if (rolEmpleado)
+        {
+            idResponsable = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario); //Obtiene id empleado logueado
+        }
+
+        visita = RegistroService.VisitaSeleccionada;
+        ListaCondicionesRealesRegistradas = ParteService.ListarCondicionesReales();
+    }
+
+    //Listado condiciones registradas
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    protected async Task BorrarCondicionInicial()
+    {
+        await ParteService.BorrarCondicionReal(ID);
+        modalEliminar = false;
+        ListaCondicionesRealesRegistradas = ParteService.ListarCondicionesReales();
+    }
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+
+    private void AbrirModalEditar(CondicionRealDTO condicionReal)
+    {
+        modalEditar = true;
+        condicionRealDTOModal = condicionReal;
+    }
+
+    protected async Task Guardar()
+    {
+        await ParteService.EditarCondicionReal(condicionRealDTOModal);
+        modalEditar = false;
+        ListaCondicionesRealesRegistradas = ParteService.ListarCondicionesReales();
+    }
+
+    private void AbrirModalInformacion(CondicionRealDTO condicionReal)
+    {
+        modalInformacion = true;
+        condicionRealDTOModal = condicionReal;
+    }
+}

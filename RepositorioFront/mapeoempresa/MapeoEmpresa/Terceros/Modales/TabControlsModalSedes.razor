@@ -1,0 +1,137 @@
+﻿@inject SedeServices sedeService
+
+<div class="btn-group contenedor-tabs" role="group" aria-label="Basic outlined example">
+
+    <span class="btn btn-outline-secondary @cssListaSedes" @onclick="()=>EventoDeRenderizado(LISTA_SEDES)">
+        Lista de sedes
+    </span>
+    <span class="btn btn-outline-secondary @cssFormularioSedes" @onclick="()=>EventoDeRenderizado(FORMULARIO_SEDES)">Formulario Sedes</span>
+    
+</div>
+
+
+<FormularioSedesTercero CambiarEstadoInfoDetalladatEvent="CambiarEstadoInfoDetalladatEvent" PaisSede="PaisSede" @ref="formularioSedesTercero" />
+<ListaSedesTercero @ref="listaSedesTercero" />
+
+
+@code{
+    [Parameter]
+    public PaisInterfazGraficaVentaDTO PaisSede{ get; set; }
+    [Parameter]
+    public EventCallback CambiarEstadoInfoDetalladatEvent { get; set; }
+    [CascadingParameter(Name ="identificacionTercero")]
+    public long IdentificacionTercero { get; set; }
+    [CascadingParameter(Name = "AccionFormularioTercero")]
+    public string AccionFormularioTerceros { get; set; }
+    [CascadingParameter(Name = "sedesTercero")]
+    public List<SedeInterfazGraficaTerceroDTO> SedesTercero { get; set; }
+    private string componenteActual = LISTA_SEDES;
+    private FormularioSedesTercero formularioSedesTercero;
+    private ListaSedesTercero listaSedesTercero;
+    private string cssFormularioSedes = string.Empty;
+    private string cssListaSedes = CLASE_MOSTRAR_CSS;
+
+
+
+    public void EventoDeRenderizado(string siguiente)
+    {
+        if (siguiente.Equals(LISTA_SEDES) && formularioSedesTercero.FormularioValido && AccionFormularioTerceros.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO))
+        {
+            formularioSedesTercero.LimpiarDatosSede();
+            listaSedesTercero.SedesTercero.Clear();
+            var sedesNuevas = sedeService.ObtenerSedesDeTercero(IdentificacionTercero);
+            sedesNuevas.ForEach(sede =>
+            {
+                listaSedesTercero.SedesTercero.Add(sede);
+
+            });
+            formularioSedesTercero.FormularioValido = false;
+        }
+
+        if (siguiente.Equals(LISTA_SEDES) && formularioSedesTercero.AccionFormulario.Equals(ParametrosComponenteTerceros.ACTUALIZAR_SEDE) && formularioSedesTercero.FormularioValido is false)
+        {
+            formularioSedesTercero.LimpiarDatosSede();
+
+        }
+
+
+
+        if (siguiente.Equals(FORMULARIO_SEDES) && listaSedesTercero.SedeSeleccionada is null)
+        {
+            formularioSedesTercero.AccionFormulario = ParametrosComponenteTerceros.NUEVA_SEDE;
+            formularioSedesTercero.InicializarUbicacion();
+        }
+
+        if (siguiente.Equals(FORMULARIO_SEDES) && listaSedesTercero.SedeSeleccionada is not null)
+        {
+            formularioSedesTercero.AccionFormulario = ParametrosComponenteTerceros.ACTUALIZAR_SEDE;
+            listaSedesTercero.SedeSeleccionada.ClaseCss = string.Empty;
+            formularioSedesTercero.Sede = MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(listaSedesTercero.SedeSeleccionada);
+            listaSedesTercero.SedeSeleccionada = null;
+        }   
+
+
+
+        DisposeComponente();
+        componenteActual = siguiente;
+        MostrarComponente();
+        StateHasChanged();
+
+    }
+
+    private void MostrarComponente()
+    {
+        switch (componenteActual)
+        {
+            case FORMULARIO_SEDES:
+                cssFormularioSedes = CLASE_MOSTRAR_CSS;
+                formularioSedesTercero.Mostrar();
+                break;
+            case LISTA_SEDES:
+                cssListaSedes = CLASE_MOSTRAR_CSS;
+                listaSedesTercero.Mostrar();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    private void DisposeComponente()
+    {
+        switch (componenteActual)
+        {
+            case FORMULARIO_SEDES:
+                cssFormularioSedes = string.Empty;
+                formularioSedesTercero.Dispose();
+                break;
+            case LISTA_SEDES:
+                cssListaSedes = string.Empty;
+                listaSedesTercero.Dispose();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    public void InicializarUbicacion(PaisInterfazGraficaVentaDTO paisSede)
+    {
+        formularioSedesTercero.InicializarUbicacion();
+    }
+
+    public SedeInterfazGraficaTerceroDTO ObtenerSedeFormulario()
+    {
+
+        return MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(formularioSedesTercero.Sede);
+    }
+
+
+    private const string FORMULARIO_SEDES = "FORMULARIO_SEDES";
+    private const string LISTA_SEDES = "LISTA_SEDES";
+
+    private const string CLASE_MOSTRAR_CSS = "mostrar-tab";
+
+}

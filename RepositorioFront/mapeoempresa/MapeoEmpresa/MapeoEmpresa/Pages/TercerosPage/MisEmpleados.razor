@@ -1,0 +1,4 @@
+﻿@page "/mis_empleados"
+@attribute [Authorize(Roles = "EMPRESA", Policy = "PoliticaFiltradoEmpleados")]
+
+<ComponenteTerceros Origen="@(ParametrosComponenteTerceros.PAGE)" TipoTercero="@ParametrosComponenteTerceros.EMPLEADO" />

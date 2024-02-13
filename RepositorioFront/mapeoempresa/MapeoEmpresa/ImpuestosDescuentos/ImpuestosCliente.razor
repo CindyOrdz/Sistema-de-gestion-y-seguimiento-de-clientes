@@ -1,0 +1,296 @@
+﻿@inject ImpuestoService impuestoService
+@inject ClienteService clienteService
+@inject UsuarioService usuarioService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize (Roles = "EMPRESA,EMPLEADO")]
+
+
+<h1>Componente de impuestos</h1>
+
+<div class="row">
+    <div class="col-md-9 mt-3">
+        <div class="input-group">
+            <label class="input-group-text">Cliente</label>
+            <InputNumber class="form-control inp-cliente" id="id-cliente" @bind-Value="identificacionCliente" disabled />
+            <InputText class="form-control" disabled @bind-Value="nombreCliente" />
+            <span class="btn btn-outline-dark" @onclick="MostrarComponenteTerceros"><i class="fa-solid fa-user"></i></span>
+        </div>
+    </div>
+</div>
+
+<EditForm Model="opcionesImpuestosCliente" OnValidSubmit="ConfigurarImpuestosCliente" OnInvalidSubmit="ConfiguracionInvalida">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="row mt-3">
+        @if (!opcionesImpuestosCliente.ConMontoPersonalizado)
+        {
+            
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-text">
+                        <InputCheckbox @bind-Value="opcionesImpuestosCliente.ConMontoDeLEY" class="form-check-input mt-0" id="con_monto_ley" />
+                    </div>
+                    <label class="form-control" for="con_monto_ley">Con monto de ley</label>
+                    <ValidationMessage For="()=>opcionesImpuestosCliente.ConMontoDeLEY"></ValidationMessage>
+                </div>
+            </div>
+        }
+
+        @if (!opcionesImpuestosCliente.ConMontoDeLEY)
+        {
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-text">
+                        <InputCheckbox @bind-Value="opcionesImpuestosCliente.ConMontoPersonalizado" class="form-check-input mt-0" id="con_monto_pers" />
+                    </div>
+                    <label class="form-control" for="con_monto_pers">Con monto personalizado</label>
+                </div>
+            </div>
+
+            @if (opcionesImpuestosCliente.ConMontoPersonalizado)
+            {
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label class="input-group-text" for="valor_monto_pers">Valor</label>
+                        <InputNumber @bind-Value="opcionesImpuestosCliente.MontoPersonalizado" class="form-control " id="valor_monto_pers" />
+                        <ValidationMessage For="()=> opcionesImpuestosCliente.MontoPersonalizado" class="font-error"></ValidationMessage>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+
+    <div class="row mt-5">
+        @for (int i = 0; i < impuestosParaCliente.Count; i++)
+        {
+            var impuesto = impuestosParaCliente[i];
+            <div class="col-md-4">
+
+                <div class="input-group">
+                    <div class="input-group-text">
+                        @if (clienteDTO.Impuestos.Any(imp => imp.Id == impuesto.Id && imp.Vigente.Equals("S") && imp.ImpuestoClienteExiste))
+                        {
+                           
+                            <input type="checkbox" checked @onclick="()=>CargarImpuestosCliente(impuesto)" class="form-check-input mt-0" id="@($"impuesto_{i}")">
+
+                        }
+                        else
+                        {
+                            <input type="checkbox" checked="@clienteDTO.Impuestos.Any(imp => imp.Id == impuesto.Id && imp.NuevoImpuesto && imp.Vigente.Equals("S"))" @onclick="()=>CargarImpuestosCliente(impuesto)" class="form-check-input mt-0" id="@($"impuesto_{i}")">
+                        }
+                    </div>
+                    <label for="@($"impuesto_{i}")" class="form-control">@impuesto.Nombre</label>
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+    <button type="submit" class="btn btn-success mt-4">Configurar impuestos</button>
+
+</EditForm>
+
+<button @onclick="Verificar" class="mt-5">verificar</button>
+
+<ComponenteTerceros TipoTercero="@ParametrosComponenteTerceros.CLIENTE" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" CargarTerceroEvent="CargarClienteDesdeComponenteTerceros" @ref="componenteTerceros" />
+<ModalConfirmacion @ref="modalConfirmacion"/>
+
+@code{
+    private List<ImpuestoInterfazGraficaVentaDTO> impuestosParaCliente = new List<ImpuestoInterfazGraficaVentaDTO>();
+    private ComponenteTerceros componenteTerceros;
+    private ModalConfirmacion modalConfirmacion;
+    private TerceroInterfazGraficaDTO clienteDTO = new TerceroInterfazGraficaDTO();
+    private OpcionesImpuestosCliente opcionesImpuestosCliente = new OpcionesImpuestosCliente();
+    private string nombreCliente = string.Empty;
+    private long identificacionEmpresa = 0;
+    private long identificacionCliente;
+
+    protected override Task OnInitializedAsync()
+    {
+
+         var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        var rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        var rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        impuestosParaCliente = impuestoService.ObtenerImpuestosParaClientes();
+        clienteDTO.Impuestos = new List<ImpuestoInterfazGraficaVentaDTO>();
+
+        return base.OnInitializedAsync();
+    }
+
+
+    private void MostrarComponenteTerceros()
+    {
+        componenteTerceros.Mostrar();
+
+    }
+
+    private void CargarClienteDesdeComponenteTerceros()
+    {
+
+        clienteDTO = componenteTerceros.TerceroSeleccionado;
+        AsignarCamposCliente();
+
+
+        if (clienteDTO is not null)
+        {
+            nombreCliente = $"{clienteDTO.Nombre1} {clienteDTO.Nombre2} {clienteDTO.Apellido1} {clienteDTO.Apellido2} {clienteDTO.RazonSocial}";
+            identificacionCliente = clienteDTO.Identificacion;
+
+        }
+    }
+
+
+    private void CargarImpuestosCliente(ImpuestoInterfazGraficaVentaDTO impuesto)
+    {
+        bool impuestoContenido = clienteDTO.Impuestos.Any(imp => imp.Id == impuesto.Id);
+        if (impuestoContenido)
+        {
+            if (clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).ImpuestoClienteExiste)
+            {
+                if (clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).Vigente.Equals("S"))
+                {
+                    clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).Vigente = "N";
+                    clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).CambiarVigencia = true;
+                }
+                else if (clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).Vigente.Equals("N"))
+                {
+                    clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).Vigente = "S";
+                    clienteDTO.Impuestos.FirstOrDefault(imp => imp.Id == impuesto.Id).CambiarVigencia = true;
+                }
+            }
+            else
+            {
+                clienteDTO.Impuestos.Remove(impuesto);
+            }
+
+        }
+        else
+        {
+            impuesto.Vigente = "S";
+            impuesto.NuevoImpuesto = true;
+            clienteDTO.Impuestos.Add(impuesto);
+
+        }
+
+    }
+
+    private void ConfigurarImpuestosCliente()
+    {
+
+        if (clienteDTO.Impuestos.Count == 0)
+        {
+            modalConfirmacion.Mensaje = "Debe seleccionar por lo menos un impuesto";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(nombreCliente))
+        {
+            modalConfirmacion.Mensaje = "Debe seleccionar el cliente";
+            modalConfirmacion.Mostrar();
+            return;
+
+        }
+
+        if (opcionesImpuestosCliente.ConMontoDeLEY)
+        {
+            clienteDTO.ConMontoDeLey = "S";
+            clienteDTO.MontoPersonalizado = 0;
+            opcionesImpuestosCliente.MontoPersonalizado = 0;
+
+        }
+        else
+        {
+            clienteDTO.ConMontoDeLey = "N";
+
+        }
+
+        if (opcionesImpuestosCliente.ConMontoPersonalizado)
+        {
+            clienteDTO.ConMontoPersonalizado = "S";
+
+        }
+        else
+        {
+            clienteDTO.ConMontoPersonalizado = "N";
+
+        }
+
+        clienteDTO.MontoPersonalizado = opcionesImpuestosCliente.MontoPersonalizado;
+
+        
+
+        bool resultado = impuestoService.ConfigurarImpuestosDelCliente(identificacionEmpresa, clienteDTO);
+        if (resultado)
+        {
+            modalConfirmacion.Mensaje = "Configuracion de impuestos exitosa";
+            modalConfirmacion.Mostrar();
+            clienteDTO = clienteService.FiltrarClientePorIdentificacion(identificacionCliente, identificacionEmpresa);
+            AsignarCamposCliente();
+
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Configuracion de impuestos fallida";
+            modalConfirmacion.Mostrar();
+
+        }
+
+    }
+
+    private void AsignarCamposCliente()
+    {
+        clienteDTO.Impuestos = impuestoService.ObtenerImpuestosDelCliente(clienteDTO.Identificacion, identificacionEmpresa);
+        if (clienteDTO.ConMontoDeLey.Equals("S"))
+        {
+            opcionesImpuestosCliente.ConMontoDeLEY = true;
+        }
+        else if (clienteDTO.ConMontoDeLey.Equals("N"))
+        {
+            opcionesImpuestosCliente.ConMontoDeLEY = false;
+
+        }
+
+        if (clienteDTO.ConMontoPersonalizado.Equals("S"))
+        {
+
+            opcionesImpuestosCliente.ConMontoPersonalizado = true;
+            opcionesImpuestosCliente.MontoPersonalizado = clienteDTO.MontoPersonalizado;
+        }
+        else if (clienteDTO.ConMontoPersonalizado.Equals("N"))
+        {
+            opcionesImpuestosCliente.ConMontoPersonalizado = false;
+        }
+    }
+
+
+    private void ConfiguracionInvalida()
+    {
+
+
+    }
+
+    private void Verificar()
+    {
+        var tercero = clienteDTO;
+        var imp = clienteDTO.Impuestos;
+        var op = opcionesImpuestosCliente;
+    }
+
+
+    private const double SIN_MONTO_PERSONALIZADO = 0;
+}

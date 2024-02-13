@@ -1,0 +1,236 @@
+﻿@inject UsuarioService usuarioService
+
+<h3>Configuracion de permisos para empleados</h3>
+
+<div class="row">
+    <div class="col-md-9 mt-3">
+        <div class="input-group">
+            <label class="input-group-text">Empleado</label>
+            <InputNumber class="form-control inp-cliente" id="id-cliente" @bind-Value="identificacionEmpresa" disabled />
+            <InputText class="form-control" disabled @bind-Value="nombreEmpleado" />
+            <span class="btn btn-outline-dark" @onclick="MostrarComponenteTerceros"><i class="fa-solid fa-user"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mt-3">
+        <div class="input-group">
+            <label class="input-group-text">Usuario asignado:</label>
+            <InputText class="form-control" disabled @bind-Value="usuarioEmpleadoDTO.Email" />
+        </div>
+    </div>
+</div>
+
+
+@if (!string.IsNullOrWhiteSpace(usuarioEmpleadoDTO.Email))
+{
+    <div class="shadow-lg p-3 rounded mt-5 mb-5">
+        <h3 class="mt-3 text-center">Politicas de acceso de usuario</h3>
+        <div class="row mt-3">
+            @for (int i = 0; i < PoliticasParaUsuarioEmpleado.Count; i++)
+            {
+                var politica = PoliticasParaUsuarioEmpleado[i];
+                <div class="col-md-6 mt-3">
+
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            @if (PoliticasDelUsuarioEmpleado.Any(pol => pol.Id == politica.Id && pol.PoliticaExistente && pol.Seleccionada))
+                            {
+
+                                <input type="checkbox" checked @onclick="()=>CargarPoliticaDeUsuario(politica)" class="form-check-input mt-0" id="@($"politica_{i}")" />
+
+                            }
+                            else
+                            {
+                                <input type="checkbox" checked="@PoliticasDelUsuarioEmpleado.Any(pol => pol.Id == politica.Id && pol.PoliticaNueva && pol.Seleccionada)" @onclick="()=>CargarPoliticaDeUsuario(politica)" class="form-check-input mt-0" id="@($"politica_{i}")" />
+                            }
+                        </div>
+                        <label for="@($"politica_{i}")" class="form-control">@politica.Nombre</label>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+        <button class="btn btn-success mt-4" @onclick="ConfigurarPoliticas">Congifurar politicas</button>
+        @* <button class="mt-3 me-5" @onclick="Verificar">Verificar</button> *@
+    </div>
+
+}
+
+
+@if(empleadoDTO is not null && string.IsNullOrWhiteSpace(usuarioEmpleadoDTO.Email))
+{
+    <div class="shadow-lg p-3 rounded mt-5 w-50">
+        <h3 class="mt-3 text-center">Registro de usuarios</h3>
+
+        <EditForm Model="usuarioNuevo" OnValidSubmit="RegistrarUsuario">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="row mt-5">
+                <label class="col-xs-12 col-sm-4 col-md-3  col-form-label mt-3" for="usuario">Usuario: </label>
+                <div class="col-xs-12 col-sm-8  col-md-9 mt-3">
+                    <InputText @bind-Value="usuarioNuevo.Email" class="form-control" id="usuario" />
+                    <ValidationMessage class="font-error font-txt" For="()=> usuarioNuevo.Email" />
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-xs-12 col-sm-4 col-md-3  col-form-label mt-3" for="passwd">Contraseña: </label>
+                <div class="col-xs-12 col-sm-8  col-md-9 mt-3">
+                    <input type="password" @bind-value="usuarioNuevo.Password" class="form-control" id="passwd" />
+                    <ValidationMessage class="font-error font-txt" For="()=> usuarioNuevo.Password" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Registrar</button>
+        </EditForm>
+    </div>
+}
+
+
+
+
+<ComponenteTerceros TipoTercero="@ParametrosComponenteTerceros.EMPLEADO" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" CargarTerceroEvent="CargarEmpleadoDesdeComponenteTerceros" @ref="componenteTerceros" />
+<ModalConfirmacion @ref="modalConfirmacion" />
+
+@code {
+    private string nombreEmpleado = string.Empty;
+    private long identificacionEmpresa = 0;
+    private ComponenteTerceros? componenteTerceros;
+    private ModalConfirmacion? modalConfirmacion;
+    private TerceroInterfazGraficaDTO empleadoDTO;
+    private DetalleUsuarioDTO usuarioEmpleadoDTO = new DetalleUsuarioDTO();
+    private UserDTO usuarioNuevo = new UserDTO();
+    private List<PoliticasAccesoDTO> PoliticasParaUsuarioEmpleado = new List<PoliticasAccesoDTO>();
+    private List<PoliticasAccesoDTO> PoliticasDelUsuarioEmpleado = new List<PoliticasAccesoDTO>();
+
+
+    protected override Task OnInitializedAsync()
+    {
+
+        PoliticasParaUsuarioEmpleado = usuarioService.ObtenerPoliticasDeAccesoParaUsuarioEmpleado();
+        return base.OnInitializedAsync();
+    }
+
+    private void MostrarComponenteTerceros()
+    {
+        if (componenteTerceros is not null)
+        {
+            componenteTerceros.Mostrar();
+
+        }
+
+    }
+
+    private void CargarEmpleadoDesdeComponenteTerceros()
+    {
+
+        empleadoDTO = componenteTerceros.TerceroSeleccionado;
+        identificacionEmpresa = empleadoDTO.Identificacion;
+        nombreEmpleado = $"{empleadoDTO.Nombre1} {empleadoDTO.Nombre2} {empleadoDTO.Apellido1} {empleadoDTO.Apellido2}";
+        usuarioEmpleadoDTO = usuarioService.ObtenerUsuarioPorIdentificacionDelTercero(empleadoDTO.Identificacion);
+        PoliticasDelUsuarioEmpleado = usuarioService.ObtenerPoliticasAccesoDeUsuarioParaConfiguracion(usuarioEmpleadoDTO.Email);
+    }
+
+    public void CargarPoliticaDeUsuario(PoliticasAccesoDTO politicaUsuario)
+    {
+        bool politicaContenida = PoliticasDelUsuarioEmpleado.Any(pol => pol.Id == politicaUsuario.Id);
+        if (politicaContenida)
+        {
+            if (PoliticasDelUsuarioEmpleado.FirstOrDefault(pol => pol.Id == politicaUsuario.Id).PoliticaExistente)
+            {
+                if (PoliticasDelUsuarioEmpleado.FirstOrDefault(pol => pol.Id == politicaUsuario.Id).Seleccionada)
+                {
+                    PoliticasDelUsuarioEmpleado.FirstOrDefault(pol => pol.Id == politicaUsuario.Id).Seleccionada = false;
+
+                }
+                else if (PoliticasDelUsuarioEmpleado.FirstOrDefault(pol => pol.Id == politicaUsuario.Id).Seleccionada is false)
+                {
+                    PoliticasDelUsuarioEmpleado.FirstOrDefault(pol => pol.Id == politicaUsuario.Id).Seleccionada = true;
+                }
+            }
+            else
+            {
+                PoliticasDelUsuarioEmpleado.Remove(politicaUsuario);
+            }
+
+        }
+        else
+        {
+            politicaUsuario.Seleccionada = true;
+            politicaUsuario.PoliticaNueva = true;
+            PoliticasDelUsuarioEmpleado.Add(politicaUsuario);
+
+        }
+    }
+
+    private void ConfigurarPoliticas()
+    {
+
+        var politicasAconfigurar = PoliticasDelUsuarioEmpleado.Where(pol => (pol.PoliticaNueva && pol.Seleccionada) || (pol.PoliticaExistente && !pol.Seleccionada)).ToList().Count;
+
+        if (PoliticasParaUsuarioEmpleado.Count == PoliticasDelUsuarioEmpleado.Count && politicasAconfigurar == 0)
+        {
+            modalConfirmacion.Mensaje = "Se han seleccionado todas las politicas de acceso";
+            modalConfirmacion.Mostrar();
+            return;
+
+        }
+
+        if (politicasAconfigurar == 0)
+        {
+            modalConfirmacion.Mensaje = "Debe seleccionar al menos una politica de acceso";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+
+
+
+
+        var resultado = usuarioService.ConfigurarPoliticasDeUsuario(usuarioEmpleadoDTO, PoliticasDelUsuarioEmpleado);
+        if (resultado)
+        {
+            modalConfirmacion.Mensaje = "Configuracion de politicas de acceso exitosa";
+            modalConfirmacion.Mostrar();
+            PoliticasDelUsuarioEmpleado = usuarioService.ObtenerPoliticasAccesoDeUsuarioParaConfiguracion(usuarioEmpleadoDTO.Email);
+
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Configuracion de politicas de acceso fallida";
+            modalConfirmacion.Mostrar();
+        }
+
+    }
+
+
+
+
+    private void RegistrarUsuario()
+    {
+        var resultado = usuarioService.InsertarUsuario(usuarioNuevo, empleadoDTO.Identificacion, 3);
+
+        if (resultado)
+        {
+            modalConfirmacion.Mensaje = "se ha insertado correctamente el usuario";
+            modalConfirmacion.Mostrar();
+            usuarioEmpleadoDTO = usuarioService.ObtenerUsuarioPorIdentificacionDelTercero(empleadoDTO.Identificacion);
+
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Inserción fallida del usuario";
+            modalConfirmacion.Mostrar();
+
+        }
+
+    }
+
+    private void Verificar()
+    {
+        var polisUsuario = PoliticasDelUsuarioEmpleado;
+
+
+    }
+}

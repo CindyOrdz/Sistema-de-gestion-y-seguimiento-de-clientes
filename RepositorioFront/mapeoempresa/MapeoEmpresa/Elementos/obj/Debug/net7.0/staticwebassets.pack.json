@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.Inventario.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.Inventario.props",
+      "PackagePath": "build\\Inventario.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.Inventario.props",
+      "PackagePath": "buildMultiTargeting\\Inventario.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.Inventario.props",
+      "PackagePath": "buildTransitive\\Inventario.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "8EDEZ0+VjrhT1sePgS5CKg0Tko5mcGeV8kyeVC59rN1aYM+uJoJdV3hP4ArfIP5Jeqc+DtigEItvcuFFWOh2Dw==",
+  "success": true,
+  "projectFilePath": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ServiciosComponentes\\ServiciosComponentes.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lorena\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

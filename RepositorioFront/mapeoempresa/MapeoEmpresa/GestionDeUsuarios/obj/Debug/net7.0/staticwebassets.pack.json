@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.GestionDeUsuarios.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.GestionDeUsuarios.props",
+      "PackagePath": "build\\GestionDeUsuarios.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.GestionDeUsuarios.props",
+      "PackagePath": "buildMultiTargeting\\GestionDeUsuarios.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.GestionDeUsuarios.props",
+      "PackagePath": "buildTransitive\\GestionDeUsuarios.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

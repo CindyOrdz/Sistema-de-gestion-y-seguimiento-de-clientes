@@ -1,0 +1,64 @@
+﻿@inherits ComponenteTab
+
+@if (display)
+{
+    <div class="modal fade show" tabindex="-1" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulario Ciudad</h5>
+                    <button type="button" class="btn-close" @onclick="Dispose"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="Ciudad" OnValidSubmit="GuardarCiudad" OnInvalidSubmit="InvalidarFormulario">
+                        <DataAnnotationsValidator/>
+                        <div class="row">
+                            <div class="col">
+                                <label class="label-info-venta font-txt" for="codigo_ciudad">Código Ciudad: </label>
+                                <InputText @bind-Value="Ciudad.Codigo" class="font-txt" id="codigo_ciudad"></InputText>
+                            </div>
+                           
+                            <div class="col">
+                                <label class="label-info-venta font-txt" for="nombre_ciudad">Nombre Ciudad: </label>
+                                <InputText @bind-Value="Ciudad.Nombre" class="font-txt" id="nombre_ciudad"></InputText>
+                            </div>
+                            
+                        </div>
+                        <div class="row mt-1 mb-2">
+                            <div class="col">
+                                <ValidationMessage For="()=>Ciudad.Codigo" class="font-error"></ValidationMessage>
+                            </div>
+                            <div class="col">
+                                <ValidationMessage For="()=>Ciudad.Nombre" class="font-error"></ValidationMessage>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-info">Guardar</button>
+                        </div>
+                        
+                    </EditForm>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+}
+
+@code{
+    public CiudadInterfazGraficaVentaDTO Ciudad { get; set; } = new CiudadInterfazGraficaVentaDTO();
+    public bool FormularioValido { get; set; } = false;
+    [Parameter]
+    public EventCallback AgregarCiudadEvent { get; set; }
+
+    public void GuardarCiudad()
+    {
+        FormularioValido = true;
+        Dispose();
+        AgregarCiudadEvent.InvokeAsync();
+    }
+
+    public void InvalidarFormulario()
+    {
+        FormularioValido = false;
+    }
+}

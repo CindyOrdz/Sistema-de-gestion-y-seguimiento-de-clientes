@@ -1,0 +1,156 @@
+﻿<div class="btn-group contenedor-tabs">
+    <span class="btn btn-outline-secondary @cssDetalleVenta" @onclick="(()=>{EventoDeRenderizado(DETALLE_VENTA);})">Detalle de la Venta</span>
+    <AuthorizeView Roles="EMPLEADO" Policy="PoliticaConsultaArticulosVendidosCliente">
+        <Authorized>
+            <span class="btn btn-outline-secondary @cssArticulosVendidosCliente" @onclick="(()=>{EventoDeRenderizado(ARTICULOS_VENDIDOS_CLIENTE);})">Articulos vendidos al cliente</span>
+        </Authorized> 
+    </AuthorizeView>
+    <AuthorizeView Roles="EMPLEADO" Policy="PoliticaConsultaHistorialVentasCliente">
+        <Authorized>
+            <span class="btn btn-outline-secondary @cssHistorialCliente" @onclick="(()=>{EventoDeRenderizado(HISTORIAL_CLIENTE);})">Historial Cliente</span>
+        </Authorized>
+    </AuthorizeView>
+
+    <AuthorizeView Roles="EMPLEADO" Policy="PoliticaConsultaHistorialVentasArticulo">
+        <Authorized>
+            <span class="btn btn-outline-secondary @cssHistorialVentasArticulo" @onclick="(()=>{EventoDeRenderizado(HISTORIAL_VENTAS_ARTICULO);})">Historial de ventas por articulo</span>
+        </Authorized>
+    </AuthorizeView>
+    
+    
+    
+</div>
+
+
+
+<DetalleVenta @ref="detalleVenta" />
+<ArticulosVendidosCliente @ref="articulosVendidosCliente" />
+<HistorialCliente @ref="historialCliente" />
+<HistorialVentasArticulo @ref="historialVentasArticulo" />
+<InformeCompras @ref="informeCompras"/>
+
+
+
+@code {
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    private string componenteActual = DETALLE_VENTA;
+    private DetalleVenta? detalleVenta;
+    private ArticulosVendidosCliente? articulosVendidosCliente;
+    private HistorialCliente? historialCliente;
+    private HistorialVentasArticulo? historialVentasArticulo;
+    private InformeCompras? informeCompras;
+    private string cssDetalleVenta = CLASE_MOSTRAR_CSS;
+    private string cssArticulosVendidosCliente = string.Empty;
+    private string cssHistorialCliente = string.Empty;
+    private string cssHistorialVentasArticulo = string.Empty;
+
+
+    private void EventoDeRenderizado(string siguiente)
+    {
+
+        if (siguiente.Equals(ARTICULOS_VENDIDOS_CLIENTE))
+        {
+            articulosVendidosCliente.InicializarDatosParaPaginado();    
+
+        }
+
+        if (siguiente.Equals(HISTORIAL_CLIENTE))
+        {
+            historialCliente.InicializarDatosParaPaginado();
+
+        }
+
+        if (siguiente.Equals(HISTORIAL_VENTAS_ARTICULO))
+        {
+            if (detalleVenta.SeleccionDetalle)
+            {
+                historialVentasArticulo.CodigoElemento = detalleVenta.ElementoFijado.CodigoArticulo;
+                historialVentasArticulo.ElementoSeleccionado = true;
+                historialVentasArticulo.InicializarDatosParaPaginado();
+            }
+
+        }
+
+        DisposeComponente();
+        componenteActual = siguiente;
+        MostrarComponente();
+
+    }
+
+
+    private void MostrarComponente()
+    {
+        switch (componenteActual)
+        {
+            case HISTORIAL_CLIENTE:
+                cssHistorialCliente = CLASE_MOSTRAR_CSS;
+                historialCliente.Mostrar();
+                break;
+            case ARTICULOS_VENDIDOS_CLIENTE:
+                cssArticulosVendidosCliente = CLASE_MOSTRAR_CSS;
+                articulosVendidosCliente.Mostrar();
+                break;
+            case HISTORIAL_VENTAS_ARTICULO:
+                cssHistorialVentasArticulo = CLASE_MOSTRAR_CSS;
+                historialVentasArticulo.Mostrar();
+                break;
+            case DETALLE_VENTA:
+                cssDetalleVenta = CLASE_MOSTRAR_CSS;
+                detalleVenta.Mostrar();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void DisposeComponente()
+    {
+        switch (componenteActual)
+        {
+            case HISTORIAL_CLIENTE:
+                cssHistorialCliente = string.Empty;
+                historialCliente.Dispose();
+                break;
+            case ARTICULOS_VENDIDOS_CLIENTE:
+                cssArticulosVendidosCliente = string.Empty;
+                articulosVendidosCliente.Dispose();
+                break;
+            case HISTORIAL_VENTAS_ARTICULO:
+                cssHistorialVentasArticulo = string.Empty;
+                historialVentasArticulo.Dispose();
+                break;
+            case DETALLE_VENTA:
+                cssDetalleVenta = string.Empty;
+                detalleVenta.Dispose();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    public void InicializarDetallesImpuestosDescuentosYTotalesVenta()
+    {
+        detalleVenta.InicializarDetallesImpuestosDescuentosYTotalesVenta();
+
+    }
+
+    public void InicializarDatosPaginado()
+    {
+        articulosVendidosCliente.InicializarDatosParaPaginado();
+        historialCliente.InicializarDatosParaPaginado();
+
+    }
+
+
+    private const string DETALLE_VENTA = "DetalleVenta";
+    private const string ARTICULOS_VENDIDOS_CLIENTE = "ArticulosVendidosCliente";
+    private const string HISTORIAL_CLIENTE = "HistorialCliente";
+    private const string HISTORIAL_VENTAS_ARTICULO = "HistorialVentasArticulo";
+
+    private const string CLASE_MOSTRAR_CSS = "mostrar-tab";
+
+}

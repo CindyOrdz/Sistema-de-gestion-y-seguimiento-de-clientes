@@ -1,0 +1,48 @@
+﻿@inherits ComponenteTab
+@if (display)
+{
+    <div class="modal fade show" tabindex="@TabIndex" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulario Sede</h5>
+                    <button type="button" class="btn-close" @onclick="CerrarModal"></button>
+                </div>
+                <div class="modal-body">
+                    <TabControlsModalSedes CambiarEstadoInfoDetalladatEvent="CambiarEstadoInfoDetalladatEvent" PaisSede="Pais" @ref="tabControlsModalSedes" />
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+    
+}
+@code {
+    [Parameter]
+    public EventCallback CambiarEstadoInfoDetalladatEvent { get; set; }
+    public PaisInterfazGraficaVentaDTO Pais { get; set; }
+    public int TabIndex { get; set; } = -1;
+    private TabControlsModalSedes tabControlsModalSedes;
+    
+
+
+
+
+
+    public SedeInterfazGraficaTerceroDTO ObtenerSedeFormulario()
+    {
+
+        return tabControlsModalSedes.ObtenerSedeFormulario();
+    }
+
+    private void CerrarModal()
+    {
+            Dispose();
+    }
+
+    
+
+    
+
+}

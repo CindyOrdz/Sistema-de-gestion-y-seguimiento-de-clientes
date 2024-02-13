@@ -1,0 +1,304 @@
+﻿@page "/mapadeprocesos"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaVerMapaProcesos")]
+
+@using Blazorise.Icons.FontAwesome
+@using Blazorise.TreeView;
+@inject SedeService SedeService;
+@inject PlantaService PlantaService;
+@inject AreaService AreaService;
+@inject ComponenteService ComponenteService;
+@inject EquipoService EquipoService;
+@inject ParteService ParteService;
+@inject CondicionOperativaInicialService CondicionInicialService;
+@inject MapaProcesosService MapaProcesosService;
+@inject NavigationManager NavigationManager
+@using EntidadesNegocio.EntidadesDto;
+@using System.Numerics;
+@inject IJSRuntime jsRuntime
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+
+
+<h1><b>Mapa de procesos</b></h1>
+<div class="col-lg-9 contact-form__wrapper">
+    <div class="row">
+        <div>
+            <p>A continuación digite el NIT de la empresa que desea consultar</p>
+            <div class="input-group mb-3">
+                <input type="search" class="form-control custom-input" id="busqueda" @bind="IdBusqueda" placeholder="Búsqueda por NIT">
+                <button class="btn btn-sm btn-secondary" type="button" @onclick="() => BuscarEmpresa(IdBusqueda)">
+                    <i class="oi oi-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        @if (AlertaBusqueda)
+        {
+            <div class="alert alert-danger" role="alert">
+                <strong>Error: </strong> Por favor ingresa un NIT válido.
+            </div>
+        }
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Informacion encontrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @if (empresa != null)
+                        {
+                            <strong>ID </strong> @empresa.Identificacion <br />
+                            <strong>Razón Social </strong> @empresa.RazonSocial <br />
+                            <strong>Dirección </strong> @empresa.Direccion <br />
+                            <strong>Telefono </strong> @empresa.Telefono <br />
+                        }
+                        else
+                        {
+                            <p>@Mensaje</p>
+                        }
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="col-lg-11">
+    <h5><b>Estructura de la empresa seleccionada</b></h5>
+    <br>
+    <TreeView Nodes="Items"
+              GetChildNodes="@(item => item.Hijos)"
+              HasChildNodes="@(item => item.Hijos?.Any() == true)">
+        <NodeContent>
+            <Icon Name="@context.Icono" @onclick="() => Redireccion(context)" class="node-icon" />
+            <a class="node-text" @onclick="() => Redireccion(context)">@context.Nombre</a>
+            <Blazorise.BarDropdownDivider></Blazorise.BarDropdownDivider>
+        </NodeContent>
+    </TreeView>
+
+</div>
+
+
+@code {
+
+    List<SedeInterfazGraficaTerceroDTO> ListSedes { get; set; }
+    List<PlantaEmpresaClienteDTO> ListPlantas { get; set; }
+
+    IEnumerable<Item> Items;
+    Item nodoSeleccionado;
+
+    TerceroInterfazGraficaDTO empresa;
+    private string IdBusqueda;
+    private bool AlertaBusqueda = false;
+    private String Mensaje = "Realice una búsqueda para ver la información";
+    
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    protected async Task BuscarEmpresa(string id)
+    {
+        if (BigInteger.TryParse(id, out BigInteger idFinal))
+        {
+            AlertaBusqueda = false;
+            empresa = await MapaProcesosService.BuscarEmpresa(idFinal, identificacionEmpresa);
+            if (empresa != null)
+            {
+                // Almacenar el NIT en sessionStorage
+                await jsRuntime.InvokeVoidAsync("sessionStorage.setItem", "nitEmpresa", id);
+
+                await CargarArbol();
+            }
+            else
+            {
+                Mensaje = "No se ha encontrado información, intente nuevamente";
+                Items = null; //Limpia el arbol en caso de que este el de una busqueda anterior
+            }
+        }
+        else
+        {
+            AlertaBusqueda = true;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        // Recupera el NIT almacenado desde sessionStorage
+        var nitAlmacenado = await jsRuntime.InvokeAsync<string>("sessionStorage.getItem", "nitEmpresa");
+
+        if (!string.IsNullOrWhiteSpace(nitAlmacenado))
+        {
+            IdBusqueda = nitAlmacenado;
+            await BuscarEmpresa(nitAlmacenado);
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+
+    public class Item
+    {
+        public string Nombre { get; set; }
+        public string Icono { get; set; }
+        public object Objeto { get; set; }
+        public IEnumerable<Item> Hijos { get; set; }
+    }
+
+    protected async Task CargarArbol()
+    {
+        ListSedes = await MapaProcesosService.ListarSedes(empresa.Identificacion);
+
+        var items = new List<Item>();
+
+        foreach (var sede in ListSedes)
+        {
+            ListPlantas = await MapaProcesosService.ListarPlantas(sede.Id);
+            var plantaNodes = new List<Item>();
+
+            foreach (var planta in ListPlantas)
+            {
+                var areas = await MapaProcesosService.ListarAreas(planta.id);
+                var areaNodes = new List<Item>();
+
+                foreach (var area in areas)
+                {
+                    var components = await MapaProcesosService.ListarComponentes(area.id);
+                    var componentNodes = new List<Item>();
+
+                    foreach (var component in components)
+                    {
+                        var equipos = await MapaProcesosService.ListarEquipos(component.id);
+                        var equipoNodes = new List<Item>();
+
+                        foreach (var equipo in equipos)
+                        {
+                            var partes = await MapaProcesosService.ListarPartes(equipo.id);
+                            var parteNodes = partes.Select(parte => new Item { Nombre = parte.NombreElemento, Icono = "fas fa-cogs", Objeto = parte });
+
+                            var equipoItem = new Item
+                                {
+                                    Nombre = equipo.nombre,
+                                    Icono = "fas fa-laptop",
+                                    Hijos = parteNodes,
+                                    Objeto = equipo
+                                };
+
+                            equipoNodes.Add(equipoItem);
+                        }
+
+                        var componentItem = new Item
+                            {
+                                Nombre = component.nombre,
+                                Icono = "fas fa-cube",
+                                Hijos = equipoNodes,
+                                Objeto = component
+                            };
+
+                        componentNodes.Add(componentItem);
+                    }
+
+                    var areaItem = new Item
+                        {
+                            Nombre = area.nombre,
+                            Icono = "fas fa-home",
+                            Hijos = componentNodes,
+                            Objeto = area
+                        };
+
+                    areaNodes.Add(areaItem);
+                }
+
+                var plantaItem = new Item
+                    {
+                        Nombre = planta.nombre,
+                        Icono = "fas fa-warehouse",
+                        Hijos = areaNodes,
+                        Objeto = planta
+                    };
+
+                plantaNodes.Add(plantaItem);
+            }
+
+            var sedeItem = new Item
+                {
+                    Nombre = "Sede ID" + sede.Id,
+                    Icono = "fas fa-city",
+                    Hijos = plantaNodes,
+                    Objeto = sede
+                };
+
+            items.Add(sedeItem);
+        }
+
+        Items = items;
+    }
+
+    private void Redireccion(Item itemSeleccionado)
+    {
+        nodoSeleccionado = itemSeleccionado;
+
+        if (nodoSeleccionado.Objeto is SedeInterfazGraficaTerceroDTO sede)
+        {
+            SedeService.EmpresaSeleccionada = empresa;
+            SedeService.SedeSeleccionada = sede;
+            PlantaService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagplanta");
+        }
+        else if (nodoSeleccionado.Objeto is PlantaEmpresaClienteDTO planta)
+        {
+            PlantaService.PlantaSeleccionada = planta;
+            AreaService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagarea");
+        }
+        else if (nodoSeleccionado.Objeto is AreaDTO area)
+        {
+            AreaService.AreaSeleccionada = area;
+            ComponenteService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagcomponente");
+        }
+        else if (nodoSeleccionado.Objeto is ComponenteDTO componente)
+        {
+            ComponenteService.ComponenteSeleccionado = componente;
+            EquipoService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagequipo");
+        }
+        else if (nodoSeleccionado.Objeto is EquipoDTO equipo)
+        {
+            EquipoService.EquipoDTOSeleccionado = equipo;
+            ParteService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagparte");
+        }
+        else if (nodoSeleccionado.Objeto is ParteDTO parte)
+        {
+            ParteService.ParteDTOSeleccionada = parte;
+            CondicionInicialService.ComponenteAnterior = "mapaProcesos";
+            NavigationManager.NavigateTo("/pagCondicionesOperativas");
+        }
+
+
+    }
+
+
+}
+
+

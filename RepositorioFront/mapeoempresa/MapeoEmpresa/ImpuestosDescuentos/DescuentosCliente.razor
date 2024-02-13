@@ -1,0 +1,111 @@
+﻿@inject DescuentoService descuentoService
+@inject ClienteService clienteService
+@inject UsuarioService usuarioService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO")]
+
+<h3>Componente de descuentos</h3>
+
+
+<div class="row">
+    <div class="col-md-9 mt-3">
+        <div class="input-group">
+            <label class="input-group-text">Cliente</label>
+            <InputNumber class="form-control inp-cliente" id="id-cliente" @bind-Value="identificacionCliente" disabled />
+            <InputText class="form-control" disabled @bind-Value="nombreCliente" />
+            <span class="btn btn-outline-dark" @onclick="MostrarComponenteTerceros"><i class="fa-solid fa-user"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    @for (int i = 0; i < DescuentoParaCliente.Count; i++)
+    {
+        var descuento = DescuentoParaCliente[i];
+        <div class="col-md-4 mt-3">
+
+            <div class="input-group">
+                <div class="input-group-text">
+                    @if (clienteDTO.Descuentos.Any(desc => desc.Codigo == descuento.Codigo && desc.Vigente.Equals("S") && desc.DescuentoClienteExiste))
+                    {
+
+                        <input type="checkbox" checked @onclick="()=>CargarDescuentosCliente(descuento)" class="form-check-input mt-0" id="@($"descuento_{i}")">
+
+                    }
+                    else
+                    {
+                        <input type="checkbox" checked="@clienteDTO.Descuentos.Any(desc => desc.Codigo == descuento.Codigo && desc.NuevoDescuento && desc.Vigente.Equals("S"))" @onclick="()=>CargarDescuentosCliente(descuento)" class="form-check-input mt-0" id="@($"descuento_{i}")">
+                    }
+                </div>
+                <label for="@($"descuento_{i}")" class="form-control">@descuento.Nombre</label>
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
+<button @onclick="Verificar" class="mt-5">verificar</button>
+
+<ComponenteTerceros TipoTercero="@ParametrosComponenteTerceros.CLIENTE" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" CargarTerceroEvent="CargarClienteDesdeComponenteTerceros" @ref="componenteTerceros" />
+<ModalConfirmacion @ref="modalConfirmacion" />
+
+
+@code {
+    private List<DescuentoInterfazGraficaVentaDTO> DescuentoParaCliente = new List<DescuentoInterfazGraficaVentaDTO>();
+    private ComponenteTerceros componenteTerceros;
+    private ModalConfirmacion modalConfirmacion;
+    private TerceroInterfazGraficaDTO clienteDTO = new TerceroInterfazGraficaDTO();
+    private string nombreCliente = string.Empty;
+    private long identificacionEmpresa = 98384875838432;
+    private long identificacionCliente;
+    private Task<AuthenticationState>? authenticationState;
+
+
+    protected override Task OnInitializedAsync()
+    {
+
+        authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        DescuentoParaCliente = descuentoService.ObtenerDescuentosParaClientes();
+        clienteDTO.Descuentos = new List<DescuentoInterfazGraficaVentaDTO>();
+
+        return base.OnInitializedAsync();
+    }
+
+    private void MostrarComponenteTerceros()
+    {
+        componenteTerceros.Mostrar();
+
+    }
+
+    private void CargarClienteDesdeComponenteTerceros()
+    {
+
+        clienteDTO = componenteTerceros.TerceroSeleccionado;
+        clienteDTO.Descuentos = new List<DescuentoInterfazGraficaVentaDTO>();
+
+
+        if (clienteDTO is not null)
+        {
+            nombreCliente = $"{clienteDTO.Nombre1} {clienteDTO.Nombre2} {clienteDTO.Apellido1} {clienteDTO.Apellido2} {clienteDTO.RazonSocial}";
+            identificacionCliente = clienteDTO.Identificacion;
+
+        }
+    }
+
+
+
+
+    public void CargarDescuentosCliente(DescuentoInterfazGraficaVentaDTO descuento)
+    {
+        
+        
+    }
+
+    private void Verificar()
+    {
+        var tercero = clienteDTO;
+        var desc = clienteDTO.Descuentos;
+    }
+}

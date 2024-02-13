@@ -1,0 +1,263 @@
+﻿@inject RegistroEvidenciaService RegistroService;
+@inject RevisionInventarioService RevisionInventarioService;
+@using EntidadesNegocio.EntidadesDto;
+@using RegistroEvidencia;
+@using System.Numerics;
+
+<div class="col-lg-10 contact-form__wrapper p-5 contenedor-bloque">
+    <h4>Registro de evidencia de revisi&oacute;n </h4>
+    <EditForm Model="registroDTO" OnSubmit="GuardarArchivo">
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="tipo">Tipo de archivo:</label>
+                <select id="tipo" class="form-control" @bind="registroDTO.tipo" required>
+                    <option value="">Seleccione tipo de archivo</option>
+                    <option value="@EnumTiposArchivos.Audio">Audio</option>
+                    <option value="@EnumTiposArchivos.Imagen">Imagen</option>
+                    <option value="@EnumTiposArchivos.Video">Video</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="fechaCaptura">Fecha de captura:</label>
+                <input type="datetime-local" class="form-control" id="fechaCaptura" @bind="registroDTO.fechaCaptura" required>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="archivo">Archivo:</label>
+                <div class="input-group mb-3">
+                    <InputFile id="archivo" class="form-control" OnChange="CargarArchivo" required />
+                    <button class="btn btn-sm btn-success" type="submit">
+                        <i class="oi oi-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+    <h4>Listado de evidencia registrada</h4>
+    @if (ListEvidencia == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListEvidencia.Count == 0)
+    {
+        <p class="pt-3">No se ha registrado evidencia para esta revisi&oacute;n</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in ListEvidencia)
+                {
+                    <tr>
+                        <td>@p.id</td>
+                        <td>@p.nombre@p.extension</td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id, p.rutaRelativa)"><i class="oi oi-x"></i></button></td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (modalEliminar)
+    {
+        <div class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Desea eliminar el archivo @ID?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                        <button type="button" class="btn btn-success" @onclick=BorrarEvidencia>Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (modalInformacion)
+    {
+        <div class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Información registrada</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="file-container">
+                            @if (registroModal.tipo == "Imagen")
+                            {
+                                <img src="data:image;base64,@ConvertirArchivoABase64(registroModal.rutaRelativa)" alt="Image" class="file-item" />
+                            }
+                            else if (registroModal.tipo == "Audio")
+                            {
+                                <audio controls>
+                                    <source src="data:audio/mp3;base64,@ConvertirArchivoABase64(registroModal.rutaRelativa)">
+                                    Su navegador no soporta la etiqueta de audio
+                                </audio>
+                            }
+                            else if (registroModal.tipo == "Video")
+                            {
+                                <video controls class="file-item">
+                                    <source src="data:video/mp4;base64,@ConvertirArchivoABase64(registroModal.rutaRelativa)">
+                                    Su navegador no soporta la etiqueta de video
+                                </video>
+                            }
+                            else
+                            {
+                                <p class="file-item">No se puede mostrar este tipo de archivo.</p>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" value="@registroModal.nombre" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="extension">Extension: </label>
+                            <input type="text" class="form-control" id="extension" value="@registroModal.extension" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tipo">Tipo: </label>
+                            <input type="text" class="form-control" id="tipo" value="@registroModal.tipo" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaRegistro">Fecha registro: </label>
+                            <input type="text" class="form-control" id="fechaRegistro" value="@registroModal.fechaRegistro" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaCaptura">Fecha captura: </label>
+                            <input type="text" class="form-control" id="fechaCaptura" value="@registroModal.fechaCaptura" readonly>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<ModalPersonalizado @ref="modalMensaje" />
+
+@code {
+    private ModalPersonalizado modalMensaje;
+    private IBrowserFile archivo;
+    private RegistroEvidenciaDTO registroDTO = new RegistroEvidenciaDTO();
+
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+    private string Ruta = "";
+    RegistroEvidenciaDTO registroModal = new RegistroEvidenciaDTO();
+    List<RegistroEvidenciaDTO> ListEvidencia;
+
+    private void CargarArchivo(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            archivo = e.File;
+            registroDTO.nombre = System.IO.Path.GetFileNameWithoutExtension(archivo.Name);
+            registroDTO.extension = System.IO.Path.GetExtension(archivo.Name);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar el archivo: {ex.Message}");
+        }
+    }
+
+
+    private async Task GuardarArchivo()
+    {
+        if (archivo != null && archivo.Size <= 20971520)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                Stream stream = archivo.OpenReadStream(20971520); // El limite esta en 20MB
+                await stream.CopyToAsync(memoryStream);
+                byte[] buffer = memoryStream.ToArray();
+                RegistroService.registro = new(buffer, registroDTO.extension, registroDTO.tipo, registroDTO.nombre, registroDTO.fechaCaptura);
+                await RegistroService.GuardarArchivoRevision(RevisionInventarioService.RevisionSeleccionada.id);
+
+                archivo = null;
+                registroDTO = new RegistroEvidenciaDTO();
+                registroDTO.fechaCaptura = DateTime.Now;
+                ListEvidencia = await RegistroService.ListarEvidenciaRevision(RevisionInventarioService.RevisionSeleccionada.id);
+            }
+
+            modalMensaje.Mostrar("El registro se realizo correctamente");
+        }
+        else
+        {
+            modalMensaje.Mostrar("El archivo cargado supera el limite de 20MB, por favor seleccione otro.");
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        registroDTO.fechaCaptura = DateTime.Now;
+        ListEvidencia = await RegistroService.ListarEvidenciaRevision(RevisionInventarioService.RevisionSeleccionada.id);
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarEvidencia()
+    {
+        await RegistroService.BorrarEvidencia(ID, Ruta);
+        modalEliminar = false;
+        ListEvidencia = await RegistroService.ListarEvidenciaRevision(RevisionInventarioService.RevisionSeleccionada.id);
+    }
+
+    //MODALES
+
+    private void AbrirModalBorrar(BigInteger id, string ruta)
+    {
+        modalEliminar = true;
+        ID = id;
+        Ruta = ruta;
+    }
+
+    private void AbrirModalInformacion(RegistroEvidenciaDTO registro)
+    {
+        modalInformacion = true;
+        registroModal = registro;
+    }
+
+    private string ConvertirArchivoABase64(string rutaArchivo)
+    {
+        byte[] archivoBytes = System.IO.File.ReadAllBytes(rutaArchivo);
+        string archivoBase64 = Convert.ToBase64String(archivoBytes);
+        return archivoBase64;
+    }
+}

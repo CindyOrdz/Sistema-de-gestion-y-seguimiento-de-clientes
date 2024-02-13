@@ -1,0 +1,57 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = VentaTradicional
+build_property.RootNamespace = VentaTradicional
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\VentaTradicional\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\VentaTradicional
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/InformacionVenta.razor]
+build_metadata.AdditionalFiles.TargetPath = SW5mb3JtYWNpb25WZW50YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/MaestroVenta.razor]
+build_metadata.AdditionalFiles.TargetPath = TWFlc3Ryb1ZlbnRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/Modales/ModalResumenVenta.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xNb2RhbFJlc3VtZW5WZW50YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsComponents/ArticulosVendidosCliente.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcQXJ0aWN1bG9zVmVuZGlkb3NDbGllbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsComponents/DetalleVenta.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcRGV0YWxsZVZlbnRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsComponents/HistorialCliente.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcSGlzdG9yaWFsQ2xpZW50ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsComponents/HistorialVentasArticulo.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcSGlzdG9yaWFsVmVudGFzQXJ0aWN1bG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsComponents/InformeCompras.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcSW5mb3JtZUNvbXByYXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/TabsControls.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbnRyb2xzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/VentaTradicional/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

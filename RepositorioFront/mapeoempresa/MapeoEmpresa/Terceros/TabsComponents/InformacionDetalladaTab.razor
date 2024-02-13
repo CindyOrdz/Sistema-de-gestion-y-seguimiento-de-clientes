@@ -1,0 +1,930 @@
+﻿@inherits ComponenteTab
+@inject TipoDocumentoService tipoDocumentoService;
+@inject PaisService paisService
+@inject DepartamentoService departamentoService
+@inject ciudadService ciudadService
+@inject EmpresaService empresaService
+@inject ClienteService clienteService
+@inject EmpleadoService empleadoService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+
+@if (display)
+{
+    <EditForm Model="@terceroDTO" OnValidSubmit="GuardarTercero"  OnInvalidSubmit="InvalidarFormulario" >
+        <DataAnnotationsValidator ></DataAnnotationsValidator>
+        <div class="contenedor-tab">
+            <div class="contenedor-bloque mt-3">
+                <label class="txt-top font-txt">Información detallada</label>
+
+                <div class="row">
+
+                    <label class="col-md-2 col-form-label mt-2" for="idn">Identificacion</label>
+                    <div class="col-md-4 mt-2">
+                        <InputNumber @bind-Value="terceroDTO.Identificacion" class="form-control me-2" disabled="@(Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO))" id="idn"/>
+                        <ValidationMessage class="font-error" For="()=>terceroDTO.Identificacion"></ValidationMessage>
+                    </div>
+
+                    <label class="col-md-1 col-form-label mt-2" for="digito">Digito</label>
+                    <div class="col-md-2 mt-2">
+                        <InputNumber @bind-Value="terceroDTO.Digito" class="form-control text-center me-5" id="digito"/>
+                        <ValidationMessage class="font-error" For="()=>terceroDTO.Digito"></ValidationMessage>
+                    </div>
+                    <div class="col-md-3 mt-2">
+                        <label class="label-info-venta me-3">Tipo de tercero: @terceroDTO.TipoTercero</label>
+                    </div>
+
+                    <label class="col-md-2 col-form-label  align-self-center mt-4" for="tipo_doc">Tipo de documento</label>
+                    <div class="col-md-4 mt-4">
+                        <select class="form-select" @onchange="CargarTipoDocumentoATercero" id="tipo_doc">
+                            @foreach (var tipoDocumento in tiposDocumentoTercero)
+                            {
+                                if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroDTO.TipoDocumento.Codigo == tipoDocumento.Codigo)
+                                {
+                                    <option value="@tipoDocumento.Codigo" selected>@tipoDocumento.Nombre</option>
+                                    @(terceroDTO.TipoDocumento = tipoDocumento)
+                                }
+                                else
+                                {
+                                    <option value="@tipoDocumento.Codigo">@tipoDocumento.Nombre</option>
+                                }
+
+
+                            }
+                        </select>
+                    </div>
+
+                    @if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+                    {
+                        <label class="col-md-2 col-form-label  align-self-center mt-4" for="cargo_empleado">Cargo: </label>
+                        <div class="col-md-4 mt-4">
+                            <select class="form-select" @onchange="AsignarCargoAEmpleado" id="cargo_empleado">
+                                @foreach (var cargo in cargosEmpleado)
+                                {
+                                    if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroDTO.Cargo.Id == cargo.Id)
+                                    {
+                                        <option value="@cargo.Id" selected>@cargo.Nombre</option>
+                                        @(terceroDTO.Cargo = cargo)
+                                    }
+                                    else
+                                    {
+                                        <option value="@cargo.Id">@cargo.Nombre</option>
+                                    }
+
+
+                                }
+                            </select>
+                        </div>  
+
+                        <label class="col-md-2 col-form-label  align-self-center mt-4" for="cargo_empleado">Fecha Inicio: </label>
+                        <div class="col-md-4 mt-4">
+                            <InputDate @bind-Value="terceroDTO.FechaInicio" class="form-control"></InputDate>
+                        </div> 
+
+                        <label class="col-md-2 col-form-label  align-self-center mt-4" for="cargo_empleado">Fecha Fin: </label>
+                        <div class="col-md-4 mt-4">
+                            <InputDate @bind-Value="terceroDTO.FechaFin" class="form-control"></InputDate>
+                        </div> 
+                    }
+
+                </div>
+
+                
+
+                @if (terceroDTO.TipoTercero.Equals("EMPRESA") || terceroDTO.TipoTercero.Equals("CLIENTE"))
+                {
+                    <div class="row mt-2">
+                        <div class="col-sm-12 col-md-8">
+                            <div class="contenedor-bloque mt-3 w-100">
+                                <label class="txt-top font-txt">Razon Social</label>
+
+                                <InputTextArea @bind-Value="terceroDTO.RazonSocial" @onblur="CambiarEstado" class="form-control txt-area-100" />
+                                <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.RazonSocial"></ValidationMessage>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-md-4 mt-3">
+                            <label class="">Sedes:</label>
+                            <span class="btn btn-outline-dark me-3" @onclick="MostrarFormularioSede"><i class="fa-solid fa-city"></i></span>
+                            <label class="">Sedes registradas:</label>
+                            @if (terceroDTO.Sedes is null)
+                            {
+                                <label class="">0</label>
+                            }
+                            else
+                            {
+                                <label class="label-info-venta">@terceroDTO.Sedes.Count</label>
+                            }
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+            <div class="contenedor-bloque mt-3">
+                <label class="txt-top font-txt">Información Personal</label>
+
+                <div class="row">
+
+                    <label class="col-xs-12 col-sm-4 col-md-2  col-form-label mt-3" for="apellido1_tercero">Primer apellido</label>
+                    <div class="col-xs-12 col-sm-8  col-md-4 mt-3">
+                        <InputText @bind-Value="terceroDTO.Apellido1" @onblur="CambiarEstado" class="form-control" id="apellido1_tercero" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Apellido1" />
+                    </div>
+
+                    <label class="col-xs-12 col-sm-4 col-md-2  col-form-label mt-3" for="apellido2_tercero">Primer apellido</label>
+                    <div class="col-xs-12 col-sm-8  col-md-4 mt-3">
+                        <InputText @bind-Value="terceroDTO.Apellido2" @onblur="CambiarEstado" class="form-control" id="apellido2_tercero" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Apellido2" />
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-xs-12 col-sm-4 col-md-2  col-form-label mt-3" for="nombre1_tercero">Primer Nombre</label>
+                    <div class="col-xs-12 col-sm-8  col-md-4 mt-3">
+                        <InputText @bind-Value="terceroDTO.Nombre1" @onblur="CambiarEstado" class="form-control" id="nombre1_tercero" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Nombre1" />
+                    </div>
+                    <label class="col-xs-12 col-sm-4 col-md-2  col-form-label mt-3" for="nombre2_tercero">Segundo Nombre</label>
+                    <div class="col-xs-12 col-sm-8  col-md-4 mt-3">
+                        <InputText @bind-Value="terceroDTO.Nombre2" @onblur="CambiarEstado" class="form-control" id="nombre2_tercero" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Nombre2" />
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="contenedor-bloque mt-3">
+                <label class="txt-top font-txt">Información Adicional</label>
+                <div class="row">
+                    <label class="col-md-3 col-form-label align-content-end mt-2" for="pais_tercero">Pais</label>
+                    <div class="col-md-6 mt-2">
+                        <select class="form-select" @onchange="CargarPaisAlTercero" id="pais_tercero">
+                            @foreach (var pais in paises)
+                            {
+                                if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroDTO.Ubicacion.Pais.Codigo.Equals(pais.Codigo))
+                                {
+                                    <option value="@pais.Codigo" selected>@pais.Nombre</option>
+                                    @(terceroDTO.Ubicacion.Pais = pais);
+                                    @(departamentos = departamentoService.ObtenerDepartamentosDePais(pais.Codigo));
+                                }
+                                else
+                                {
+                                    <option value="@pais.Codigo" >@pais.Nombre</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <label class="col-md-3 col-form-label mt-3">Departamento (Estado)</label>
+                    <div class="col-md-6 mt-3">
+                        <select class="form-select" @onchange="CargarDepartamentoAlTercero">
+                            @foreach (var departamento in departamentos)
+                            {
+                                if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroDTO.Ubicacion.DepartamentoProvincia.Codigo.Equals(departamento.Codigo))
+                                {
+                                    <option value="@departamento.Codigo" selected>@departamento.Nombre</option>
+                                    @(terceroDTO.Ubicacion.DepartamentoProvincia = departamento);
+                                    @(ciudades = ciudadService.ObtenerCiudadesDeDepartamento(departamento.Codigo));
+                                }
+                                else
+                                {
+                                    <option value="@departamento.Codigo">@departamento.Nombre</option>
+                                }
+
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <span class="btn btn-outline-dark" @onclick="MostrarModalDepartamentoParaAgregar"><i class="fa-solid fa-flag fas"></i></span>
+                        <span class="btn btn-outline-dark" @onclick="MostrarModalDepartamentoParaActualizar"><i class="fa-solid fa-pen-to-square fas"></i></span>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <label class="col-md-3 col-form-label mt-3">Municipio (Provincia)</label>
+                    <div class="col-md-6 mt-3">
+                        <select class="form-select" @onchange="CargarCiudadAlTercero">
+                            @foreach (var ciudad in ciudades)
+                            {
+                                @if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroDTO.Ubicacion.Ciudad.Codigo.Equals(ciudad.Codigo))
+                                {
+                                    <option value="@ciudad.Codigo" selected>@ciudad.Nombre</option>
+                                    @(terceroDTO.Ubicacion.Ciudad = ciudad);
+                                }
+                                else
+                                {
+                                    <option value="@ciudad.Codigo">@ciudad.Nombre</option>
+                                }
+
+                            }
+                        </select>  
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <span class="btn btn-outline-dark" @onclick="()=> modalFormularioCiudad.Mostrar()"><i class="fa-solid fa-location-dot fas"></i></span>
+                        <span class="btn btn-outline-dark"><i class="fa-solid fa-pen-to-square fas"></i></span>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <label class="col-md-3 col-form-label">Dirección</label>
+                    <div class="col-md-7">
+                        <InputText @bind-Value="terceroDTO.Direccion" class="form-control" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Direccion"></ValidationMessage>
+                    </div>
+                </div>
+
+
+                <div class="row mt-3">
+                    <label class="col-md-3 col-form-label">Telefono(s)</label>
+                    <div class="col-md-7">
+                        <InputText @bind-Value="terceroDTO.Telefono" class="form-control" />
+                        <ValidationMessage class="font-error font-txt"  For="()=> terceroDTO.Telefono"></ValidationMessage>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <label class="col-md-3 col-form-label">Celulares(s)</label>
+                    <div class="col-md-7">
+                        <InputText @bind-Value="terceroDTO.Celular" class="form-control" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Celular"></ValidationMessage>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <label class="col-md-3 col-form-label">Correo Electrónico</label>
+                    <div class="col-md-7">
+                        <InputText @bind-Value="terceroDTO.Email" class="form-control" />
+                        <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Email"></ValidationMessage>
+                    </div>
+                </div>
+
+                @if (terceroDTO.TipoTercero.Equals("CLIENTE"))
+                {
+                    <div class="row mt-3">
+                        <label class="col-md-3 col-form-label">Actividad Economica</label>
+                        <div class="col-md-7">
+                            <InputText @bind-Value="terceroDTO.ActividadEconomica" class="form-control" />
+                            <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.ActividadEconomica"></ValidationMessage>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <label class="col-md-3 col-form-label">Naturaleza</label>
+                        <div class="col-md-4">
+                            <select class="form-select" @onchange="CargarNaturalezaATercero">
+                                @foreach (var naturaleza in naturalezas)
+                                {
+                                    @if (terceroDTO.Naturaleza.Equals(naturaleza))
+                                    {
+                                        <option value="@naturaleza" selected>@naturaleza</option>
+                                        @(terceroDTO.Naturaleza = naturaleza);
+                                    }
+                                    else
+                                    {
+                                        <option value="@naturaleza">@naturaleza</option>
+                                    }
+
+                                }
+                            </select>
+                            <ValidationMessage class="font-error font-txt" For="()=> terceroDTO.Naturaleza"></ValidationMessage>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="d-flex justify-content-between mt-3">
+
+                <div class="contenedor mt-3">
+                    <span class="btn btn-dark font-txt" @onclick="Verificar">Cancelar</span>
+                    <button type="submit" class="btn btn-info font-txt" >Guardar</button>
+                </div>
+
+            </div>
+        </div>
+
+    </EditForm>
+
+    <ModalFormularioCiudad AgregarCiudadEvent="AgregarCiudad" @ref="modalFormularioCiudad" />
+    <ModalFormularioDepartamento AgregarDepartamentoEvent="AgregarDepartamento" @ref="modalFormularioDepartamento" />
+    <ModalConfirmacion @ref="modalConfirmacion"/>
+
+    @if (terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA) || terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+    {
+        <CascadingValue Name="sedesTercero" Value="@terceroDTO.Sedes">
+            <CascadingValue Name="AccionFormularioTercero" Value="@Accion">
+                <CascadingValue Name="identificacionTercero" Value="@terceroDTO.Identificacion">
+                    <ModalSedes CambiarEstadoInfoDetalladatEvent="CambiarEstado"  @ref="modalSedes" />
+                </CascadingValue>
+            </CascadingValue>
+        </CascadingValue>
+    }
+
+} 
+
+@code {
+    public TerceroInterfazGraficaDTO terceroDTO { get; set; } = new TerceroInterfazGraficaDTO();
+    public string Accion { get; set; } = ParametrosComponenteTerceros.NUEVO_TERCERO; 
+    [CascadingParameter(Name = "TipoTercero")]
+    public string TipoTercero { get; set; }
+    private ModalFormularioCiudad modalFormularioCiudad;
+    private ModalFormularioDepartamento modalFormularioDepartamento;
+    private ModalSedes modalSedes;
+    private ModalConfirmacion modalConfirmacion;
+    private List<TipoDocumentoInterfazGraficaTercerosDTO> tiposDocumentoDb;
+    private List<TipoDocumentoInterfazGraficaTercerosDTO> tiposDocumentoTercero = new List<TipoDocumentoInterfazGraficaTercerosDTO>();
+    private List<PaisInterfazGraficaVentaDTO> paises;
+    private List<DepartamentoProvinciaInterfazGraficaVentaDTO> departamentos = new List<DepartamentoProvinciaInterfazGraficaVentaDTO>();
+    private List<CiudadInterfazGraficaVentaDTO> ciudades = new List<CiudadInterfazGraficaVentaDTO>();
+    private List<string> naturalezas = new List<string> { "Privada", "Publica", "Mixta" };
+    private List<ImpuestoInterfazGraficaVentaDTO> impuestosTercero;
+    private List<CargoEmpleadoDTO> cargosEmpleado = new List<CargoEmpleadoDTO>();
+    private int indiceAnteriorSeleccionadoDeDepartamentos = 0;
+    private int indiceAnteriorSeleccionadoDeCiudades = 0;
+    private int indiceAnteriorSeleccionadoDeTiposDocumentos = 0;
+    private int indiceAnteriorSeleccionadoDeNaturalezas = 0;
+    private long identificacionEmpresa = 0;
+
+
+    protected override Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var usuario = authenticationState.Result.User.Identity.Name;
+        var rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        var rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+
+        tiposDocumentoDb = tipoDocumentoService.ObtenerTiposDocumento();
+        if(TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+        {
+            cargosEmpleado = empleadoService.ObtenerCargosDeEmpleado();   
+        }
+
+        paises = paisService.ObtenerPaises();
+        if (Accion.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO))
+        {
+            InicializarDatosParaNuevoTercero();
+        }
+
+        return base.OnInitializedAsync();
+    }
+
+
+    private void CargarPaisAlTercero(ChangeEventArgs e)
+    {
+        var codigoPais = e.Value.ToString();
+        var paisTercero = paises.FirstOrDefault(pais => pais.Codigo == codigoPais);
+        terceroDTO.Ubicacion.Pais = paisTercero;
+        var departamentosRepo = departamentoService.ObtenerDepartamentosDePais(paisTercero.Codigo);
+        departamentos = new List<DepartamentoProvinciaInterfazGraficaVentaDTO>(departamentosRepo);
+        if (departamentos.Count > 0)
+        {
+            if (departamentos.Count < (indiceAnteriorSeleccionadoDeDepartamentos + 1))
+            {
+                indiceAnteriorSeleccionadoDeDepartamentos = 0;
+
+            }
+            var departamentoTercero = departamentos[indiceAnteriorSeleccionadoDeDepartamentos];
+            terceroDTO.Ubicacion.DepartamentoProvincia = departamentoTercero;
+            var ciudadesRepo = ciudadService.ObtenerCiudadesDeDepartamento(departamentoTercero.Codigo);
+            if (ciudadesRepo.Count > 0)
+            {
+                ciudades = new List<CiudadInterfazGraficaVentaDTO>(ciudadesRepo);
+                if (ciudades.Count < (indiceAnteriorSeleccionadoDeCiudades + 1))
+                {
+                    indiceAnteriorSeleccionadoDeCiudades = 0;
+                }
+                terceroDTO.Ubicacion.Ciudad = ciudades[indiceAnteriorSeleccionadoDeCiudades];
+                return;
+            }
+            else
+            {
+                terceroDTO.Ubicacion.Ciudad = null;
+                indiceAnteriorSeleccionadoDeCiudades = 0;
+            }
+        }
+        else
+        {
+            terceroDTO.Ubicacion.DepartamentoProvincia = null;
+            terceroDTO.Ubicacion.Ciudad = null;
+            indiceAnteriorSeleccionadoDeCiudades = 0;
+            indiceAnteriorSeleccionadoDeDepartamentos = 0;
+        }
+        ciudades = new List<CiudadInterfazGraficaVentaDTO>();
+    }
+
+    private void CargarDepartamentoAlTercero(ChangeEventArgs e)
+    {
+        var codigodepartamento = e.Value.ToString();
+        var departamentoTercero = departamentos.FirstOrDefault(dpto => dpto.Codigo == codigodepartamento);
+        terceroDTO.Ubicacion.DepartamentoProvincia = departamentoTercero;
+        int indice = departamentos.FindIndex(dpto => dpto.Codigo == departamentoTercero.Codigo);
+        if (indice != -1)
+        {
+            indiceAnteriorSeleccionadoDeDepartamentos = indice;
+        }
+        else
+        {
+            indiceAnteriorSeleccionadoDeDepartamentos = 0;
+        }
+
+        var ciudadesRepo = ciudadService.ObtenerCiudadesDeDepartamento(departamentoTercero.Codigo);
+        ciudades = new List<CiudadInterfazGraficaVentaDTO>(ciudadesRepo);
+
+        if (ciudades.Count > 0)
+        {
+            if (ciudades.Count < (indiceAnteriorSeleccionadoDeCiudades + 1))
+            {
+                indiceAnteriorSeleccionadoDeCiudades = 0;
+            }
+            terceroDTO.Ubicacion.Ciudad = ciudades[indiceAnteriorSeleccionadoDeCiudades];
+        }
+        else
+        {
+            terceroDTO.Ubicacion.Ciudad = null;
+            indiceAnteriorSeleccionadoDeCiudades = 0;
+        }
+
+    }
+
+    private void CargarCiudadAlTercero(ChangeEventArgs e)
+    {
+        var codigociudad = e.Value.ToString();
+        var ciudadTercero = ciudades.FirstOrDefault(ciudad => ciudad.Codigo == codigociudad);
+        int indice = ciudades.FindIndex(ciudad => ciudad.Codigo == ciudadTercero.Codigo);
+        if (indice != -1)
+        {
+            indiceAnteriorSeleccionadoDeCiudades = indice;
+        }
+        else
+        {
+            indiceAnteriorSeleccionadoDeCiudades = 0;    
+
+        }
+
+        terceroDTO.Ubicacion.Ciudad = ciudadTercero;
+    }
+
+    private void CargarTipoDocumentoATercero(ChangeEventArgs e)
+    {
+        var codigoTipoDocumento = int.Parse(e.Value.ToString());
+        var tipoDocumentoTercero = tiposDocumentoDb.FirstOrDefault(doc => doc.Codigo == codigoTipoDocumento);
+        int indice = tiposDocumentoTercero.FindIndex(doc => doc.Codigo == codigoTipoDocumento);
+        if (indice != -1)
+        {
+            indiceAnteriorSeleccionadoDeTiposDocumentos = indice;
+        }
+        else
+        {
+            indiceAnteriorSeleccionadoDeTiposDocumentos = 0;
+
+        }
+        terceroDTO.TipoDocumento = tipoDocumentoTercero;
+
+    }
+
+    private void AsignarCargoAEmpleado(ChangeEventArgs e)
+    {
+        var idCargo = int.Parse(e.Value.ToString());
+        var cargoEmpleado = cargosEmpleado.FirstOrDefault(cargo => cargo.Id == idCargo);
+        terceroDTO.Cargo = cargoEmpleado;
+
+    }
+
+
+    private void CargarNaturalezaATercero(ChangeEventArgs e)
+    {
+        var naturalezaTercero = e.Value.ToString();
+        terceroDTO.Naturaleza = naturalezaTercero;
+        int indice = naturalezas.FindIndex(nat => nat.Equals(naturalezaTercero));
+        if (indice != -1)
+        {
+            indiceAnteriorSeleccionadoDeNaturalezas = indice;
+        }
+        else
+        {
+            indiceAnteriorSeleccionadoDeNaturalezas = 0;
+
+        }
+
+    }
+
+
+
+    private void GuardarTercero()
+    {
+        if (terceroDTO.Ubicacion.DepartamentoProvincia is null || terceroDTO.Ubicacion.Ciudad is null)
+        {
+            modalConfirmacion.Mensaje = "La ubicación debe estar completa, debes elegir un departamento(Estado) y un municipio (provincia)";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        ToUpper();
+
+        if(Accion.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO))
+        {
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+            {
+                var terceroAGuardar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = empresaService.InsertarEmpresa(terceroAGuardar);
+
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha registrado la empresa";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar el registro de la empresa";
+                    modalConfirmacion.Mostrar();
+
+                }
+
+            }
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+            {
+                var terceroAGuardar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = clienteService.InsertarCliente(terceroAGuardar, identificacionEmpresa);
+
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha registrado el cliente con éxito";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar el registro del cliente";
+                    modalConfirmacion.Mostrar();
+
+                }
+            }
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+            {
+                var terceroAGuardar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = empleadoService.InsertarEmpleado(terceroAGuardar, identificacionEmpresa);
+
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha registrado el empleado con éxito";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar el registro del empleado";
+                    modalConfirmacion.Mostrar();
+
+                }   
+
+            }
+
+
+        }
+
+        if (Accion.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO))
+        {
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+            {
+                var terceroAActualizar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = empresaService.ActualizarEmpresa(terceroAActualizar);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha actualizado la empresa exitosamente";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar la actualizacion de la empresa";
+                    modalConfirmacion.Mostrar();
+                }
+
+            }
+
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+            {
+                var terceroAActualizar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = clienteService.ActualizarCliente(terceroAActualizar, identificacionEmpresa);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha actualizado el cliente exitosamente";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar la actualizacion del cliente";
+                    modalConfirmacion.Mostrar();
+                }
+            }
+
+            if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+            {
+                var terceroAActualizar = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroDTO);
+                bool resultado = empleadoService.ActualizarEmpleado(terceroAActualizar, identificacionEmpresa);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = $"Se ha actualizado el empleado exitosamente";
+                    modalConfirmacion.Mostrar();
+                    InicializarDatosTercero();
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = $"No se pudo completar la actualizacion del empleado";
+                    modalConfirmacion.Mostrar();
+                }
+            }
+
+        }
+
+
+
+        //InicializarDatosTercero();
+
+
+    }
+
+
+    private void ToUpper()
+    {
+        terceroDTO.Nombre1 =  terceroDTO.Nombre1.ToUpper();
+        terceroDTO.Nombre2 = terceroDTO.Nombre2.ToUpper();
+        terceroDTO.Apellido1 = terceroDTO.Apellido1.ToUpper();
+        terceroDTO.Apellido2 = terceroDTO.Apellido2.ToUpper();
+        terceroDTO.RazonSocial = terceroDTO.RazonSocial.ToUpper();
+        terceroDTO.Direccion = terceroDTO.Direccion.ToUpper();
+        terceroDTO.Email = terceroDTO.Email.ToUpper();
+
+    }
+
+
+    private void MostrarModalDepartamentoParaAgregar()
+    {
+        if (modalFormularioDepartamento is not null)
+        {
+            modalFormularioDepartamento.Accion = ParametrosComponenteTerceros.NUEVO_DEPARTAMENTO;
+            modalFormularioDepartamento.Mostrar();
+        }
+
+    }
+
+    private void MostrarModalDepartamentoParaActualizar()
+    {
+        if (modalFormularioDepartamento is not null &&  terceroDTO is not null)
+        {
+            if (terceroDTO.Ubicacion.DepartamentoProvincia is null && modalConfirmacion is not null)
+            {
+                modalConfirmacion.Mensaje = "Debe seleccionar un Departamento (Estado) para editarlo";
+                modalConfirmacion.Mostrar();
+                return;
+            }
+            modalFormularioDepartamento.Accion = ParametrosComponenteTerceros.ACTUALIZAR_DEPARTAMENTO;
+            modalFormularioDepartamento.Departamento = terceroDTO.Ubicacion.DepartamentoProvincia;
+            modalFormularioDepartamento.Mostrar();
+        }
+
+    }
+
+    private void MostrarFormularioSede()
+    {
+        if ((terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA) || terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE)) && terceroDTO.Sedes is null)
+        {
+            terceroDTO.Sedes = new List<SedeInterfazGraficaTerceroDTO>();    
+        }
+
+        modalSedes.Pais = terceroDTO.Ubicacion.Pais;
+        modalSedes.Mostrar();
+
+    }
+
+
+    private void AgregarDepartamento()
+    {
+        if (modalFormularioDepartamento is not null && terceroDTO is not null)
+        {
+            bool verificacionFormularioCiudad = modalFormularioDepartamento.FormularioValido;
+            if (verificacionFormularioCiudad)
+            {
+                var departamentoModal = modalFormularioDepartamento.Departamento;
+                departamentoModal.Pais = terceroDTO.Ubicacion.Pais.Codigo;
+                RepoUbicacion.AgregarDepartamento(departamentoModal);
+                departamentos = RepoUbicacion.ObtenerDepartamentosPais(terceroDTO.Ubicacion.Pais.Codigo);
+                modalFormularioDepartamento.Departamento = new DepartamentoProvinciaInterfazGraficaVentaDTO();
+                if (departamentos.Count == 1)
+                {
+                    terceroDTO.Ubicacion.DepartamentoProvincia = departamentos[0];
+                }
+
+
+            }
+        }
+
+    }
+
+    private void AgregarCiudad()
+    {
+        if (modalFormularioCiudad is not null && terceroDTO is not null)
+        {
+            bool verificacionFormularioCiudad = modalFormularioCiudad.FormularioValido;
+            if (verificacionFormularioCiudad)
+            {
+                var ciudadmodal = modalFormularioCiudad.Ciudad;
+                var ubicacionTercero = terceroDTO.Ubicacion;
+                ciudadmodal.Pais = ubicacionTercero.Pais.Codigo;
+                ciudadmodal.Departamento = ubicacionTercero.DepartamentoProvincia.Codigo;
+                RepoUbicacion.AgregarCiudad(ciudadmodal);
+                ciudades = RepoUbicacion.ObtenerCiudaddesDeDepartamento(ubicacionTercero.DepartamentoProvincia.Codigo);
+                modalFormularioCiudad.Ciudad = new CiudadInterfazGraficaVentaDTO();
+                if (ciudades.Count == 1)
+                {
+                    terceroDTO.Ubicacion.Ciudad = ciudades[0];
+                }
+            }
+        }
+
+    }
+
+    private void AgregarSede()
+    {
+        if (terceroDTO is not null)
+        {
+            var sedeModal = modalSedes.ObtenerSedeFormulario();
+            if (terceroDTO.Sedes is not null)
+            {
+                if(Accion.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO))
+                {
+                    terceroDTO.Sedes.Add(sedeModal);
+                }
+            }
+
+        }
+
+    }
+
+
+
+    private List<TipoDocumentoInterfazGraficaTercerosDTO> ObtenerTiposDocumentoPorTercero()
+    {
+        List<TipoDocumentoInterfazGraficaTercerosDTO> tiposDocumentoTercero = new List<TipoDocumentoInterfazGraficaTercerosDTO>();
+
+        var tercero = terceroDTO;
+        if (terceroDTO.TipoTercero.Equals("CLIENTE"))
+        {
+
+            tiposDocumentoTercero = tiposDocumentoDb;
+        }
+
+        if (terceroDTO.TipoTercero.Equals("EMPRESA"))
+        {
+            tiposDocumentoTercero = tiposDocumentoDb
+            .Where(doc => doc.Codigo == 13 || doc.Codigo == 31 || doc.Codigo == 50)
+            .ToList();
+        }
+
+        if (terceroDTO.TipoTercero.Equals("EMPLEADO"))
+        {
+            tiposDocumentoTercero = tiposDocumentoDb
+            .Where(doc => doc.Codigo == 11 || doc.Codigo == 12 || doc.Codigo == 13 || doc.Codigo == 21 || doc.Codigo == 22 || doc.Codigo == 41 || doc.Codigo == 42 || doc.Codigo == 91)
+            .ToList();
+
+        }
+
+        return tiposDocumentoTercero;
+    }
+
+    private void InicializarDatosTercero()
+    {
+        if (terceroDTO is not null)
+        {
+            terceroDTO.Identificacion = 0;
+            terceroDTO.Digito = 0;
+            if (terceroDTO.TipoTercero.Equals("EMPRESA") || terceroDTO.TipoTercero.Equals("CLIENTE"))
+            {
+                terceroDTO.Naturaleza = naturalezas[indiceAnteriorSeleccionadoDeNaturalezas];
+                terceroDTO.Sedes = new List<SedeInterfazGraficaTerceroDTO>();
+            }
+            if (terceroDTO.TipoTercero.Equals("EMPLEADO"))
+            {
+                terceroDTO.Sedes = null;
+                terceroDTO.Naturaleza = string.Empty;
+
+            }
+            terceroDTO.RazonSocial = string.Empty;
+            terceroDTO.Nombre1 = string.Empty;
+            terceroDTO.Nombre2 = string.Empty;
+            terceroDTO.Apellido1 = string.Empty;
+            terceroDTO.Apellido2 = string.Empty; 
+            terceroDTO.Direccion = string.Empty;
+            terceroDTO.Telefono = string.Empty;
+            terceroDTO.Celular = string.Empty;
+            terceroDTO.Email = string.Empty;
+            terceroDTO.ActividadEconomica = string.Empty;
+        }
+
+    }
+
+
+
+
+    public void InicializarDatosParaNuevoTercero()
+    {
+        terceroDTO.TipoTercero = TipoTercero;
+        tiposDocumentoTercero = ObtenerTiposDocumentoPorTercero();
+        terceroDTO.TipoDocumento = tiposDocumentoTercero[0];
+        terceroDTO.Naturaleza = naturalezas[0];
+        departamentos.Clear();
+        ciudades.Clear();
+        var paisTercero = paises[0];
+        terceroDTO.Ubicacion.Pais = paisTercero;
+        var departamentosRepo = departamentoService.ObtenerDepartamentosDePais(paisTercero.Codigo);
+        if (departamentosRepo.Count > 0)
+        {
+            departamentos = new List<DepartamentoProvinciaInterfazGraficaVentaDTO>(departamentosRepo);
+            var departamentoTercero = departamentos[0];
+            terceroDTO.Ubicacion.DepartamentoProvincia = departamentoTercero;
+            var ciudadesRepo = ciudadService.ObtenerCiudadesDeDepartamento(departamentoTercero.Codigo);
+            if (ciudadesRepo.Count > 0)
+            {
+                ciudades = new List<CiudadInterfazGraficaVentaDTO>(ciudadesRepo);
+                terceroDTO.Ubicacion.Ciudad = ciudades[0];
+
+            }
+        }
+
+        if (terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA) || terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+        {
+            terceroDTO.Sedes = new List<SedeInterfazGraficaTerceroDTO>();
+
+        }
+
+        if (terceroDTO.TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+        {
+            terceroDTO.Impuestos = new List<ImpuestoInterfazGraficaVentaDTO>();    
+        }
+
+        if(TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+        {
+            terceroDTO.FechaInicio = DateOnly.FromDateTime(DateTime.Now);
+            terceroDTO.FechaFin = DateOnly.FromDateTime(DateTime.Now.AddYears(1));
+            if(cargosEmpleado.Count > 0)
+
+            {
+                terceroDTO.Cargo = cargosEmpleado[0]; 
+            }
+        }
+
+        InicializarDatosTercero();
+    }
+
+    private void CambiarEstado()
+    {
+        StateHasChanged();
+
+    }
+
+
+
+
+    private void InvalidarFormulario()
+    {
+        var tercero = terceroDTO;
+
+    }
+
+    private void Verificar()
+    {
+        var tercero = terceroDTO;
+        var terstr = terceroDTO.TipoTercero;
+        var accion = Accion;
+        var impuestos = impuestosTercero;
+        var tipoTercero = TipoTercero;
+        var dptos = departamentos;
+        var ciudadesm = ciudades;
+        var strfechaInicio = terceroDTO.FechaInicio.ToString("yyyy/MM/dd");
+    }
+
+    private void Onfocus()
+    {
+        var tercero = terceroDTO;
+        var terstr = terceroDTO.TipoTercero;
+
+    }
+
+}

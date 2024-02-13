@@ -1,0 +1,54 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject AreaService AreaService;
+
+
+<div class="col-lg-9 contact-form__wrapper p-5 order-lg-1 border border-3 formDesign">
+
+    <EditForm Model="componenteDTO" OnValidSubmit="GuardarComponente">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control" id="nombre" @bind="componenteDTO.nombre" required>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="area">Área de procesos: </label>
+                    <input type="text" class="form-control" id="area" value="@AreaService.AreaSeleccionada.nombre" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="componenteDTO.descripcion" required></textarea>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <button type="submit" name="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </div>
+    </EditForm>
+</div>
+<br />
+
+<ModalPersonalizado @ref="modalRegistroExitoso"/>
+
+@code {
+    private ModalPersonalizado modalRegistroExitoso;
+    ComponenteDTO componenteDTO = new ComponenteDTO();
+
+    protected async Task GuardarComponente()
+    {
+        await AreaService.AgregarComponente(componenteDTO);
+
+        // Limpiar los campos del formulario
+        componenteDTO = new ComponenteDTO();
+        modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+    }
+}

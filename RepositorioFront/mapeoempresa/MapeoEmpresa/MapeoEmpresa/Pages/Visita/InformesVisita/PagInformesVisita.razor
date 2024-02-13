@@ -1,0 +1,150 @@
+﻿@page "/InformesVisita"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaInformesVisita")]
+
+@inject VisitaService VisitaService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@using ChartJs.Blazor.PieChart
+
+<PageTitle>Informes</PageTitle>
+
+<h1><b>Informes de visitas</b></h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="4">Estado de visitas este mes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Programadas</strong>
+                        </td>
+                        <td colspan="2">@visitasProgramadas</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Finalizadas</strong>
+                        </td>
+                        <td colspan="2">@visitasFinalizadas</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>Total</strong>
+                        </td>
+                        <td colspan="2">@total</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        @if (visitasProgramadas != 0 || visitasFinalizadas != 0)
+        {
+            <div class="col-md-6">
+                <Chart Config="_configuracionGrafica"></Chart>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="pt-2">
+    @foreach (var item in types)
+    {
+        if (Array.IndexOf(types, item) == selected)
+        {
+            <button class="btn btn-secondary">@item.Name</button>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" @onclick="() => selected = Array.IndexOf(types, item)">@item.Name</button>
+        }
+    }
+</div>
+
+<div class="contenedor-bloque">
+    @GetRenderFragment(types[selected])
+</div>
+
+@code {
+    int selected;
+    private PieConfig _configuracionGrafica;
+    private long visitasProgramadas;
+    private long visitasFinalizadas;
+    private long total = 0;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    ComponentBase[] components = { new Elementos(), new Responsables() };
+    Type[] types => components.Select(c => c.GetType()).ToArray();
+
+    RenderFragment GetRenderFragment(Type type)
+    {
+        RenderFragment renderFragment = renderTreeBuilder =>
+        {
+            renderTreeBuilder.OpenComponent(0, type);
+            renderTreeBuilder.CloseComponent();
+        };
+        return renderFragment;
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        (visitasProgramadas, visitasFinalizadas) = VisitaService.ObtenerDatosGraficaVisitas(identificacionEmpresa);
+        total = visitasProgramadas + visitasFinalizadas;
+        RealizarConfiguracionGrafica();
+
+    }
+
+    private void RealizarConfiguracionGrafica()
+    {
+        _configuracionGrafica = new PieConfig();
+
+        _configuracionGrafica.Options = new PieOptions
+            {
+                Responsive = true,
+                //AspectRatio = 3,
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = "Estado de las visitas para este mes"
+                }
+            };
+
+        foreach (var item in new[] { "Visitas programadas", "Visitas finalizadas" })
+        {
+            _configuracionGrafica.Data.Labels.Add(item);
+        }
+
+        PieDataset<long> dataset = new PieDataset<long>(new[] { visitasProgramadas, visitasFinalizadas })
+            {
+                BackgroundColor = new[]
+                        {
+                ColorUtil.ColorHexString(103,193,99),
+                ColorUtil.ColorHexString(99,151,193),
+            }
+            };
+
+        _configuracionGrafica.Data.Datasets.Add(dataset);
+    }
+}

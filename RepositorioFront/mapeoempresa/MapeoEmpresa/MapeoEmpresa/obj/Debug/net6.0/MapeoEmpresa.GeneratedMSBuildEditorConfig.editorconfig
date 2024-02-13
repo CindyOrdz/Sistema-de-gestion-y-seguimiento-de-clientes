@@ -1,0 +1,149 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MapeoEmpresa
+build_property.RootNamespace = MapeoEmpresa
+build_property.ProjectDir = C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Lorena\Documents\Unillanos\Pasantia\mapeoempresa\MapeoEmpresa\MapeoEmpresa
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/CrearArea.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxDcmVhckFyZWEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/PagArea.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxQYWdBcmVhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/Crear.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxDcmVhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/PagComponente.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxQYWdDb21wb25lbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesOperativas/CrearListado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNPcGVyYXRpdmFzXENyZWFyTGlzdGFkby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesOperativas/GestionarCondiciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNPcGVyYXRpdmFzXEdlc3Rpb25hckNvbmRpY2lvbmVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesOperativas/PagCondicionesOperativas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNPcGVyYXRpdmFzXFBhZ0NvbmRpY2lvbmVzT3BlcmF0aXZhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesOperativas/VerListado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNPcGVyYXRpdmFzXFZlckxpc3RhZG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Empresa/Empresa.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW1wcmVzYVxFbXByZXNhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Empresa/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW1wcmVzYVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/CrearEquipo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxDcmVhckVxdWlwby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/PagEquipo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxQYWdFcXVpcG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/RegistroMedidas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxSZWdpc3Ryb01lZGlkYXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/MapaDeProcesos/PagMapaDeProcesos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwYURlUHJvY2Vzb3NcUGFnTWFwYURlUHJvY2Vzb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/CrearParte.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcQ3JlYXJQYXJ0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcTGlzdGFkby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/PagParte.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcUGFnUGFydGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/CrearPlanta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXENyZWFyUGxhbnRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXExpc3RhZG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/PagPlanta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXFBhZ1BsYW50YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Sede/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VkZVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Sede/PagSede.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VkZVxQYWdTZWRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-6q8wnreh06
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-t0cad2rwkv
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Lorena/Documents/Unillanos/Pasantia/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

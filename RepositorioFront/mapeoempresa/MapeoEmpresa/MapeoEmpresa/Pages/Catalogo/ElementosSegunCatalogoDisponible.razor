@@ -1,0 +1,8 @@
+﻿@page "/informacionelemento/{CodigoArticulo:int}"
+<InformacionElementoComponente CodigoArticulo="CodigoArticulo"/>
+
+
+@code{
+    [Parameter]
+    public int CodigoArticulo { get; set; }
+}

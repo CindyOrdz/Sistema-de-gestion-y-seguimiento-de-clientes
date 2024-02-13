@@ -1,0 +1,154 @@
+﻿@page "/CrearVisita"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaAgendarVisita")]
+
+@inject NavigationManager NavigationManager
+@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@using global::Terceros;
+@inject VisitaService VisitaService;
+@inject PlantaService PlantaService;
+
+
+<div class="flex-container">
+    <button class="btn" @onclick="ObtenerEmpresa">
+        <i class="oi oi-magnifying-glass"></i>
+    </button>
+    <h1><b>Empresa</b></h1>
+</div>
+
+<div class="col-lg-9 contact-form__wrapper">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="col-titulo">
+                <th colspan="2">Información encontrada</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="col-nombre">ID</td>
+                <td>@(empresa != null ? empresa.Identificacion : "")</td>
+
+            </tr>
+            <tr>
+                <td class="col-nombre">Razon social</td>
+                <td>@(empresa != null ? empresa.RazonSocial : "")</td>
+            </tr>
+            <tr>
+                <td class="col-nombre">Telefono</td>
+                <td>@(empresa != null ? empresa.Telefono : "")</td>
+            </tr>
+            <tr>
+                <td class="col-nombre">Direccion</td>
+                <td>@(empresa != null ? empresa.Direccion : "")</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>
+        <b>Listado de sedes</b>
+    </h3>
+
+    @if (ListaSedes != null)
+    {
+        @foreach (var sede in ListaSedes)
+        {
+            <div class="accordion" id="accordionHistorial">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@sede.Id" aria-expanded="false" aria-controls="collapse_@sede.Id">
+                            <div class="contenedor-info-sm-top col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>ID Sede: </strong> @sede.Id<br />
+                                        <strong>Responsable: </strong> @sede.Responsable<br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Direccion: </strong> @sede.Direccion <br />
+                                        <strong>Ciudad: </strong>  @sede.Ubicacion.Ciudad.Nombre <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="collapse_@sede.Id" class="accordion-collapse collapse" data-bs-parent=".accordion">
+                        <div class="accordion-body">
+                            <div class="contenedor-info-sm-top pt-4">
+                                <label class="txt-top font-txt">Plantas</label>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            ListaPlantas = new List<PlantaEmpresaClienteDTO>();
+                                            ListaPlantas = VisitaService.ListarSedesPlantas(sede.Id);
+                                        }
+
+                                        @if (ListaPlantas.Count > 0)
+                                        {
+                                            @foreach (var planta in ListaPlantas)
+                                            {
+                                                <tr>
+                                                    <td>@planta.id</td>
+                                                    <td>@planta.nombre</td>
+                                                    <td><button class="btn btn-success" @onclick="() => Seleccionar(planta)"><i class="oi oi-check"></i> Agendar Visita</button></td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="3">No se han registrado plantas para esta sede</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+
+
+</div>
+
+
+
+<ComponenteTerceros @ref="componenteTerceros" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" TipoTercero="@ParametrosComponenteTerceros.CLIENTE" CargarTerceroEvent=" CargarEmpresaDelComponente" />
+@code {
+    private ComponenteTerceros componenteTerceros;
+    private TerceroInterfazGraficaDTO empresa;
+    private List<SedeInterfazGraficaTerceroDTO> ListaSedes;
+    private List<PlantaEmpresaClienteDTO> ListaPlantas;
+    private SedeInterfazGraficaTerceroDTO SedeDTO;
+
+    private void Seleccionar(PlantaEmpresaClienteDTO planta)
+    {
+        PlantaService.PlantaSeleccionada = planta;
+        NavigationManager.NavigateTo("/DetallesVisita");
+    }
+
+    private void ObtenerEmpresa()
+    {
+        componenteTerceros.Mostrar();
+    }
+
+    private void CargarEmpresaDelComponente()
+    {
+        empresa = componenteTerceros.TerceroSeleccionado;
+        ListaSedes = empresa.Sedes;
+    }
+}

@@ -1,0 +1,4 @@
+﻿@page "/maestro_venta"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaRealizacionVentas")]
+
+<MaestroVenta />

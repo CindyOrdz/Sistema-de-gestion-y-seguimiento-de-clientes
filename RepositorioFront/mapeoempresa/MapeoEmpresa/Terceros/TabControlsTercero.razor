@@ -1,0 +1,175 @@
+﻿
+<div class="btn-group contenedor-tabs" role="group" aria-label="Basic outlined example">
+
+    <span class="btn btn-outline-secondary @cssTerceros" @onclick="()=>EventoDeRenderizado(TERCEROS)">@($"{cadenaTercero}s")</span>
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR" Policy="PoliticaActualizacionEmpresas">
+            <Authorized>
+                <span class="btn btn-outline-secondary @cssInformacionDetallada" @onclick="()=>{
+                    AccionInformacionDetallada = ParametrosComponenteTerceros.ACTUALIZAR_TERCERO;
+                    EventoDeRenderizado(INFORMACION_DETALLADA);
+                    }">
+                    Información detallada
+                </span>
+            </Authorized>
+        </AuthorizeView>
+        
+    }
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR,EMPRESA,EMPLEADO" Policy="PoliticaActualizacionClientes">
+            <Authorized>
+                <span class="btn btn-outline-secondary @cssInformacionDetallada" @onclick="()=>{
+                    AccionInformacionDetallada = ParametrosComponenteTerceros.ACTUALIZAR_TERCERO;
+                    EventoDeRenderizado(INFORMACION_DETALLADA);
+                    }">
+                    Información detallada
+                </span>
+            </Authorized>
+        </AuthorizeView>
+        
+    }
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR,EMPRESA" Policy="PoliticaActualizacionEmpleados">
+            <Authorized>
+                <span class="btn btn-outline-secondary @cssInformacionDetallada" @onclick="()=>{
+                    AccionInformacionDetallada = ParametrosComponenteTerceros.ACTUALIZAR_TERCERO;
+                    EventoDeRenderizado(INFORMACION_DETALLADA);
+                    }">
+                    Información detallada
+                </span>
+            </Authorized>
+        </AuthorizeView>
+
+    }
+
+
+</div>
+
+<TerceroTab @ref="terceroTab"/>
+<InformacionDetalladaTab @ref="informacionDetalladaTab"/>
+<ModalConfirmacion @ref="modalConfirmacion"/>
+
+
+
+@code {
+    private string componenteActual = TERCEROS;
+    [CascadingParameter(Name = "TipoTercero")]
+    public string TipoTercero { get; set; }
+    private string cadenaTercero = string.Empty;
+    private InformacionDetalladaTab? informacionDetalladaTab;
+    private ModalConfirmacion? modalConfirmacion;
+    private TerceroTab? terceroTab;
+    private string cssTerceros = CLASE_MOSTRAR_CSS;
+    private string cssInformacionDetallada = string.Empty;
+    public string AccionInformacionDetallada { get; set; } = string.Empty;
+
+
+    protected override Task OnInitializedAsync()
+    {
+
+        cadenaTercero = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(TipoTercero.ToLower());
+
+        return base.OnInitializedAsync();
+    }
+
+    public void EventoDeRenderizado(string siguiente)
+    {
+        if (siguiente.Equals(componenteActual) && componenteActual.Equals(TERCEROS)) return;
+
+        if (AccionInformacionDetallada.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroTab.terceroSeleccionado is null && siguiente.Equals(INFORMACION_DETALLADA))
+        {
+            modalConfirmacion.Mensaje = $"Para ver la información detallada de {cadenaTercero} debes filtrar y seleccionar una opción";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        if (AccionInformacionDetallada.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO) && terceroTab.terceroSeleccionado is not null)
+        {
+            informacionDetalladaTab.terceroDTO = MapperTerceros.ClonarTerceroInterfazGraficaDTO(terceroTab.terceroSeleccionado);
+            terceroTab.InicializarListaTercerosFiltrados();
+        }
+
+        if (AccionInformacionDetallada.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO) && siguiente.Equals(INFORMACION_DETALLADA))
+        {
+            informacionDetalladaTab.InicializarDatosParaNuevoTercero();
+        }
+
+
+        DisposeComponente();
+        componenteActual = siguiente;
+        MostrarComponente();
+        StateHasChanged();
+
+    }
+
+
+    private void MostrarComponente()
+    {
+        switch (componenteActual)
+        {
+            case TERCEROS:
+                cssTerceros = CLASE_MOSTRAR_CSS;
+                terceroTab.Mostrar();
+                break;
+            case INFORMACION_DETALLADA:
+                informacionDetalladaTab.Accion = AccionInformacionDetallada;
+                cssInformacionDetallada = CLASE_MOSTRAR_CSS;
+                informacionDetalladaTab.Mostrar();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void DisposeComponente()
+    {
+        switch (componenteActual)
+        {
+            case TERCEROS:
+                cssTerceros = string.Empty;
+                terceroTab.Dispose();
+                break;
+            case INFORMACION_DETALLADA:
+                cssInformacionDetallada = string.Empty;
+                informacionDetalladaTab.Dispose();
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    public void InicializarListaTercerosFiltrados()
+    {
+        terceroTab.InicializarListaTercerosFiltrados();    
+    }
+
+    public void FiltrarTerceroPorIdentificacion(long identificacion)
+    {
+        terceroTab.FiltrarTerceroPorIdentificacion(identificacion);
+    }
+
+    public void FiltrarTercerosPorIniciales(string iniciales)
+    {
+        terceroTab.FiltrarTerceroPorIniciales(iniciales);
+    }
+
+    public TerceroInterfazGraficaDTO ObtenerTerceroSeleccionado()
+    {
+
+        return terceroTab.terceroSeleccionado;    
+    }
+
+   
+
+    private const string TERCEROS = "Terceros";
+    private const string INFORMACION_DETALLADA = "Informacion_Detallada";
+
+    private const string CLASE_MOSTRAR_CSS = "mostrar-tab";
+
+}

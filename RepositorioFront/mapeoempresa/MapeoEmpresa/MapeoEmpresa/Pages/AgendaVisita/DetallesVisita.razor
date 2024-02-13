@@ -1,0 +1,505 @@
+﻿@page "/DetallesVisita"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaAgendarVisita")]
+
+@using System.Numerics;
+@using MapeoEmpresa.Services;
+@using EntidadesNegocio.EntidadesDto;
+@inject PlantaService PlantaService;
+@inject NavigationManager NavigationManager;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<PageTitle>Agendamiento de visitas</PageTitle>
+
+<div class="flex-container">
+    <button class="btn" @onclick="Retroceder">
+        <i class="fas fa-circle-chevron-left"></i>
+    </button>
+    <h1><b>Agendamiento de visitas</b></h1>
+</div>
+
+<div class="col-lg-9 contact-form__wrapper">
+    <div class="row">
+        <div class="input-group mb-3">
+            <span class="input-group-text input-title">ID Planta</span>
+            <input type="text" value="@PlantaService.PlantaSeleccionada.id" class="form-control custom-input" id="id" readonly>
+            <span class="input-group-text input-title">Nombre</span>
+            <input type="text" value="@PlantaService.PlantaSeleccionada.nombre" class="form-control custom-input" id="nombre" readonly>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-9 contact-form__wrapper p-3 order-lg-1 border border-3 formDesign">
+    <h6><b>Agendar visita</b></h6>
+    <EditForm Model="agendaDTO" OnValidSubmit="AgregarVisita">
+        <DataAnnotationsValidator />
+        <div class="row">
+
+            <div class="col-sm-10 mb-3">
+                <div class="form-group">
+                    <label for="responsable">Responsable: </label>
+                    <input type="text" class="form-control" id="responsable" @bind="nombreCompleto" readonly>
+                </div>
+            </div>
+            <div class="col-sm-2 mb-3">
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-light" @onclick="ObtenerEmpleado"><i class="oi oi-magnifying-glass"></i></button>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio:</label>
+                    <input type="datetime-local" class="form-control" id="fechaInicio" @bind="agendaDTO.fechaInicio" required>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="fechaFinaliza">Fecha de Finalización: </label>
+                    <input type="datetime-local" class="form-control" id="fechaFinaliza" @bind="agendaDTO.fechaFinaliza" required>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="contactoEmpresa">Contacto de empresa: </label>
+                    <input type="text" class="form-control" id="contactoEmpresa" @bind="agendaDTO.contactoEmpresa" required>
+                </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+                @if (alerta)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error: </strong> Debe seleccionar un responsable.
+                    </div>
+                }
+                <button type="submit" name="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </div>
+    </EditForm>
+</div>
+
+<h6 class="pt-4">
+    <b>Listado de visitas agendadas</b>
+</h6>
+
+@if (ListAgendas == null)
+{
+    <p>Cargando...</p>
+}
+else if (ListAgendas.Count == 0)
+{
+    <p class="pt-3">No se han agendado visitas para esta planta</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de Inicio</th>
+                <th>Estado</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in ListAgendas)
+            {
+                <tr>
+                    <td>@p.id</td>
+                    <td>@p.fechaInicio</td>
+                    <td><strong>@p.estado</strong></td>
+                    @if (p.estado != "Finalizada")
+                    {
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(p)"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id)"><i class="oi oi-x"></i></button></td>
+                    }
+                    else
+                    {
+                        <td><button class="btn btn-primary" @onclick="AlertaOpcionInactiva"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="AlertaOpcionInactiva"><i class="oi oi-x"></i></button></td>
+                    }
+                    
+                    <td><button class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="col-auto">
+        <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+    </div>
+}
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>¿Desea eliminar la agenda con ID @ID?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarAgenda>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Agenda ID @AgendaDTO.id</strong></h5>
+
+                    <EditForm Model="AgendaDTO">
+                        <DataAnnotationsValidator />
+                        
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha de inicio: </label>
+                            <input type="datetime-local" class="form-control" id="fechaInicio" @bind="AgendaDTO.fechaInicio">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fechaFinaliza">Fecha de finalización: </label>
+                            <input type="datetime-local" class="form-control" id="fechaFinaliza" @bind="AgendaDTO.fechaFinaliza">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactoEmpresa">Contacto de empresa: </label>
+                            <input type="text" class="form-control" id="contactoEmpresa" @bind="AgendaDTO.contactoEmpresa">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10 mb-3">
+                                <div class="form-group">
+                                    <label for="responsable">Responsable Actual: </label>
+                                    <input type="text" class="form-control" id="responsable" @bind="AgendaDTO.nombreResponsable" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 mb-3">
+                                <div class="form-group">
+                                    <br />
+                                    <button class="btn btn-light" @onclick="MostrarEditarResponsable"><i class="oi oi-pencil"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (mostrarSegundoLabel)
+                        {
+                            <div class="row">
+                                <div class="col-sm-10 mb-3">
+                                    <div class="form-group">
+                                        <label for="responsable">Nuevo responsable: </label>
+                                        <input type="text" class="form-control" id="responsable" @bind="nombreCompleto" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 mb-3">
+                                    <div class="form-group">
+                                        <br />
+                                        <button class="btn btn-light" @onclick="ObtenerEmpleado"><i class="oi oi-magnifying-glass"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                        <br /><button type="submit" class="btn btn-primary" @onclick=Guardar>Editar Agenda</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="id">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@AgendaDTO.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaCreacion">Fecha de creación: </label>
+                                <input type="text" class="form-control" id="fechaCreacion" value="@AgendaDTO.fechaCreacion" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaInicio">Fecha de inicio: </label>
+                                <input type="text" class="form-control" id="fechaInicio" value="@AgendaDTO.fechaInicio" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="fechaFinaliza">Fecha de finalización: </label>
+                                <input type="text" class="form-control" id="fechaFinaliza" value="@AgendaDTO.fechaFinaliza" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="responsable">Responsable: </label>
+                        <input type="text" class="form-control" id="responsable" value="@AgendaDTO.nombreResponsable" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cantidadDias">Cantidad de días: </label>
+                        <input type="text" class="form-control" id="cantidadDias" value="@AgendaDTO.cantidadDias" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactoEmpresa">Contacto de empresa: </label>
+                        <input type="text" class="form-control" id="contactoEmpresa" value="@AgendaDTO.contactoEmpresa" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="asociada">Venta asociada: </label>
+                        <input type="text" class="form-control" id="asociada" value="@(AgendaDTO.idVentaAsociada == 0 ? "Pendiente" : AgendaDTO.idVentaAsociada)" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado: </label>
+                        <input type="text" class="form-control" id="estado" value="@AgendaDTO.estado" readonly>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<ModalPersonalizado @ref="modalRegistroExitoso" />
+<ComponenteTerceros @ref="componenteTerceros" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" TipoTercero="@ParametrosComponenteTerceros.EMPLEADO" CargarTerceroEvent=" CargarEmpleadoDelComponente" />
+@code {
+
+    private ModalPersonalizado modalRegistroExitoso;
+    VisitaDTO agendaDTO = new VisitaDTO();
+    private List<VisitaDTO> ListAgendas;
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    VisitaDTO AgendaDTO = new VisitaDTO();
+    private ComponenteTerceros componenteTerceros;
+    private TerceroInterfazGraficaDTO empleado;
+    private String nombreCompleto = "";
+    private bool botonPresionado = false;
+    private bool mostrarSegundoLabel = false;
+    private bool alerta = false;
+
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    protected async Task AgregarVisita()
+    {
+        if (botonPresionado) //Valida que se selecciono un responsable
+        {
+            // Validación de fecha de finalización mayor que la de inicio
+            if (agendaDTO.fechaFinaliza <= agendaDTO.fechaInicio)
+            {
+                alerta = false;
+                modalRegistroExitoso.Mostrar("La fecha de finalización no puede ser anterior a la fecha de inicio, por favor seleccione otra.");
+            }
+            else
+            {
+                await PlantaService.AgregarAgenda(agendaDTO, empleado, identificacionEmpresa);
+
+                //Limpiar los campos del formulario
+                agendaDTO.contactoEmpresa = "";
+                agendaDTO.fechaInicio = DateTime.Now;
+                agendaDTO.fechaFinaliza = DateTime.Now;
+                nombreCompleto = "";
+                botonPresionado = false;
+                alerta = false;
+
+                ListAgendas = PlantaService.ListarAgendas(1, elementosPorPagina);
+                modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+            }
+
+        }
+        else
+        {
+            alerta = true;
+        }
+
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoListadoVisitas"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginas = calcularPaginasTotales();
+
+        ListAgendas = PlantaService.ListarAgendas(paginaActual, elementosPorPagina);
+
+        // Inicializa los campos de fecha y hora con los valores actuales
+        agendaDTO.fechaInicio = DateTime.Now;
+        agendaDTO.fechaFinaliza = DateTime.Now;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarAgenda()
+    {
+        await PlantaService.BorrarAgendas(ID);
+        modalEliminar = false;
+        ListAgendas =PlantaService.ListarAgendas(paginaActual, elementosPorPagina);
+    }
+
+    protected async Task Guardar()
+    {
+        await PlantaService.EditarAgendas(AgendaDTO, empleado);
+        modalEditar = false;
+        ListAgendas =PlantaService.ListarAgendas(paginaActual, elementosPorPagina);
+        nombreCompleto = "";
+    }
+
+    //MODALES
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+        mostrarSegundoLabel = false;
+    }
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    private void AbrirModalEditar(VisitaDTO agenda)
+    {
+        modalEditar = true;
+        AgendaDTO = agenda;
+    }
+
+    private void AbrirModalInformacion(VisitaDTO agenda)
+    {
+        modalInformacion = true;
+        AgendaDTO = agenda;
+    }
+
+    private void Retroceder()
+    {
+        NavigationManager.NavigateTo("/CrearVisita");
+    }
+
+    private void ObtenerEmpleado()
+    {
+        componenteTerceros.Mostrar();
+    }
+
+    private void CargarEmpleadoDelComponente()
+    {
+        empleado = componenteTerceros.TerceroSeleccionado;
+        nombreCompleto = $"{empleado.Nombre1} {empleado.Nombre2} {empleado.Apellido1} {empleado.Apellido2}";
+        botonPresionado = true;
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        paginaActual = 1;
+        totalPaginas = calcularPaginasTotales();
+        ListAgendas =PlantaService.ListarAgendas(paginaActual, elementosPorPagina);
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)PlantaService.ObtenerTotalVisitas();
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListAgendas = PlantaService.ListarAgendas(paginaActual, elementosPorPagina);
+    }
+
+     private void AlertaOpcionInactiva()
+    {
+        modalRegistroExitoso.Mostrar("Esta opción se encuentra inactiva porque la visita ya finalizó");
+    }
+
+    //EDITAR RESPONSABLE
+    private void MostrarEditarResponsable()
+    {
+        mostrarSegundoLabel = !mostrarSegundoLabel;
+    }
+}

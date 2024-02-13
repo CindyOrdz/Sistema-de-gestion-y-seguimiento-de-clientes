@@ -1,0 +1,332 @@
+@inherits ComponenteTab
+@inject DepartamentoService departamentoService
+@inject ciudadService ciudadService
+@inject SedeServices sedeService
+@if(display)
+{
+    <div class="contenedor-tab">
+        <EditForm Model="Sede" OnValidSubmit="GuardarSede" OnInvalidSubmit="InvalidarFormulario">
+            <DataAnnotationsValidator />
+            @if (AccionFormulario.Equals(ParametrosComponenteTerceros.ACTUALIZAR_SEDE))
+            {
+                <div class="row">
+                    <label class="col-3 col-form-label" for="codigo_sede">Código sede: </label>
+                    <div class="col-8">
+                        <InputNumber @bind-Value="Sede.Id" class="form-control" id="codigo_sede" disabled />
+                        <ValidationMessage For="()=>Sede.Id" class="font-error"></ValidationMessage>
+                    </div>
+                </div>   
+            }
+
+            <div class="row mt-3">
+                <label class="col-3 col-form-label" for="responsable_sede">Responsable </label>
+                <div class="col-8">
+
+                    <InputText @bind-Value="Sede.Responsable" class="form-control" id="responsable_sede"></InputText>
+                    <ValidationMessage For="()=>Sede.Responsable" class="font-error"></ValidationMessage>
+                </div>
+            </div>
+
+
+
+            <div class="row mt-3">
+                <label class="col-3 col-form-label" for="email1_sede">Email 1: </label>
+                <div class="col-8">
+                    <InputText @bind-Value="Sede.Email1" class="form-control" id="email1_sede" />
+                    <ValidationMessage For="()=>Sede.Email1" class="font-error"></ValidationMessage>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <label class="col-3 col-form-label" for="email2_sede">Email 2: </label>
+                <div class="col-8">
+                    <InputText @bind-Value="Sede.Email2" class="form-control" id="email2_sede"></InputText>
+                    <ValidationMessage For="()=>Sede.Email2" class="font-error"></ValidationMessage>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <label class="col-3 col-form-label" for="direccion_sede">Telefono: </label>
+                <div class="col-8">
+                    <InputText @bind-Value="Sede.Telefono" class="form-control" id="direccion_sede" />
+                    <ValidationMessage For="()=>Sede.Telefono" class="font-error"></ValidationMessage>
+                </div>
+
+            </div>
+
+
+            <div class="row mt-3">
+                <label class="col-3 col-form-label">Departamento (Estado)</label>
+                <div class="col-8">
+                    <select class="form-select" @onchange="CargarDepartamentoASede">
+                        @foreach (var departamento in departamentos)
+                        {
+                            if (Sede.Ubicacion.DepartamentoProvincia.Codigo.Equals(departamento.Codigo) && AccionFormulario.Equals(ParametrosComponenteTerceros.ACTUALIZAR_SEDE))
+                            {
+                                <option value="@departamento.Codigo" selected>@departamento.Nombre</option>
+                                @(Sede.Ubicacion.DepartamentoProvincia = departamento);
+                                @(ciudades = ciudadService.ObtenerCiudadesDeDepartamento(departamento.Codigo));
+                            }
+                            else
+                            {
+                                <option value="@departamento.Codigo">@departamento.Nombre</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+
+                <label class="col-3 col-form-label">Municipio (Provincia)</label>
+                <div class="col-8">
+                    <select class="form-select" @onchange="CargarCiudadASede">
+                        @foreach (var ciudad in ciudades)
+                        {
+                            @if (Sede.Ubicacion.Ciudad.Codigo.Equals(ciudad.Codigo))
+                            {
+                                <option value="@ciudad.Codigo" selected>@ciudad.Nombre</option>
+                                @(Sede.Ubicacion.Ciudad = ciudad);
+                            }
+                            else
+                            {
+                                <option value="@ciudad.Codigo">@ciudad.Nombre</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3 ">
+                <label class="col-3 col-form-label" for="direccion_sede">Dirección: </label>
+                <div class="col-8">
+                    <InputText @bind-Value="Sede.Direccion" class="form-control" id="direccion_sede" />
+                    <ValidationMessage For="()=>Sede.Direccion" class="font-error"></ValidationMessage>
+                </div>
+            </div>
+
+
+            <div class="modal-footer mt-3">
+                <button type="submit" class="btn btn-info">Guardar</button>
+            </div>
+        </EditForm>
+        <button @onclick="Validar">validar</button>
+    </div>
+    <ModalConfirmacion @ref="ModalConfirmacion"/>
+}
+
+@code {
+
+    [Parameter]
+    public EventCallback CambiarEstadoInfoDetalladatEvent { get; set; }
+
+    [Parameter]
+    public PaisInterfazGraficaVentaDTO PaisSede { get; set; }
+    [CascadingParameter(Name = "sedesTercero")]
+    public List<SedeInterfazGraficaTerceroDTO> SedesTercero { get; set; }
+    [CascadingParameter(Name = "AccionFormularioTercero")]
+    public string AccionFormularioTerceros { get; set; }
+    [CascadingParameter(Name = "identificacionTercero")]
+    public long IdentificacionTercero { get; set; }
+    public bool FormularioValido { get; set; } = false;
+    public string AccionFormulario { get; set; } = ParametrosComponenteTerceros.NUEVA_SEDE;
+    private ModalConfirmacion ModalConfirmacion;
+    public SedeInterfazGraficaTerceroDTO Sede { get; set; } = new SedeInterfazGraficaTerceroDTO();
+    private List<DepartamentoProvinciaInterfazGraficaVentaDTO> departamentos = new List<DepartamentoProvinciaInterfazGraficaVentaDTO>();
+    private List<CiudadInterfazGraficaVentaDTO> ciudades = new List<CiudadInterfazGraficaVentaDTO>();
+    private int indiceAnteriorSeleccionadoDeCiudades = 0;
+    private long indiceMaximoSedesBD = 1;
+
+
+    protected override Task OnInitializedAsync()
+    {
+
+        InicializarUbicacion();
+        return base.OnInitializedAsync();
+    }
+
+    public void InicializarUbicacion()
+    {
+
+        if (PaisSede is not null)
+        {
+            var codigoPais = PaisSede.Codigo;
+            if (!string.IsNullOrWhiteSpace(codigoPais))
+            {
+                Sede.Ubicacion.Pais = PaisSede;
+                departamentos = departamentoService.ObtenerDepartamentosDePais(codigoPais);
+                if (departamentos.Count > 0)
+                {
+                    var departamentoSede = departamentos[0];
+                    Sede.Ubicacion.DepartamentoProvincia = departamentoSede;
+                    ciudades = ciudadService.ObtenerCiudadesDeDepartamento(departamentoSede.Codigo);
+                    if (ciudades.Count > 0)
+                    {
+                        Sede.Ubicacion.Ciudad = ciudades[0];
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    private void CargarDepartamentoASede(ChangeEventArgs e)
+    {
+        var codigodepartamento = e.Value.ToString();
+        var departamentoSede = departamentos.FirstOrDefault(dpto => dpto.Codigo == codigodepartamento);
+        Sede.Ubicacion.DepartamentoProvincia = departamentoSede;
+        int indice = departamentos.FindIndex(dpto => dpto.Codigo == departamentoSede.Codigo);
+
+        var ciudadesRepo = ciudadService.ObtenerCiudadesDeDepartamento(departamentoSede.Codigo);
+        ciudades = new List<CiudadInterfazGraficaVentaDTO>(ciudadesRepo);
+
+        if (ciudades.Count > 0)
+        {
+            if (ciudades.Count < (indiceAnteriorSeleccionadoDeCiudades + 1))
+            {
+                indiceAnteriorSeleccionadoDeCiudades = 0;
+            }
+            Sede.Ubicacion.Ciudad = ciudades[indiceAnteriorSeleccionadoDeCiudades];
+        }
+        else
+        {
+            Sede.Ubicacion.Ciudad = null;
+            indiceAnteriorSeleccionadoDeCiudades = 0;
+        }
+
+    }
+
+    private void CargarCiudadASede(ChangeEventArgs e)
+    {
+        var codigociudad = e.Value.ToString();
+        var ciudadSede = ciudades.FirstOrDefault(ciudad => ciudad.Codigo == codigociudad);
+        int indice = ciudades.FindIndex(ciudad => ciudad.Codigo == ciudadSede.Codigo);
+        if (indice != -1)
+        {
+            indiceAnteriorSeleccionadoDeCiudades = indice;
+        }
+        else
+        {
+            indiceAnteriorSeleccionadoDeCiudades = 0;
+
+        }
+
+        Sede.Ubicacion.Ciudad = ciudadSede;
+
+    }
+
+    private void GuardarSede()
+    {
+        if (Sede.Ubicacion.DepartamentoProvincia is null || Sede.Ubicacion.Ciudad is null)
+        {
+            ModalConfirmacion.Mensaje = "Debe seleccionar un departamento y un municipio";
+            ModalConfirmacion.Mostrar();
+            return;
+        }
+
+        if (AccionFormulario.Equals(ParametrosComponenteTerceros.NUEVA_SEDE))
+        {
+            AgregarSede();
+        }
+
+
+        if (AccionFormulario.Equals(ParametrosComponenteTerceros.ACTUALIZAR_SEDE))
+        {
+            ActualizarSede();
+
+        }
+        LimpiarDatosSede();
+
+    }
+
+    private void InvalidarFormulario()
+    {
+        FormularioValido = false;
+    }
+
+    public void LimpiarDatosSede()
+    {
+        Sede.Id = 0;
+        Sede.Direccion = string.Empty;
+        Sede.Responsable = string.Empty;
+        Sede.Email1 = string.Empty;
+        Sede.Email2 = string.Empty;
+        Sede.Telefono = string.Empty;
+
+
+    }
+
+    private void AgregarSede()
+    {
+        if (AccionFormularioTerceros.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO))
+        {
+            indiceMaximoSedesBD += SedesTercero.Count;
+            var sedeNueva = MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(Sede);
+            sedeNueva.Id = indiceMaximoSedesBD;
+            SedesTercero.Add(sedeNueva);
+            CambiarEstadoInfoDetalladatEvent.InvokeAsync();
+        }
+
+        if (AccionFormularioTerceros.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO))
+        {
+            var sedeNueva = MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(Sede);
+            int resultado = sedeService.InsertarSede(sedeNueva, IdentificacionTercero);
+            FormularioValido = true;
+            if (resultado == 1)
+            {
+                ModalConfirmacion.Mensaje = "Se ha agregado la sede con éxito";
+                ModalConfirmacion.Mostrar();
+            }
+            else
+            {
+                ModalConfirmacion.Mensaje = "ha ocurrido un error al agregar la sede";
+                ModalConfirmacion.Mostrar();
+            
+            }
+        }
+
+    }
+
+    private void ActualizarSede()
+    {
+        if (AccionFormularioTerceros.Equals(ParametrosComponenteTerceros.NUEVO_TERCERO))
+        {
+            var sedeNueva = MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(Sede);
+            int indice  = SedesTercero.FindIndex(sede => sede.Id == sedeNueva.Id);
+            SedesTercero[indice] = sedeNueva;
+            FormularioValido = true;
+        }
+
+        if (AccionFormularioTerceros.Equals(ParametrosComponenteTerceros.ACTUALIZAR_TERCERO))
+        {
+            var sedeNueva = MapperTerceros.ClonarSedeInterfazGraficaTerceroDTO(Sede);
+            int resultado = sedeService.ActualizarSede(sedeNueva);
+            FormularioValido = true;
+            if (resultado == 1)
+            {
+                ModalConfirmacion.Mensaje = "Se ha actualizado la sede con éxito";
+                ModalConfirmacion.Mostrar();
+                CambiarEstadoInfoDetalladatEvent.InvokeAsync();
+            }
+            else
+            {
+                ModalConfirmacion.Mensaje = "Ocurrió un error al actualizar la sede";
+                ModalConfirmacion.Mostrar();
+            }
+        }
+    }
+
+    private void Validar()
+    {
+        var sede = Sede;
+        var accion = AccionFormulario;
+        var ciuddes = ciudades;
+        var dptos = departamentos;
+        var accionFormTerceros = AccionFormularioTerceros;
+
+    }
+
+}

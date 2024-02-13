@@ -1,0 +1,869 @@
+﻿@inject ElementoService elementoService
+@inject CatalogoService catalogoService
+@inherits ComponenteTab
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+@using Microsoft.AspNetCore.Components.Forms
+<div class="container border border-secondary p-3">
+    <div class="row">
+        <div class="col-5">
+            <b class="small">Digite la información del artículo a buscar</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="d-flex flex-wrap">
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="codigo" @onchange="() => opcionSeleccionada(1)" checked />
+                    <label class="form-check-label" for="codigo">Código</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="nombre" @onchange="() => opcionSeleccionada(2)" />
+                    <label class="form-check-label" for="nombre">Nombre</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="set" @onchange="() => opcionSeleccionada(3)" />
+                    <label class="form-check-label" for="set">Set</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="code" @onchange="() => opcionSeleccionada(4)" />
+                    <label class="form-check-label" for="marca">Marca</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="todos" @onchange="() => opcionSeleccionada(5)" />
+                    <label class="form-check-label" for="todos">Todos</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="referencias" @onchange="() => opcionSeleccionada(6)" />
+                    <label class="form-check-label" for="referencias">Referencias</label>
+                </div>
+                <div class="form-check form-check-inline col-xs-4">
+                    <input class="form-check-input" type="radio" name="opciones" value="nombreyreferencias" @onchange="() => opcionSeleccionada(7)" />
+                    <label class="form-check-label" for="nombreyreferencias">Nombre y referencias</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+
+        <div class="row">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="d-flex flex-wrap">
+                            @if (display_codigo)
+                            {
+                                <div class="col-xs-6">
+                                    <div class="d-flex flex-wrap justify-content-left">
+                                        <div class="col-xs-6 col-6">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="number" class="form-control form-control-sm" placeholder="Código" @bind-value="@codigobuscar" />
+                                                <label class="text-danger" for="input-id-cliente">CÓDIGO</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (display_nombre)
+                            {
+                                <div class="col-xs-6">
+                                    <div class="d-flex flex-wrap justify-content-left">
+                                        <div class="col-xs-6 col-6">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="Nombre" @bind-value="nombrebuscar" />
+                                                <label class="text-danger" for="input-id-cliente">NOMBRE</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (display_set)
+                            {
+                                <div class="col-xs-6">
+                                    <div class="d-flex flex-wrap justify-content-left">
+                                        <div class="col-xs-6 col-6">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="Set" @bind-value="setbuscar" />
+                                                <label class="text-danger" for="input-id-cliente">SET</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (display_marca)
+                            {
+                                <div class="col-xs-6">
+                                    <div class="d-flex flex-wrap justify-content-left">
+                                        <div class="col-xs-6 col-6">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="Marca" @bind-value="marcabuscar" />
+                                                <label class="text-danger" for="input-id-cliente">MARCA</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            @if (display_referencias)
+                            {
+                                <div class="col-xs-12">
+                                    <div class="d-flex flex-wrap justify-content-left">
+                                        <div class="col-xs-2 col-2">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="ref1" @bind-value="ref1" />
+                                                <label class="text-danger" for="input-id-cliente">REF1</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-2">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="ref2" @bind-value="ref2" />
+                                                <label class="text-danger" for="input-id-cliente">REF2</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-2">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="ref3" @bind-value="ref3" />
+                                                <label class="text-danger" for="input-id-cliente">REF3</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-2">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="ref4" @bind-value="ref4" />
+                                                <label class="text-danger" for="input-id-cliente">REF4</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-2 col-2">
+                                            <div class="d-flex flex-column align-items-left">
+                                                <input type="text" class="form-control form-control-sm" placeholder="ref5" @bind-value="ref5" />
+                                                <label class="text-danger" for="input-id-cliente">REF5</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }<div class="col-xs-12">
+                                <div class="d-flex flex-wrap justify-content-left">
+                                    <button class="btn btn-link btn-sm" @onclick="Buscar">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <Paginacion PaginasTotales="paginasTotales" PaginaActual="paginaActual" Radio="1"
+                                    PaginaSeleccionada="PaginaSeleccionada"></Paginacion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+    .selected-row {
+        background-color: #7FB3D5; /* Color azul agua marina */
+    }
+</style>
+<div class="contenedor-tab border border-secondary p-4">
+    <div class="contenedor-grid">
+        <div class="contenedor-tabla mb-3">
+            <table class="table tabla-detalles table-hover cursor-pointer mb-3">
+                <thead>
+                    <tr>
+                        <th class="text-center ancho-columna-num">
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Código</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Descripción</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Referencia</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Marca</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">SET</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Tipo</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Disponible en Bodega</label>
+                        </th>
+                        <th class="text-center ancho-columna-num">
+                            <label class="font-txt">Disponible en almacén</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < elementos.Count; i++)
+                    {
+                        var indice = i;
+                        var referencia = elementos[indice].Ref1 + " " + elementos[indice].Ref2 + " " + elementos[indice].Ref3 + " " + elementos[indice].Ref4 + " " + elementos[indice].Ref5;
+                        var elementoActual = elementos[indice];
+                        <tr class="@elementoActual.ClaseCss" @onclick="() => EventoTeclado(indice)">
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento"></label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].CodigoArticulo</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].Nombre</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@referencia</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].Marca</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].Sett</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].TipoElemento</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].CantidadDisponibleBodega</label>
+                            </td>
+                            <td class="text-center">
+                                <label class="font-info-venta cursor-pointer-elemento">@elementos[indice].CantidadDisponibleAlmacen</label>
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+
+<div class="row mt-3">
+    <div class="col"></div>
+    <div class="col-auto">
+        <span @onclick="InicializarDatosElementoActual" class="btn btn-outline-dark"><i class="fa-solid fa-file-circle-plus fas"></i></span>
+    </div>
+</div>
+
+
+<div class="container border border-secondary p-4 mt-3">
+    <div class="row">
+        <div class="col-12">
+            <b class="small">Información del elemento</b>
+        </div>
+    </div>
+    <EditForm Model="elementoActual" OnValidSubmit="SubmitFormulario">
+        <DataAnnotationsValidator />
+        <div class="row">
+
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="code" class="input-group-text">Código</label>
+                    <InputNumber id="code" class="form-control" @bind-Value="elementoActual.CodigoArticulo" disabled />
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="nombre" class="input-group-text">Nombre</label>
+                    <InputText id="nombre" class="form-control" @bind-Value="elementoActual.Nombre" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Nombre)" />
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="marca" class="input-group-text">Marca</label>
+                    <select class="form-control" id="marca" @onchange="cargarIdMarca">
+                        @foreach (var mar in marcas)
+                        {
+                            @if (accion == ACTUALIZAR && elementoActual.IdMarca == mar.Id)
+                            {
+                                <option selected class="form-control" value="@mar.Id">@mar.Marca</option>
+                            }
+                            else
+                            {
+                                <option class="form-control" value="@mar.Id">@mar.Marca</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="ref1" class="input-group-text">REF1</label>
+                    <InputText id="ref1" class="form-control" @bind-Value="elementoActual.Ref1" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Ref1)" />
+            </div>
+
+
+
+            <div class="col-1 d-flex flex-column align-items-center">
+                <span class="btn btn-primary">
+                    <i class="fas fa-m"></i>
+                </span>
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="ref2" class="input-group-text">REF2</label>
+                    <InputText id="ref2" class="form-control" @bind-Value="elementoActual.Ref2" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Ref2)" />
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="ref3" class="input-group-text">REF3</label>
+                    <InputText id="ref3" class="form-control" @bind-Value="elementoActual.Ref3" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Ref3)" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="ref4" class="input-group-text">REF4</label>
+                    <InputText id="ref4" class="form-control" @bind-Value="elementoActual.Ref4" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Ref4)" />
+            </div>
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label for="ref5" class="input-group-text">REF5</label>
+                    <InputText id="ref5" class="form-control" @bind-Value="elementoActual.Ref5" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Ref5)" />
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label for="catalogo" class="input-group-text">Catálogos</label>
+                    <select class="form-control" id="catalogo" @onchange="cargarIdCatalogoElemento">
+                        @foreach (var cat in catalogos)
+                        {
+                            @if (accion == ACTUALIZAR && elementoActual.IdCatalogo == cat.id)
+                            {
+                                <option selected class="form-control" value="@cat.id">@cat.clasificacion</option>
+                            }
+                            else
+                            {
+                                <option class="form-control" value="@cat.id">@cat.clasificacion</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="sett" class="input-group-text">SET</label>
+                    <InputText id="sett" class="form-control" @bind-Value="elementoActual.Sett" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Sett)" />
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="unidad" class="input-group-text">Unidad</label>
+                    <select class="form-control" id="unidad" @onchange="cargarIdUnidad">
+                        @foreach (var unidad in unidades)
+                        {
+                            @if (accion == ACTUALIZAR && elementoActual.Unidad.Id == unidad.Id)
+                            {
+                                <option selected class="form-control" value="@unidad.Id">@unidad.Unidad</option>
+                            }
+                            else
+                            {
+                                <option class="form-control" value="@unidad.Id">@unidad.Unidad</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="tipo" class="input-group-text">TIPO</label>
+                    <InputText id="tipo" class="form-control" @bind-Value="elementoActual.Tipo" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Tipo)" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="valor" class="input-group-text">VALOR</label>
+                    <InputNumber id="valor" class="form-control" @bind-Value="elementoActual.Valor" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.Valor)" />
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="iva" class="input-group-text"> % de IVA</label>
+                    <InputNumber id="iva" class="form-control" @bind-Value="elementoActual.PorcentajeIva" />
+                </div>
+                <ValidationMessage class="font-error" For="@(() => elementoActual.PorcentajeIva)" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaActualizacionElementos" Context="auth">
+                    <Authorized>
+                        <button class="btn btn-primary" @onclick="()=>CambiarAccion(ACTUALIZAR)">Editar</button>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="EMPRESA,EMPLEADO" Policy="PoliticaCreacionElementos" Context="auth">
+                    <Authorized>
+                        <button class="btn btn-success" @onclick="()=>CambiarAccion(CREAR)">Guardar</button>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+
+
+        </div>
+    </EditForm>
+</div>
+
+<br />
+<ModalInsertarElemento @ref="modalInsertarElemento" RefrescarEvent="Refrescar" ConfirmarEvent="ConfirmacionAgregarElemento"></ModalInsertarElemento>
+<ModalEditarElemento @ref="modalEditarElemento" RefrescarEvent="Refrescar" ConfirmarEvent="ConfirmacionEditarElemento"></ModalEditarElemento>
+<ModalConfirmacion @ref="modalConfirmacion"></ModalConfirmacion>
+
+@*<button @onclick="SeleccionarElemento">Botón retornar</button>*@
+@code {
+    public ElementoInterfazGraficaVentaDTO elementoActual { get; set; } = new ElementoInterfazGraficaVentaDTO();
+    private List<CatalogoInterfazGraficaVentaDTO>? catalogos;
+    private CatalogoInterfazGraficaVentaDTO catActual;
+    private List<MarcasInterfazGraficaVentaDTO>? marcas;
+    private List<UnidadInterfazGraficaVentaDTO> unidades;
+    private List<ElementoInterfazGraficaVentaDTO>? elementos;
+    private ModalInsertarElemento modalInsertarElemento;
+    private ModalEditarElemento modalEditarElemento;
+    private ModalConfirmacion modalConfirmacion;
+    private string ref1 = string.Empty;
+    private string ref2 = string.Empty;
+    private string ref3 = string.Empty;
+    private string ref4 = string.Empty;
+    private string ref5 = string.Empty;
+    private string marcabuscar = string.Empty;
+    private int codigobuscar;
+    private String nombrebuscar = string.Empty;
+    private String setbuscar = string.Empty;
+    private long codigo;
+    private String nombre = string.Empty;
+    private String marca = string.Empty;
+    private String set = string.Empty;
+    private string unidad;
+    private String tipo = string.Empty;
+    private bool display_codigo = false;
+    private bool display_nombre = false;
+    private bool display_set = false;
+    private bool display_marca = false;
+    private bool display_todos = false;
+    private bool display_referencias = false;
+    private bool display_nombreyreferencias = false;
+    //private int pagactual = 0;
+    private string unidadActual;
+    private int paginaActual = 1;
+    private int paginasTotales = 0;
+    private long identificacionEmpresa = 0;
+    private string accion = CREAR;
+    private const string CREAR = "CREAR";
+    private const string ACTUALIZAR = "ACTUALIZAR";
+    private int indiceAnt = 0;
+    private int paginarPor = 0;
+    private double cantElemen = 0;
+
+    private void CambiarAccion(string accionBoton)
+    {
+        accion = accionBoton;
+    }
+
+    private void cargarIdMarca(ChangeEventArgs e)
+    {
+        var idMarcaElemento = int.Parse(e.Value.ToString());
+        elementoActual.IdMarca = idMarcaElemento;
+    }
+
+    private void cargarIdUnidad(ChangeEventArgs e)
+    {
+        var idUnidadElemento = e.Value.ToString();
+        elementoActual.Unidad.Id = idUnidadElemento;
+    }
+
+    private void cargarIdCatalogoElemento(ChangeEventArgs e)
+    {
+        var idCatalogoElemento = long.Parse(e.Value.ToString());
+        elementoActual.IdCatalogo = idCatalogoElemento;
+    }
+
+    private async Task PaginaSeleccionada(int pagina)
+    {
+        paginaActual = pagina;
+
+        if (ref1 == string.Empty && ref2 == string.Empty && ref3 == string.Empty && ref4 == string.Empty && ref5 == string.Empty && codigobuscar == 0 && nombrebuscar == string.Empty && setbuscar == string.Empty && marcabuscar == string.Empty)
+        {
+            elementos = elementoService.ObtenerElementosPaginado(identificacionEmpresa, paginaActual, paginarPor);
+        }
+        else {
+            if (!display_todos && !display_nombreyreferencias)
+            {
+                if (display_referencias)
+                {
+                    elementos = elementoService.ObtenerElementosPorReferenciaPaginado(ref1, ref2, ref3, ref4, ref5, identificacionEmpresa, paginaActual, paginarPor);
+                    cantElemen = (double)(elementoService.ObtenerCantidadElementosPorReferenciaPaginado(ref1, ref2, ref3, ref4, ref5, identificacionEmpresa));
+                    paginasTotales = calcularPaginasTotales(cantElemen);
+                }
+                if (display_codigo)
+                {
+                    elementos = elementoService.ObtenerElementosPorCodigoPaginado(codigobuscar, identificacionEmpresa, paginaActual, paginarPor);
+                    cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorCodigoPaginado(identificacionEmpresa, codigobuscar));
+                    paginasTotales = calcularPaginasTotales(cantElemen);
+                }
+                if (display_nombre)
+                {
+                    elementos = elementoService.ObtenerElementosPorNombrePaginado(nombrebuscar, identificacionEmpresa, paginaActual, paginarPor);
+                    cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorNombrePaginado(identificacionEmpresa, nombrebuscar));
+                    paginasTotales = calcularPaginasTotales(cantElemen);
+                }
+                if (display_set)
+                {
+                    elementos = elementoService.ObtenerElementosPorSettPaginado(setbuscar, identificacionEmpresa, paginaActual, paginarPor);
+                    cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorSettPaginado(identificacionEmpresa, setbuscar));
+                    paginasTotales = calcularPaginasTotales(cantElemen);
+                }
+                if (display_marca)
+                {
+                    elementos = elementoService.ObtenerElementosPorMarcaPaginado(marcabuscar, identificacionEmpresa, paginaActual, paginarPor);
+                    cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorMarcaPaginado(identificacionEmpresa, marcabuscar));
+                    paginasTotales = calcularPaginasTotales(cantElemen);
+                }
+            }
+            if (display_nombreyreferencias)
+            {
+                elementos = elementoService.ObtenerElementosPorNombreYReferenciasPaginado(ref1, ref2, ref3, ref4, ref5, nombrebuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosPorNombreYReferenciasPaginado(ref1, ref2, ref3, ref4, ref5, nombrebuscar, identificacionEmpresa));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            if (display_todos)
+            {
+                //elementos = elementoService.ObtenerElementosPorTodasLasOpciones(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar, identificacionEmpresa);
+                elementos = elementoService.ObtenerElementosPorTodasLasOpcionesPaginado(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosPorTodasLasOpcionesPaginado(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar, identificacionEmpresa));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            Refrescar();
+        }
+
+    }
+
+
+
+    private void Buscar()
+    {
+        elementos.Clear();
+        if (!display_todos && !display_nombreyreferencias)
+        {
+            if (display_referencias)
+            {
+                elementos = elementoService.ObtenerElementosPorReferenciaPaginado(ref1, ref2, ref3, ref4, ref5, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosPorReferenciaPaginado(ref1, ref2, ref3, ref4, ref5, identificacionEmpresa));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            if (display_codigo)
+            {
+                elementos = elementoService.ObtenerElementosPorCodigoPaginado(codigobuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorCodigoPaginado(identificacionEmpresa, codigobuscar));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            if (display_nombre)
+            {
+                elementos = elementoService.ObtenerElementosPorNombrePaginado(nombrebuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorNombrePaginado(identificacionEmpresa, nombrebuscar));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            if (display_set)
+            {
+                elementos = elementoService.ObtenerElementosPorSettPaginado(setbuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorSettPaginado(identificacionEmpresa, setbuscar));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+            if (display_marca)
+            {
+                elementos = elementoService.ObtenerElementosPorMarcaPaginado(marcabuscar, identificacionEmpresa, paginaActual, paginarPor);
+                cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorMarcaPaginado(identificacionEmpresa, marcabuscar));
+                paginasTotales = calcularPaginasTotales(cantElemen);
+            }
+        }
+        if (display_nombreyreferencias)
+        {
+            elementos = elementoService.ObtenerElementosPorNombreYReferenciasPaginado(ref1, ref2, ref3, ref4, ref5, nombrebuscar, identificacionEmpresa, paginaActual, paginarPor);
+            cantElemen = (double)(elementoService.ObtenerCantidadElementosPorNombreYReferenciasPaginado(ref1, ref2, ref3, ref4, ref5, nombrebuscar, identificacionEmpresa));
+            paginasTotales = calcularPaginasTotales(cantElemen);
+        }
+        if (display_todos)
+        {
+            //elementos = elementoService.ObtenerElementosPorTodasLasOpciones(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar, identificacionEmpresa);
+            elementos = elementoService.ObtenerElementosPorTodasLasOpcionesPaginado(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar,identificacionEmpresa, paginaActual, paginarPor);
+            cantElemen = (double)(elementoService.ObtenerCantidadElementosPorTodasLasOpcionesPaginado(ref1, ref2, ref3, ref4, ref5, codigobuscar, nombrebuscar, setbuscar, marcabuscar, identificacionEmpresa));
+            paginasTotales = calcularPaginasTotales(cantElemen);
+        }
+        Refrescar();
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var usuario = authenticationState.Result.User.Identity.Name;
+        var rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        var rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            paginarPor = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoBodyElementos"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        display_codigo = true;
+        elementos = elementoService.ObtenerElementosPaginado(identificacionEmpresa, paginaActual, paginarPor);
+        cantElemen = (double)(elementoService.ObtenerCantidadElementosTotalesPorEmpresa(identificacionEmpresa));
+        paginasTotales = calcularPaginasTotales(cantElemen);
+        catalogos = elementoService.ObtenerCatalogos();
+        catalogos = catalogoService.ObtenerCatalogosPorEmpresa(identificacionEmpresa);
+        marcas = elementoService.ObtenerMarcas();
+        unidades = elementoService.ObtenerUnidades();
+        elementoActual.Unidad = new UnidadInterfazGraficaVentaDTO();
+        elementoActual.IdCatalogo = catalogos[0].id;
+        elementoActual.Unidad.Id = unidades[0].Id;
+        elementoActual.IdMarca = marcas[0].Id;
+        elementoActual.CodigoArticulo = elementoService.GenerarCodigoElemento();
+        limpiarCampos();
+        return base.OnInitializedAsync();
+    }
+
+    private int calcularPaginasTotales(double cantElemen)
+    {
+        double divi = cantElemen / paginarPor;
+        bool tieneParteDecimal = divi != Math.Floor(divi);
+        if (tieneParteDecimal)
+        {
+            divi += 1;
+        }
+        return (int)divi;
+    }
+
+    public async Task EventoTeclado(int indice)
+    {
+
+        accion = ACTUALIZAR;
+        elementoActual = Mapper.ClonarElementoInterfazGraficaVentaDTO(elementos[indice]);
+
+        if(indiceAnt < elementos.Count)
+        {
+            elementos[indiceAnt].ClaseCss = string.Empty;
+
+        }
+
+
+        elementos[indice].ClaseCss = "fijar-fila-tabla";
+        indiceAnt = indice;
+
+    }
+
+    private async Task SubmitFormulario()
+    {
+        if (accion == ACTUALIZAR)
+        {
+            EditarElemento();
+        }
+        if (accion == CREAR)
+        {
+            AgregarElemento();
+
+        }
+    }
+
+
+    private void MostrarModalInsertar()
+    {
+        elementoActual.IdEmpresa = identificacionEmpresa;
+        modalInsertarElemento.elementoActual = elementoActual;
+        modalInsertarElemento.Mostrar();
+    }
+
+    public void AgregarElemento()
+    {
+
+        MostrarModalInsertar();
+    }
+    public void EditarElemento()
+    {
+        MostrarModalEditar();
+    }
+
+    private void MostrarModalEditar()
+    {
+        elementoActual.IdEmpresa = identificacionEmpresa;
+        modalEditarElemento.elementoActual = elementoActual;
+        modalEditarElemento.Mostrar();
+    }
+
+
+    private void ConfirmacionAgregarElemento()
+    {
+        if (modalInsertarElemento.Resultado)
+        {
+            modalConfirmacion.Mensaje = "Elemento agregado";
+            RecargarTabla();
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "No se ha agregado el elemento";
+        }
+        modalConfirmacion.Mostrar();
+    }
+
+    private void ConfirmacionEditarElemento()
+    {
+        if (modalEditarElemento.Resultado)
+        {
+            modalConfirmacion.Mensaje = "Elemento editado";
+            RecargarTabla();
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "No se ha editado el elemento";
+        }
+        modalConfirmacion.Mostrar();
+    }
+    private void RecargarTabla()
+    {
+        elementos = elementoService.ObtenerElementos(identificacionEmpresa);
+    }
+
+
+
+    void opcionSeleccionada(int op)
+    {
+        cerrarOpciones();
+        limpiarCampos();
+        switch (op)
+        {
+            case 1:
+                display_codigo = true;
+                break;
+            case 2:
+                display_nombre = true;
+                break;
+            case 3:
+                display_set = true;
+                break;
+            case 4:
+                display_marca = true;
+                break;
+            case 5:
+                display_codigo = true;
+                display_nombre = true;
+                display_set = true;
+                display_marca = true;
+                display_referencias = true;
+                display_nombreyreferencias = true;
+                display_todos = true;
+                break;
+            case 6:
+                display_referencias = true;
+                break;
+            case 7:
+                display_nombre = true;
+                display_referencias = true;
+                display_nombreyreferencias = true;
+                break;
+            default:
+                break;
+        }
+    }
+    private void limpiarCampos()
+    {
+        ref1 = string.Empty;
+        ref2 = string.Empty;
+        ref3 = string.Empty;
+        ref4 = string.Empty;
+        ref5 = string.Empty;
+        marcabuscar = string.Empty;
+        codigobuscar = 0;
+        nombrebuscar = string.Empty;
+        setbuscar = string.Empty;
+    }
+    private void cerrarOpciones()
+    {
+        display_codigo = false;
+        display_nombre = false;
+        display_set = false;
+        display_marca = false;
+        display_todos = false;
+        display_referencias = false;
+        display_nombreyreferencias = false;
+    }
+
+
+    private void Refrescar()
+    {
+        Mostrar();
+    }
+
+    private void InicializarDatosElementoActual()
+    {
+        elementoActual.CodigoArticulo = elementoService.GenerarCodigoElemento();
+        elementoActual.Nombre = string.Empty;
+        elementoActual.Ref1 = string.Empty;
+        elementoActual.Ref2 = string.Empty;
+        elementoActual.Ref3 = string.Empty;
+        elementoActual.Ref4 = string.Empty;
+        elementoActual.Ref5 = string.Empty;
+        elementoActual.Sett = string.Empty;
+        elementoActual.Tipo = string.Empty;
+        elementoActual.Valor = 0;
+        elementoActual.PorcentajeIva = 0;
+
+
+
+    }
+}

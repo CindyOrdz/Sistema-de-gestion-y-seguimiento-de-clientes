@@ -1,0 +1,93 @@
+﻿@inject RegistroEvidenciaService RegistroService;
+@using EntidadesNegocio.EntidadesDto;
+@using RegistroEvidencia;
+
+<div class="col-lg-10 contact-form__wrapper">
+    <h4><b>Registrar evidencia a la visita</b></h4>
+    <EditForm Model="registroDTO" OnSubmit="GuardarArchivo">
+    <div class="col-sm-12 mb-3">
+        <div class="form-group">
+            <label for="tipo">Tipo de archivo:</label>
+            <select id="tipo" class="form-control" @bind="registroDTO.tipo" required>
+                <option value="">Seleccione tipo de archivo</option> 
+                <option value="@EnumTiposArchivos.Audio">Audio</option>
+                <option value="@EnumTiposArchivos.Imagen">Imagen</option>
+                <option value="@EnumTiposArchivos.Video">Video</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="col-sm-12 mb-3">
+        <div class="form-group">
+            <label for="fechaCaptura">Fecha de captura:</label>
+            <input type="datetime-local" class="form-control" id="fechaCaptura" @bind="registroDTO.fechaCaptura" required>
+        </div>
+    </div>
+
+    <div class="col-sm-12 mb-3">
+        <div class="form-group">
+            <label for="archivo">Archivo:</label>
+            <div class="input-group mb-3">
+                <InputFile id="archivo" class="form-control" OnChange="CargarArchivo" required/>
+                <button class="btn btn-sm btn-success" type="submit">
+                    <i class="oi oi-check"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    </EditForm>
+</div>
+
+<ModalPersonalizado @ref="modalMensaje" />
+
+@code {
+    private ModalPersonalizado modalMensaje;
+    private IBrowserFile archivo;
+    private RegistroEvidenciaDTO registroDTO = new RegistroEvidenciaDTO();
+
+    private void CargarArchivo(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            archivo = e.File;
+            registroDTO.nombre = System.IO.Path.GetFileNameWithoutExtension(archivo.Name);
+            registroDTO.extension = System.IO.Path.GetExtension(archivo.Name);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar el archivo: {ex.Message}");
+        }
+    }
+
+
+    private async Task GuardarArchivo()
+    {
+        if (archivo != null && archivo.Size <= 20971520)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                Stream stream = archivo.OpenReadStream(20971520); // El limite esta en 20MB
+                await stream.CopyToAsync(memoryStream);
+                byte[] buffer = memoryStream.ToArray();
+                RegistroService.registro = new(buffer, registroDTO.extension, registroDTO.tipo, registroDTO.nombre, registroDTO.fechaCaptura);
+                await RegistroService.GuardarArchivo();
+
+                archivo = null;
+                registroDTO = new RegistroEvidenciaDTO();
+                registroDTO.fechaCaptura = DateTime.Now;
+            }
+
+            modalMensaje.Mostrar("El registro se realizo correctamente");
+        }
+        else
+        {
+            modalMensaje.Mostrar("El archivo cargado supera el limite de 20MB, por favor seleccione otro.");
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        registroDTO.fechaCaptura = DateTime.Now;
+    }
+}

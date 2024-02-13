@@ -1,0 +1,142 @@
+﻿<div class="cont-grid-header-tercero">
+    <div class="contenedor-bloque me-3">
+        <EditForm Model="opcionesFiltrado" OnValidSubmit="FiltrarTercero">
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="row">
+                <InputRadioGroup class="me-3" @bind-Value="opcionesFiltrado.FiltroSeleccionado">
+                    
+                    <div class="col-md-6">
+                        <label class="form-label me-2" for="iniciales">Digite las iniciales a buscar</label>
+                        <InputRadio id="iniciales" class="form-check-input" Value="INICIALES" @onclick="InicializarListaTercerosFiltrados" />
+                    </div>
+
+                    
+                    <div class="col-md-6">
+                        <label class="form-label me-2" for="identificacion">Digite la identificacion a buscar</label>
+                        <InputRadio id="identificacion" class="form-check-input" Value="IDENTIFICACION" @onclick="InicializarListaTercerosFiltrados" /> 
+                    </div>
+                </InputRadioGroup>
+            </div>
+        
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <InputText @bind-Value="opcionesFiltrado.CadenaParaFiltrar" class="form-control me-4" />
+                    <ValidationMessage For="()=>opcionesFiltrado.CadenaParaFiltrar"></ValidationMessage>
+                </div>
+
+                <div class="col-2">
+                    <button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-magnifying-glass fas"></i></button>
+                </div>
+            </div>
+        </EditForm>
+        
+        
+             
+    </div>
+
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR" Policy="PoliticaCreacionEmpresas">
+            <Authorized>
+                <div class="contenedor-bloque">
+                    <span @onclick="CrearTercero" class="btn btn-outline-dark"><i class="fa-solid fa-file-circle-plus fas"></i></span>
+                    <span class="btn btn-outline-dark"><i class="fa-solid fa-address-card fas"></i></span>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    }
+
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR,EMPRESA,EMPLEADO" Policy="PoliticaCreacionClientes">
+            <Authorized>
+                <div class="contenedor-bloque">
+                    <span @onclick="CrearTercero" class="btn btn-outline-dark"><i class="fa-solid fa-file-circle-plus fas"></i></span>
+                    <span class="btn btn-outline-dark"><i class="fa-solid fa-address-card fas"></i></span>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    }
+
+    @if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+    {
+        <AuthorizeView Roles="ADMINISTRADOR,EMPRESA" Policy="PoliticaCreacionEmpleados">
+            <Authorized>
+                <div class="contenedor-bloque">
+                    <span @onclick="CrearTercero" class="btn btn-outline-dark"><i class="fa-solid fa-file-circle-plus fas"></i></span>
+                    <span class="btn btn-outline-dark"><i class="fa-solid fa-address-card fas"></i></span>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    }
+
+        
+    
+</div>
+
+<CascadingValue Name="TipoTercero" Value="@TipoTercero">
+    <TabControlsTercero @ref="tabControlsTercero" />
+</CascadingValue>
+
+
+
+
+
+
+@code {
+    private OpcionesFiltrado opcionesFiltrado = new OpcionesFiltrado { FiltroSeleccionado = INICIALES};
+    private TabControlsTercero? tabControlsTercero;
+    [Parameter]
+    public string TipoTercero { get; set; }
+
+    private TerceroInterfazGraficaDTO terceroDTO = new TerceroInterfazGraficaDTO();
+    private const string INICIALES = ParametrosComponenteTerceros.INICIALES;
+    private const string IDENTIFICACION = ParametrosComponenteTerceros.IDENTIFICACION;
+    private bool cambio;
+
+    private void FiltrarTercero()
+    {
+        switch (opcionesFiltrado.FiltroSeleccionado)
+        {
+            case IDENTIFICACION:
+                long identificacion = 0;
+                try
+                {
+                    identificacion = long.Parse(opcionesFiltrado.CadenaParaFiltrar);
+                }
+                catch (Exception e)
+                {
+
+                }
+                tabControlsTercero.FiltrarTerceroPorIdentificacion(identificacion);
+                break;
+            case INICIALES:
+                string iniciales = opcionesFiltrado.CadenaParaFiltrar;
+                tabControlsTercero.FiltrarTercerosPorIniciales(iniciales);
+                break;
+        }
+
+
+    }
+
+    private void InicializarListaTercerosFiltrados()
+    {
+        tabControlsTercero.InicializarListaTercerosFiltrados();
+
+    }
+
+    private void CrearTercero()
+    {
+        tabControlsTercero.AccionInformacionDetallada = ParametrosComponenteTerceros.NUEVO_TERCERO;
+        tabControlsTercero.EventoDeRenderizado("Informacion_Detallada");
+
+
+    }
+
+    public TerceroInterfazGraficaDTO ObtenerTerceroSeleccionado()
+    {
+
+        return tabControlsTercero.ObtenerTerceroSeleccionado();
+    }
+}
+

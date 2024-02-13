@@ -1,0 +1,215 @@
+﻿@inherits ComponenteTab
+@inject EmpresaService empresaService
+@inject ClienteService clienteService
+@inject EmpleadoService empleadoService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@if (display)
+{
+    <div class="contenedor-tab">
+        <div class="contenedor-grid">
+            <div class="contenedor-tabla mb-3">
+                <table class="table mb-3 w-75">
+                    <thead>
+                        <tr>
+                            @foreach (var elemento in elementosCabecera)
+                            {
+                                <th class="">
+                                    <label class="form-label">@elemento</label>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        @for (int i = 0; i < tercerosFiltrados.Count; i++)
+                        {
+                            var currenIndex = i;
+                            var tercero = tercerosFiltrados[i];
+                            <tr class="@tercero.ClaseCss cursor-pointer-elemento" @onclick="()=> FijarTercero(currenIndex)">
+                                <td class="">
+                                    <label class="form-label">
+                                        @($"{tercero.RazonSocial} {tercero.Nombre1} {tercero.Nombre2} {tercero.Apellido1} {tercero.Apellido2}")
+                                    </label>
+                                </td>
+                                
+                                <td class="">
+                                    <label class="form-label me-2">
+                                        @tercero.Identificacion
+                                    </label>
+                                    <!--
+                                        <span class="btn btn-outline-dark"><i class="fa-solid fa-user-check"></i></span>
+                                    -->
+                                    
+                                </td>
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> 
+    <ModalConfirmacion @ref="modalConfirmacion"/>
+
+}
+
+
+@code {
+
+    [CascadingParameter(Name = "TipoTercero")]
+    public string TipoTercero { get; set; }
+    private string cadenaTercero = string.Empty;
+    private bool displayByDefault = true;
+    public TerceroInterfazGraficaDTO terceroSeleccionado;
+    private List<string> elementosCabecera = new List<string>{
+    "Nombre del tercero","Identificación"
+    };
+    private ModalConfirmacion modalConfirmacion;
+    private List<TerceroInterfazGraficaDTO> tercerosRepo = RepoTerceros.ObtenerTerceros();
+    private List<TerceroInterfazGraficaDTO> tercerosFiltrados = new List<TerceroInterfazGraficaDTO>();
+    private int indiceFijado = 0;
+    private long identificacionEmpresaParaFiltrar = 0;
+
+    protected override Task OnInitializedAsync()
+    {
+        
+        cadenaTercero = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(TipoTercero.ToLower());
+        display = true;
+
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var usuario = authenticationState.Result.User.Identity.Name;
+        var rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        var rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresaParaFiltrar = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresaParaFiltrar = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+
+        return base.OnInitializedAsync();
+    }
+
+    public void FiltrarTerceroPorIdentificacion(long identificacion)
+    {
+        tercerosFiltrados.Clear();
+        TerceroInterfazGraficaDTO terceroPorId = null;
+        
+
+        
+
+        if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+        {
+            terceroPorId = empresaService.FiltrarEmpresaPorIdentificacion(identificacion);
+
+        }
+
+        
+
+
+        if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+        {
+            
+
+            terceroPorId = clienteService.FiltrarClientePorIdentificacion(identificacion, identificacionEmpresaParaFiltrar);
+
+        }
+
+        if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+        {
+            terceroPorId = empleadoService.FiltrarEmpleadoPorIdentificacion(identificacion, identificacionEmpresaParaFiltrar);
+
+        }
+
+
+
+
+
+        if (terceroPorId is null || terceroPorId.Identificacion == 0)
+        {
+            modalConfirmacion.Mensaje = $"El(La){cadenaTercero} no está registrado(a)";
+            modalConfirmacion.Mostrar();
+        }
+        else
+        {
+            tercerosFiltrados.Add(terceroPorId);
+
+        }
+        StateHasChanged();
+    }
+
+    public void FiltrarTerceroPorIniciales(string iniciales)
+    {
+        tercerosFiltrados.Clear();
+        List<TerceroInterfazGraficaDTO> tercerosPorIniciales = new List<TerceroInterfazGraficaDTO>();
+        
+
+
+        if(TipoTercero.Equals(ParametrosComponenteTerceros.EMPRESA))
+        {
+
+            tercerosPorIniciales = empresaService.FiltrarEmpresaPorIniciales(iniciales);
+        }
+
+        if (TipoTercero.Equals(ParametrosComponenteTerceros.CLIENTE))
+        {
+            
+            tercerosPorIniciales = clienteService.FiltrarClientesPorIniciales(iniciales, identificacionEmpresaParaFiltrar);
+        }
+
+        if (TipoTercero.Equals(ParametrosComponenteTerceros.EMPLEADO))
+        {
+            tercerosPorIniciales = empleadoService.FiltrarEmpleadosPorNombre(iniciales, identificacionEmpresaParaFiltrar);
+        }
+
+
+        if (tercerosPorIniciales is not null && tercerosPorIniciales.Count > 0)
+        {
+            tercerosFiltrados = new List<TerceroInterfazGraficaDTO>(tercerosPorIniciales);
+            
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = $"No se encontraron {cadenaTercero}s que coincidan";
+            modalConfirmacion.Mostrar();
+        }
+        StateHasChanged();
+    }
+
+    private void FijarTercero(int indice)
+    {
+        if (tercerosFiltrados.Count > 0)
+        {
+            tercerosFiltrados[indiceFijado].ClaseCss = string.Empty;
+            indiceFijado = indice;
+            terceroSeleccionado = tercerosFiltrados[indice];
+            terceroSeleccionado.ClaseCss = "fijar-fila-tabla";
+        }
+
+
+    }
+
+    public void InicializarListaTercerosFiltrados()
+    {
+        tercerosFiltrados = new List<TerceroInterfazGraficaDTO>();
+        if (terceroSeleccionado is not null)
+        {
+            terceroSeleccionado.ClaseCss = string.Empty;
+        }
+        terceroSeleccionado = null;
+        indiceFijado = 0;
+        StateHasChanged();
+    }
+
+    private void Verificar()
+    {
+        var tercero = terceroSeleccionado;
+    }
+
+}

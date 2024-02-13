@@ -1,0 +1,37 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = GestionDeUsuarios
+build_property.RootNamespace = GestionDeUsuarios
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\GestionDeUsuarios\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\GestionDeUsuarios
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/GestionDeUsuarios/IndexUser.razor]
+build_metadata.AdditionalFiles.TargetPath = SW5kZXhVc2VyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/GestionDeUsuarios/LoginBlazor.razor]
+build_metadata.AdditionalFiles.TargetPath = TG9naW5CbGF6b3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/GestionDeUsuarios/PemisosEmpleados.razor]
+build_metadata.AdditionalFiles.TargetPath = UGVtaXNvc0VtcGxlYWRvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/GestionDeUsuarios/PermisosEmpresas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGVybWlzb3NFbXByZXNhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/GestionDeUsuarios/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

@@ -1,0 +1,26 @@
+﻿@page "/"
+@using MapeoEmpresa.Pages.UserPages;
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Inicio</PageTitle>
+
+@if (context.User.Identity.IsAuthenticated)
+{
+    <IndexUserPage></IndexUserPage>
+}
+else
+{
+    <LoginPage></LoginPage>
+}
+
+@code {
+    private AuthenticationState authenticationState;
+
+    protected override async Task OnInitializedAsync()
+    {
+        authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    }
+
+    private AuthenticationState context => authenticationState;
+}

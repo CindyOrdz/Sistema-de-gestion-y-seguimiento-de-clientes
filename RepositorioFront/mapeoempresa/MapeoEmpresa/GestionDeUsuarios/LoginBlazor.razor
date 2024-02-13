@@ -1,0 +1,44 @@
+﻿<div class="contenedor-login">
+
+    <form class="formulario" method="post" action="/iniciarSesion">
+        <h1 class="titulo-login">Inicio de sesión</h1>
+        <div class="input-contenedor">
+            <i class="fas fa-user icon"></i>
+            <input class="input-login" type="text" name="usuario" placeholder="Usuario" required>
+
+        </div>
+
+        <div class="input-contenedor">
+            <i class="fas fa-key icon"></i>
+            <input class="input-login" type="password" name="clave" placeholder="Contraseña" required>
+
+        </div>
+        <input type="submit" name="BtnLogin" value="Ingresar" class="button">
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <div class="text-danger">@ErrorMessage</div>
+
+        }
+    </form>
+
+</div>
+
+
+
+
+@code {
+
+    [Parameter]
+    public string ErrorMessage { get; set; }
+    public UserDTO userDTO { get; set; }
+
+
+    private void LoguearUsuario()
+    {
+        
+    
+    
+    }
+
+
+}

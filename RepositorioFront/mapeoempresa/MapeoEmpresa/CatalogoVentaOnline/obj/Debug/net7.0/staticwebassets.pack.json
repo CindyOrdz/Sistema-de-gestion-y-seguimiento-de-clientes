@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\CatalogoVentaOnline\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.CatalogoVentaOnline.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.CatalogoVentaOnline.props",
+      "PackagePath": "build\\CatalogoVentaOnline.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.CatalogoVentaOnline.props",
+      "PackagePath": "buildMultiTargeting\\CatalogoVentaOnline.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.CatalogoVentaOnline.props",
+      "PackagePath": "buildTransitive\\CatalogoVentaOnline.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

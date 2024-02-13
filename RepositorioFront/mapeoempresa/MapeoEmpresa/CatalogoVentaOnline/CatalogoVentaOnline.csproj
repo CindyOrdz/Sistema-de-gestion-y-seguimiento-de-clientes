@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="CatalogoComponent\" />
+    <None Remove="CarritoCompras\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CatalogoComponent\" />
+    <Folder Include="CarritoCompras\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntidadesNegocio">
+      <HintPath>..\..\..\..\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiciosComponentes">
+      <HintPath>..\ServiciosComponentes\bin\Debug\net7.0\ServiciosComponentes.dll</HintPath>
+    </Reference>
+    <Reference Include="Inventario">
+      <HintPath>..\Elementos\bin\Debug\net7.0\Inventario.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

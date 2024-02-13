@@ -1,0 +1,96 @@
+﻿@inject UsuarioService usuarioService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<div class="container">
+    <h3>Información personal</h3>
+
+    <div class="row mt-5">
+
+        <label class="col-form-label col-md-3">Nombre:</label>
+        <div class="col-md-9">
+            <h6> @($"{usuarioInfoDTO.RazonSocial} {usuarioInfoDTO.Nombre1} {usuarioInfoDTO.Nombre2} {usuarioInfoDTO.Apellido1} {usuarioInfoDTO.Apellido2}")</h6>
+        </div>
+        
+        <label class="col-form-label col-md-3">Roles de usuario:</label>
+        <div class="col-md-9">
+            @foreach(var rol in usuarioInfoDTO.Roles)
+            {
+                <label class="me-2">@rol</label>
+                
+            }
+        </div>
+
+
+
+        <label class="col-form-label col-md-3">Telefono(S):</label>
+        <div class="col-md-9">
+            <label> @usuarioInfoDTO.Telefono</label>
+        </div>
+        
+
+    </div>
+
+    <hr />
+    <h3>Datos básicos</h3>
+
+    <div class="row mt-5">
+        <label class="col-form-label col-md-3">Tipo documento:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.TipoDocumento.Nombre</label>
+        </div>
+
+        <label class="col-form-label col-md-3">Identificacion:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.Identificacion</label>
+        </div>
+
+        <label class="col-form-label col-md-3">Pais:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.Ubicacion.Pais.Nombre</label>
+        </div>
+
+        <label class="col-form-label col-md-3">Departamento:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.Ubicacion.DepartamentoProvincia.Nombre</label>
+        </div>
+
+        <label class="col-form-label col-md-3">Ciudad:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.Ubicacion.Ciudad.Nombre</label>
+        </div>
+
+        <label class="col-form-label col-md-3">Direccion:</label>
+        <div class="col-md-3">
+            <label> @usuarioInfoDTO.Direccion</label>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+@code {
+    private UsuarioInfoDTO usuarioInfoDTO = new UsuarioInfoDTO();
+
+
+    protected override Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var usuario = authenticationState.Result.User.Identity.Name;
+
+        usuarioInfoDTO = usuarioService.ObtenerInformacionPorUsuario(usuario);
+
+        return base.OnInitializedAsync();
+    }
+
+}

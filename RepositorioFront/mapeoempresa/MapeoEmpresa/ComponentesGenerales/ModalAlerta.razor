@@ -1,0 +1,45 @@
+﻿@inherits ComponenteTab
+
+@if (display)
+{
+    <div class="modal fade show" tabindex="-2" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje</h5>
+                    <button type="button" class="btn-close" @onclick="Dispose"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="justify-content-center">@Mensaje</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success mr-5" @onclick="ConfirmarAccion">Sí</button>
+                    <button class="btn btn-danger" @onclick="CancelarAccion">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    public string Mensaje { get; set; }
+    public bool Seleccion { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ConfirmarAccionEvent { get; set; }
+
+    private void ConfirmarAccion()
+    {
+        Seleccion = true;
+        ConfirmarAccionEvent.InvokeAsync(Seleccion);
+        Dispose();
+    }
+
+    private void CancelarAccion()
+    {
+        Seleccion = false;
+        ConfirmarAccionEvent.InvokeAsync(Seleccion);
+        Dispose();
+
+    }
+}

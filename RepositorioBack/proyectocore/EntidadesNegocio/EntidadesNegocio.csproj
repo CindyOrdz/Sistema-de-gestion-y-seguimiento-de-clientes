@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="VentasOnlineTradicional\**" />
+    <Compile Remove="VentasOnline\**" />
+    <Compile Remove="VisitaCliente\**" />
+    <EmbeddedResource Remove="VentasOnlineTradicional\**" />
+    <EmbeddedResource Remove="VentasOnline\**" />
+    <EmbeddedResource Remove="VisitaCliente\**" />
+    <None Remove="VentasOnlineTradicional\**" />
+    <None Remove="VentasOnline\**" />
+    <None Remove="VisitaCliente\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.2.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RegistroEvidencia">
+      <HintPath>..\RegistroEvidencia\bin\Debug\net6.0\RegistroEvidencia.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

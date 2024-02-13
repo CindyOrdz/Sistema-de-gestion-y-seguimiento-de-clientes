@@ -1,0 +1,174 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject RegistroEvidenciaService RegistroService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+@inject VisitaService VisitaService;
+
+<h4><b>Historial de ventas</b></h4>
+
+@if (listaVentas == null)
+{
+    <p>Cargando...</p>
+}
+else if (listaVentas.Count == 0)
+{
+    <p class="pt-3">Aún no se han realizado ventas al cliente de esta visita.</p>
+}
+else
+{
+    foreach (var venta in listaVentas)
+    {
+        <div class="accordion" id="accordionHistorial">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@venta.IdVenta" aria-expanded="false" aria-controls="collapse_@venta.IdVenta">
+                        <div class="contenedor-info-sm-top col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>ID Venta: </strong> @venta.IdVenta<br />
+                                    <strong>Tipo: </strong> @venta.TipoVenta <br />
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Vendedor: </strong> @venta.NombreResponsable<br />
+                                    <strong>Fecha: </strong>  @venta.FechaVenta @venta.Hora<br />
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>IVA: </strong> @venta.IVA<br />
+                                    <strong>Total: </strong> @venta.Total <br />
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse_@venta.IdVenta" class="accordion-collapse collapse" data-bs-parent=".accordion">
+                    <div class="accordion-body">
+                        <div class="contenedor-info-sm-top pt-4">
+                            <label class="txt-top font-txt">Detalle de venta</label>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th>Referencia</th>
+                                        <th>Marca</th>
+                                        <th>Valor Unitario</th>
+                                        <th>Cantidad</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var detalle in venta.Detalles)
+                                    {
+                                        <tr>
+                                            <td>@detalle.Elemento.Codigo</td>
+                                            <td>@detalle.Elemento.Nombre</td>
+                                            <td>@detalle.Elemento.Referencia</td>
+                                            <td>@detalle.Elemento.Marca</td>
+                                            <td>$@detalle.Elemento.Valor</td>
+                                            <td>@detalle.Cantidad</td>
+                                            <td>$@detalle.Total</td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9 contenedor-info-sm-top txt-valores">
+                                    <strong>SUBTOTAL </strong> <br>
+                                    <strong>IVA </strong> <br>
+                                    <strong>TOTAL </strong> <br>
+                                </div>
+                                <div class="col-md-3 contenedor-info-sm-top">
+                                    <p>
+                                        $ @venta.SubTotal <br>
+                                        $ @venta.IVA <br>
+                                        $ @venta.Total <br>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <div class="col-auto pt-2">
+        <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+    </div>
+}
+
+
+@code {
+    List<CabeceraHistorialDTO> listaVentas;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoHistorialVentasVisita"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginas = calcularPaginasTotales();
+
+        listaVentas = VisitaService.ObtenerHistorial(identificacionEmpresa,RegistroService.VisitaSeleccionada.idEmpresaCliente, paginaActual, elementosPorPagina);
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        paginaActual = 1;
+        totalPaginas = calcularPaginasTotales();
+        listaVentas = VisitaService.ObtenerHistorial(identificacionEmpresa, RegistroService.VisitaSeleccionada.idEmpresaCliente, paginaActual, elementosPorPagina);
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)VisitaService.ObtenerTotalVentasCliente(identificacionEmpresa, RegistroService.VisitaSeleccionada.idEmpresaCliente);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        listaVentas = VisitaService.ObtenerHistorial(identificacionEmpresa, RegistroService.VisitaSeleccionada.idEmpresaCliente, paginaActual, elementosPorPagina);
+    }
+}
+

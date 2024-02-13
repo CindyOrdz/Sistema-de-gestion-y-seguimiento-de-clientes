@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\background.png",
+      "PackagePath": "staticwebassets\\background.png"
+    },
+    {
+      "Id": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\ImpuestosDescuentos\\wwwroot\\exampleJsInterop.js",
+      "PackagePath": "staticwebassets\\exampleJsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.ImpuestosDescuentos.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.ImpuestosDescuentos.props",
+      "PackagePath": "build\\ImpuestosDescuentos.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.ImpuestosDescuentos.props",
+      "PackagePath": "buildMultiTargeting\\ImpuestosDescuentos.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.ImpuestosDescuentos.props",
+      "PackagePath": "buildTransitive\\ImpuestosDescuentos.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

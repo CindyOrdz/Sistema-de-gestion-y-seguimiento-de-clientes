@@ -1,0 +1,489 @@
+﻿@inherits ComponenteTab
+@inject VentaService ventaService
+@inject ImpuestoService impuestoService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject ElementoService elementoService
+@if (display)
+{
+    <div class="shadow p-3 border border-light rounded-end">
+        <div class="contenedor-grid">
+            <div class="contenedor-tabla mb-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                <label class="font-info-venta">Num.</label>
+
+                            </th>
+
+                            @foreach (var elemento in elementosCabecera)
+                            {
+
+                                @if (elemento.Equals("Cantidad Bodega") || elemento.Equals("Cantidad Almacen") || elemento.Equals("Ultima Venta"))
+                                {
+                                    <th class="text-center ancho-columna-num">
+                                        <label class="font-info-venta">@elemento</label>
+                                    </th>
+
+                                }
+                                else
+                                {
+                                    <th class="text-center">
+                                        <label class="font-info-venta">@elemento</label>
+                                    </th>
+
+                                }
+
+                            }
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (int i = 0; i < detalles.Count; i++)
+                        {
+                            var currentIndex = i;
+                            var elementoDelDetalle = detalles[i].Elemento;
+                            <tr class="@elementoDelDetalle.ClaseCss cursor-pointer-elemento" @onclick="()=>FijarElemento(currentIndex)">
+                                <th role="row" class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @(detalles[i].Item = currentIndex + 1)
+                                    </label>
+
+                                </th>
+                                <td>
+
+                                    <InputNumber @bind-Value="elementoDelDetalle.CodigoArticulo" @onkeydown="((e)=> EventoTecladoDetalle(e,currentIndex))" @onblur="(()=>BuscarElemento(currentIndex))" class="form-control form-control-sm"></InputNumber>
+                                </td>
+
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.Nombre</label>
+
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@($"{elementoDelDetalle.Ref1} {elementoDelDetalle.Ref2} {elementoDelDetalle.Ref3} {elementoDelDetalle.Ref4} {elementoDelDetalle.Ref5}")</label>
+
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.Marca</label>
+
+                                </td>
+                                <td class="text-center ancho-columna-num">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.CantidadDisponibleBodega</label>
+
+                                </td>
+                                <td class="text-center ancho-columna-num">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.CantidadDisponibleAlmacen</label>
+
+                                </td>
+                                <td class="text-center ancho-columna-num">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.UltimaVenta</label>
+                                </td>
+                                <td>
+                                    <InputNumber @bind-Value="detalles[currentIndex].CantidadSolicitada" @onblur="()=>CalcularTotalDetalle(currentIndex)" class="form-control form-control-sm text-center"></InputNumber>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@elementoDelDetalle.Valor.ToString("C")</label>
+
+                                </td>
+                                <td class="text-center">
+                                    <InputNumber @bind-Value="elementoDelDetalle.ValorUnitario" @onblur="()=>CalcularTotalDetalle(currentIndex)" class="form-control form-control-sm"></InputNumber>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@detalles[i].Total.ToString("C")</label>
+                                </td>
+
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10">
+                <div class="contenedor-info-sm text-center">
+                    <div class="row p-2">
+                        <label class="font-info-venta col-md-2">Valor(1)</label>
+                        <label class="font-info-venta bg-valor cont-info-valores col-md-2">@ElementoFijado.ValorUnitario.ToString("C")</label>
+                        <label class="font-info-venta col-md-2">Valor(2)</label>
+                        <label class="font-info-venta bg-valor cont-info-valores col-md-2">@((ElementoFijado.ValorUnitario + ElementoFijado.ValorUnitario * 0.1).ToString("C"))</label>
+                        <label class="font-info-venta col-md-2">Valor(3)</label>
+                        <label class="font-info-venta bg-valor  cont-info-valores col-md-2">@((ElementoFijado.ValorUnitario + ElementoFijado.ValorUnitario * 0.2).ToString("C"))</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mt-3">
+
+                <div class="contenedor-info-sm-top">
+                    <label class="txt-top font-txt">Disponible</label>
+                    <div class="row p-2">
+                        <label class="font-info-venta col-md-2">Bodega</label>
+                        <label class="font-info-venta bg-cant-elemento cont-info-valores col-md-2">@ElementoFijado.CantidadDisponibleBodega</label>
+                        <label class="font-info-venta col-md-2">Almacen</label>
+                        <label class="font-info-venta bg-cant-elemento cont-info-valores col-md-2">@ElementoFijado.CantidadDisponibleAlmacen</label>
+                        <label class="font-info-venta col-md-2">Total</label>
+                        <label class="font-info-venta bg-cant-elemento cont-info-valores col-md-2">@(ElementoFijado.CantidadDisponibleAlmacen + ElementoFijado.CantidadDisponibleBodega)</label>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="contenedor-info-sm ">
+                    <div class="row p-2">
+                        <label class="font-info-venta col-md-2">SUBTOTAL</label>
+                        <label class="font-info-venta  col-md-2">@ventaDTO.SubTotal.ToString("C")</label>
+                        <label class="font-info-venta col-md-1">IVA</label>
+                        
+                        @if (ventaDTO.Impuestos.FirstOrDefault(imp => imp.Id.Equals("01")) is not null)
+                        {
+                            <label class="font-info-venta  col-md-2">@ventaDTO.Impuestos.FirstOrDefault(imp => imp.Id.Equals("01")).Valor.ToString("C")</label>
+
+                        }
+                        else
+                        {
+                            <label class="font-info-venta  col-md-2">@ivaPordefecto.ToString("C")</label>
+                        }
+                        <label class="font-info-venta col-md-1">TOTAL</label>
+                        <label class="font-info-venta  col-md-2">@ventaDTO.Total.ToString("C")</label>
+                        <label class="marca-valor col-md-2">W R L C U X X*</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor-info-sm  mt-3">
+            <label class="txt-top font-txt">Retenciones</label>
+            <div class="row">
+                <label class="cop">COP$</label>
+                @if (ventaDTO.Impuestos.Count == 0)
+                {
+                    <label class="font-info-venta">SIN RETENCIONES</label>
+                }
+                else
+                {
+                    @foreach (var impuesto in ventaDTO.Impuestos)
+                    {
+                        @if (impuesto.Id.Equals("05") || impuesto.Id.Equals("06") || impuesto.Id.Equals("07"))
+                        {
+                            <div class="col-md-3">
+                                <div class="input-group input-group-sm">
+                                    <label class="input-group-text">@impuesto.Nombre</label>
+                                    <label class="input-group-text">@Math.Abs(impuesto.Valor).ToString("C")</label>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+                }
+            </div>
+
+        </div>
+
+    </div>
+    <ModalConfirmacion @ref="modalConfirmacion" />
+    <ComponenteElemento origen=@("detalleventa") @ref="componenteElemento" TraerElementoEvent="TraerElementoSeleccionado" DesactivarEventoDetalle="DesactivarEventoTeclado" />
+
+}
+
+
+@code {
+
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    public bool SeleccionDetalle { get; set; } = false;
+    public ElementoInterfazGraficaVentaDTO ElementoFijado { get; set; } = new ElementoInterfazGraficaVentaDTO();
+    private ModalConfirmacion modalConfirmacion;
+    private ComponenteElemento componenteElemento;
+    private int indiceAnteriorFijado;
+    private List<DetalleVentaInterfazGraficaVentaDTO> detalles;
+    private List<string> elementosCabecera = new List<string>{
+    "Código del elemento","Descripción","Referencia","Marca","Cantidad Bodega","Cantidad Almacen","Ultima Venta","Cantidad solicitada", "Valor", "Valor Unitario", "Total"
+    };
+
+    private int indiceElementoBuscado;
+    private long codigoElementoAnterior; 
+    private double ivaPordefecto = 0;
+    private ParametrosImpuestosInterfazGraficaVentaDTO parametrosImpuestos;
+    private long identificacionEmpresa = 0;
+    private bool activacionEventoTeclado = false;
+
+
+
+
+    protected override Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var usuario = authenticationState.Result.User.Identity.Name;
+        var rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        var rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        detalles = ventaDTO.DetallesVenta;
+        display = true;
+        parametrosImpuestos = impuestoService.ObtenerParametrosImpuestos();
+        return base.OnInitializedAsync();
+    }
+
+
+
+    public void BuscarElemento(int indice)
+    {
+        if (ventaDTO.Cliente is null)
+        {
+            modalConfirmacion.Mensaje = "Debe agregar el cliente";
+            modalConfirmacion.Mostrar();
+        }
+        else
+        {
+            CargarElemento(indice);
+        }
+    }
+
+    public void EventoTecladoDetalle(KeyboardEventArgs e, int indice)
+    {
+        var code = e.Code;
+        var tecla = e.Key;
+        switch (tecla)
+        {
+            case "Enter":
+                activacionEventoTeclado = true;
+                indiceElementoBuscado = indice;
+                componenteElemento.Mostrar();
+                break;
+            case "Control":
+                EliminarDetalle(indice);
+                break;
+        }
+    }
+
+    private void DesactivarEventoTeclado() => activacionEventoTeclado = false;
+
+
+    private void TraerElementoSeleccionado()
+    {
+        activacionEventoTeclado = false;
+        var elementoEncontrado = componenteElemento.elementoActual;
+
+        var elementosAntes = detalles.TakeWhile((elemento, index) => index < indiceElementoBuscado);
+        var elementosDespues = detalles.SkipWhile((elemento, index) => index <= indiceElementoBuscado);
+        bool elementoExisteAntes = elementosAntes.Any(det => det.Elemento.CodigoArticulo == elementoEncontrado.CodigoArticulo);
+        bool elementoExisteDespues = elementosDespues.Any(det => det.Elemento.CodigoArticulo == elementoEncontrado.CodigoArticulo);
+        if (elementoExisteAntes || elementoExisteDespues)
+        {
+
+            if (indiceElementoBuscado == detalles.Count - 1)
+            {
+                detalles[indiceElementoBuscado].Elemento.CodigoArticulo = 0;
+            }
+            else
+            {
+                detalles[indiceElementoBuscado].Elemento.CodigoArticulo = codigoElementoAnterior;
+            }
+
+            modalConfirmacion.Mensaje = $"El elemento con el código {elementoEncontrado.CodigoArticulo} ya existe en los detalles de la venta";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+        else
+        {
+            detalles[indiceElementoBuscado].Elemento = elementoEncontrado;
+            detalles[indiceElementoBuscado].Elemento.ValorUnitario = detalles[indiceElementoBuscado].Elemento.Valor;
+            detalles[indiceElementoBuscado].Total = 0;
+            detalles[indiceElementoBuscado].CantidadSolicitada = 0;
+            ventaService.IniciarVenta(ventaDTO, parametrosImpuestos);
+
+        }
+
+
+        if (indiceElementoBuscado == detalles.Count - 1) AgregarFila();
+
+    }
+
+
+    public void CargarElemento(int indice)
+    {
+        long codigoElemento = detalles[indice].Elemento.CodigoArticulo;
+
+        if (codigoElemento < 0)
+        {
+            if (indice == detalles.Count - 1)
+            {
+                detalles[indice].Elemento.CodigoArticulo = 0;
+            }
+            else
+            {
+                detalles[indice].Elemento.CodigoArticulo = codigoElementoAnterior;
+            }
+
+            
+            modalConfirmacion.Mensaje = "No se permiten valores negativos en el codigo del elemento";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        
+        var elementoEncontrado = elementoService.ObtenerElementoEmpresaPorCodigo(codigoElemento,identificacionEmpresa);
+        if (elementoEncontrado is not null)
+        {
+            var elementosAntes = detalles.TakeWhile((elemento, index) => index < indice);
+            var elementosDespues = detalles.SkipWhile((elemento, index) => index <= indice);
+            bool elementoExisteAntes = elementosAntes.Any(det => det.Elemento.CodigoArticulo == elementoEncontrado.CodigoArticulo);
+            bool elementoExisteDespues = elementosDespues.Any(det => det.Elemento.CodigoArticulo == elementoEncontrado.CodigoArticulo);
+            if (elementoExisteAntes || elementoExisteDespues)
+            {
+
+                if (indice == detalles.Count - 1)
+                {
+                    detalles[indice].Elemento.CodigoArticulo = 0;
+                }
+                else
+                {
+                    detalles[indice].Elemento.CodigoArticulo = codigoElementoAnterior;
+                }
+
+                modalConfirmacion.Mensaje = $"El elemento con el código {elementoEncontrado.CodigoArticulo} ya existe en los detalles de la venta";
+                modalConfirmacion.Mostrar();
+                return;
+            }
+            else
+            {
+                if (!activacionEventoTeclado)
+                {
+                    detalles[indice].Elemento = elementoEncontrado;
+                    detalles[indice].Total = 0;
+                    detalles[indice].CantidadSolicitada = 0;
+                    detalles[indice].Elemento.ValorUnitario = detalles[indice].Elemento.Valor;
+                    ventaService.IniciarVenta(ventaDTO, parametrosImpuestos);
+
+                }
+
+
+            }
+
+
+        }
+        else
+        {
+
+            if (codigoElemento > 0)
+            {
+                indiceElementoBuscado = indice;
+                detalles[indice].Elemento = new ElementoInterfazGraficaVentaDTO();
+                componenteElemento.Mostrar();
+                
+            }
+            
+
+        }
+
+        if (elementoEncontrado is not null && indice == detalles.Count - 1) AgregarFila();
+
+    }
+
+    private void AgregarFila()
+    {
+
+        detalles.Add(new DetalleVentaInterfazGraficaVentaDTO { Elemento = new ElementoInterfazGraficaVentaDTO() });
+
+    }
+
+    private void CalcularTotalDetalle(int index)
+    {
+        var detalle = detalles[index];
+
+        if (detalles[index].CantidadSolicitada <= 0)
+        {
+            modalConfirmacion.Mensaje = $"El detalle numero {index+1} no puede tener una cantidad negativa o igual a cero";
+            modalConfirmacion.Mostrar();
+            detalles[index].CantidadSolicitada = 0;
+            return;
+        }
+
+        if (detalles[index].Elemento.ValorUnitario <= 0)
+        {
+            modalConfirmacion.Mensaje = $"El detalle numero {index + 1} no puede tener un valor negativo o igual a cero";
+            modalConfirmacion.Mostrar();
+            detalles[index].Elemento.ValorUnitario = 0;
+            return;
+        }
+
+
+
+        if (ventaDTO.Cliente is null)
+        {
+            modalConfirmacion.Mensaje = "Debe agregar el cliente";
+            modalConfirmacion.Mostrar();
+        }
+        else
+        {
+            var elementoDelDetalle = detalles[index].Elemento;
+            detalles[index].Total = detalles[index].CantidadSolicitada * elementoDelDetalle.ValorUnitario;
+            ventaService.IniciarVenta(ventaDTO, parametrosImpuestos);
+        }
+    }
+
+    public void FijarElemento(int index)
+    {
+        if (index < detalles.Count -1)
+        {
+            detalles[indiceAnteriorFijado].Elemento.ClaseCss = string.Empty;
+            indiceAnteriorFijado = index;
+            detalles[index].Elemento.ClaseCss = "fijar-fila-tabla";
+            ElementoFijado = detalles[index].Elemento;
+            SeleccionDetalle = true;
+            codigoElementoAnterior = detalles[index].Elemento.CodigoArticulo;
+
+        }
+
+
+    }
+
+    private void EliminarDetalle(int indice)
+    {
+        var detalle = detalles[indice];
+
+        if (indice < detalles.Count -1)
+        {
+            detalles.Remove(detalle);
+            ventaService.IniciarVenta(ventaDTO,parametrosImpuestos);
+
+        }
+
+    }
+
+    public void InicializarDetallesImpuestosDescuentosYTotalesVenta()
+    {
+        ventaDTO.SubTotal = 0;
+        ventaDTO.IVA = 0;
+        ventaDTO.Total = 0;
+        ventaDTO.Impuestos = new List<ImpuestoInterfazGraficaVentaDTO>();
+        ventaDTO.Descuentos = new List<DescuentoInterfazGraficaVentaDTO>();
+        indiceAnteriorFijado = 0;
+        ventaDTO.DetallesVenta = new List<DetalleVentaInterfazGraficaVentaDTO> { new DetalleVentaInterfazGraficaVentaDTO { Elemento = new ElementoInterfazGraficaVentaDTO() } };
+        detalles = ventaDTO.DetallesVenta;
+        ElementoFijado = new ElementoInterfazGraficaVentaDTO();
+        SeleccionDetalle = false;
+        StateHasChanged();
+
+    }
+}

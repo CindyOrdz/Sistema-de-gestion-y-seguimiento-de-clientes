@@ -1,0 +1,65 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = Terceros
+build_property.RootNamespace = Terceros
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\Terceros\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\Terceros
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/BodyComponenteTerceros.razor]
+build_metadata.AdditionalFiles.TargetPath = Qm9keUNvbXBvbmVudGVUZXJjZXJvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/ComponenteTerceros.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50ZVRlcmNlcm9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/ModalFormularioCiudad.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xNb2RhbEZvcm11bGFyaW9DaXVkYWQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/ModalFormularioDepartamento.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xNb2RhbEZvcm11bGFyaW9EZXBhcnRhbWVudG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/ModalSedes.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xNb2RhbFNlZGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/TabControlsModalSedes.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xUYWJDb250cm9sc01vZGFsU2VkZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/TabsComponentsFormSede/FormularioSedesTercero.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xUYWJzQ29tcG9uZW50c0Zvcm1TZWRlXEZvcm11bGFyaW9TZWRlc1RlcmNlcm8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/Modales/TabsComponentsFormSede/ListaSedesTercero.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxlc1xUYWJzQ29tcG9uZW50c0Zvcm1TZWRlXExpc3RhU2VkZXNUZXJjZXJvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/TabControlsTercero.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFiQ29udHJvbHNUZXJjZXJvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/TabsComponents/InformacionDetalladaTab.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcSW5mb3JtYWNpb25EZXRhbGxhZGFUYWIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/TabsComponents/TerceroTab.razor]
+build_metadata.AdditionalFiles.TargetPath = VGFic0NvbXBvbmVudHNcVGVyY2Vyb1RhYi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Terceros/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

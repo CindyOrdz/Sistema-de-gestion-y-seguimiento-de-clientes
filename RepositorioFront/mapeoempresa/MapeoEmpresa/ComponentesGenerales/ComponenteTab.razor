@@ -1,0 +1,20 @@
+﻿
+
+@code {
+
+    protected bool display = false;
+    public virtual void Mostrar()
+    {
+        display = true;
+        StateHasChanged();
+
+    }
+
+    public virtual void Dispose()
+    {
+        display = false;
+        StateHasChanged();
+
+    }
+
+}

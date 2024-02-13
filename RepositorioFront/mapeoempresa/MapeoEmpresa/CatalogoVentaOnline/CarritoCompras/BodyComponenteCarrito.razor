@@ -1,0 +1,129 @@
+﻿@inject ElementoService elementoService
+@inherits ComponenteTab
+
+<div class="container mt-4">
+    <h1>Carrito de Compras</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Productos en el carrito</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (elementos is not null)
+                    {
+                        @if (elementos.Count != 0)
+                        {
+                            @foreach(var ele in elementos)
+                            {
+                                <tr>
+                                    <td><img src="https://challengerco.vteximg.com.br/arquivos/ids/161775-500-500/CW5715_1.jpg?v=638046333462770000" alt="img" class="img-thumbnail" width="50"></td>
+                                    <td>@ele.Nombre</td>
+                                    <td>@ele.Valor $</td>
+                                    <td>@ele.CantidadSolicitadaEnCarrito</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" @onclick="(() => RemoverDelCarrito(ele))">-</button>
+                                        <button class="btn btn-sm btn-success" @onclick="(() => AgregarAlCarrito(ele))">+</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h2>Datos Bancarios</h2>
+            <form>
+                <div class="form-group">
+                    <label for="paymentType">Tipo de Pago</label>
+                    <input type="text" class="form-control" id="paymentType" placeholder="Tipo de Pago">
+                </div>
+                <div class="form-group">
+                    <label for="accountNumber">Número de Cuenta</label>
+                    <input type="text" class="form-control" id="accountNumber" placeholder="Número de Cuenta">
+                </div>
+                <div class="form-group">
+                    <label for="totalAmount">Total a Pagar</label>
+                    <input type="text" class="form-control" id="totalAmount" value="@SumarTotal() $" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Realizar Compra</button>
+            </form>
+        </div>
+    </div>
+</div>
+<ModalConfirmarEliminarDeCarrito  @ref="modalConfirmarEliminarDeCarrito" RefrescarEvent="Refrescar" ConfirmarEvent="ConfirmacionAgregarElemento"></ModalConfirmarEliminarDeCarrito>
+<ModalConfirmacion @ref="modalConfirmacion"></ModalConfirmacion>
+@code {
+    private List<ElementoInterfazGraficaVentaDTO>?  elementos;
+    private ModalConfirmarEliminarDeCarrito modalConfirmarEliminarDeCarrito;
+    private ModalConfirmacion modalConfirmacion;
+
+
+    private void ConfirmacionAgregarElemento()
+    {
+        if (modalConfirmarEliminarDeCarrito.Resultado)
+        {
+            elementos.Remove(modalConfirmarEliminarDeCarrito.elementoActual);
+            ListadoCarritoCompras.EliminarElementoDelCarrito(modalConfirmarEliminarDeCarrito.elementoActual);
+            modalConfirmacion.Mensaje = "Elemento eliminado";
+            Refrescar();
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "No se ha eliminado el elemento";
+        }
+        modalConfirmacion.Mostrar();
+    }
+
+
+    protected override Task OnInitializedAsync()
+    {
+        elementos = ListadoCarritoCompras.ObtenerElementosCarrito();
+        return base.OnInitializedAsync();
+    }
+    private void Refrescar()
+    {
+        Mostrar();
+    }
+
+    private double SumarTotal()
+    {
+        return elementos.Sum(elemento => elemento.Valor * elemento.CantidadSolicitadaEnCarrito);
+    }
+    private void AgregarAlCarrito(ElementoInterfazGraficaVentaDTO elemento)
+    {
+        elemento.CantidadSolicitadaEnCarrito++;
+    }
+    private void RemoverDelCarrito(ElementoInterfazGraficaVentaDTO elemento)
+    {
+        if (elemento.CantidadSolicitadaEnCarrito > 1)
+        {
+            elemento.CantidadSolicitadaEnCarrito--;
+        }
+        else
+        {
+            modalConfirmarEliminarDeCarrito.elementoActual = elemento;
+            modalConfirmarEliminarDeCarrito.Mostrar();
+
+            /*if (modalConfirmarEliminarDeCarrito.Resultado) {
+                elementos.Remove(elemento);
+                ListadoCarritoCompras.EliminarElementoDelCarrito(elemento);
+                Refrescar();
+            }*/
+
+        }
+    }
+
+}

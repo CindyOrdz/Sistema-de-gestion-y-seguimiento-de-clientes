@@ -1,0 +1,91 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@using MapeoEmpresa.Services;
+@using global::Terceros;
+@inject PlantaService PlantaService;
+@inject SedeService SedeService;
+
+<div class="col-lg-9 contact-form__wrapper p-5 order-lg-1 border border-3 formDesign">
+    <EditForm Model="plantaDTO" OnValidSubmit="GuardarPlanta">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="contacto">Nombre: </label>
+                    <input type="text" class="form-control" id="nombre" @bind="plantaDTO.nombre" required>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="ubicacion">Dirección: </label>
+                    <input type="text" class="form-control" id="ubicacion" @bind="plantaDTO.direccion" required>
+                </div>
+            </div>
+ 
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="contacto">Contacto: </label>
+                    <input type="text" class="form-control" id="contacto" @bind="plantaDTO.contacto" required>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="telefono1">Teléfono 1: </label>
+                    <input type="text" class="form-control" id="telefono1" @bind="plantaDTO.telefono1" required>
+                </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="telefono2">Teléfono 2: </label>
+                    <input type="text" class="form-control" id="telefono2" @bind="plantaDTO.telefono2" required>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="emailcontacto">Email Contacto: </label>
+                    <input type="email" class="form-control" id="emailcontacto" @bind="plantaDTO.emailContacto" required>
+                </div>
+            </div>
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label class="required-field" for="emailinforme">Email Informe: </label>
+                    <input type="email" class="form-control" id="emailinforme" @bind="plantaDTO.emailInforme" required>
+                </div>
+            </div>
+            
+            <div class="col-sm-12 mb-3">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </div>
+
+
+
+    </EditForm>
+    
+</div>
+<br />
+
+<ModalPersonalizado @ref="modalRegistroExitoso"/>
+
+@code {
+    PlantaEmpresaClienteDTO plantaDTO = new PlantaEmpresaClienteDTO();
+    private ModalPersonalizado modalRegistroExitoso;
+    
+
+    protected async Task GuardarPlanta()
+    {
+        await SedeService.AgregarPlanta(plantaDTO);
+
+        // Limpiar los campos del formulario después de agregar la planta
+        plantaDTO = new PlantaEmpresaClienteDTO();
+       
+        // Mostrar el modal de registro exitoso
+        modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+    }
+
+}

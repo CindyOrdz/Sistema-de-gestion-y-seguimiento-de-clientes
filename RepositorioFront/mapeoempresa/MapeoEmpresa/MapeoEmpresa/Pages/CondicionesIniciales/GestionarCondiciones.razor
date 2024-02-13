@@ -1,0 +1,303 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject CondicionOperativaInicialService CondicionInicialService;
+@inject ParteService ParteService;
+@using EntidadesNegocio.InformacionVisita;
+
+<PageTitle>Gestionar condiciones operativas</PageTitle>
+
+<div class="col-lg-9 contact-form__wrapper p-5 order-lg-1 border border-3 formDesign">
+    <h4>Gestionar condiciones operativas</h4>
+    <p>Por favor ingrese el ID del listado que desea consultar</p>
+    <!--Seccion de busqueda del listado de condiciones iniciales por ID-->
+    <div class="input-group mb-3">
+        <input type="search" class="form-control custom-input" id="busqueda" @bind="IdBusqueda" placeholder="ID del listado">
+        <button class="btn btn-sm btn-secondary" type="button" @onclick="() => BuscarCondicionInicial(IdBusqueda)">
+            <i class="oi oi-magnifying-glass"></i>
+        </button>
+    </div>
+
+    @if (mostrarResultadoBusqueda )
+    {
+        <div>
+            <div class="form-group">
+                <label for="descripcion"><b>Descripcion del listado seleccionado</b></label>
+                <textarea class="form-control" rows="3" id="descripcion" value="@CondicionInicialService.CondicionInicialDTOSeleccionada.descripcion" disabled></textarea>
+            </div>
+
+            <!--Formulario para agregar una condicion al listado-->
+            <div class="pt-4">
+                <h6><b>Agregar Condición Operativa</b></h6>
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <div class="form-group">
+                            <label class="required-field" for="nombreCondicion">Nombre: </label>
+                            <input type="text" class="form-control" id="nombreCondicion" @bind="CondicionOperativaDTO.nombre" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <div class="form-group">
+                            <label class="required-field" for="valorFijo">Valor fijo: </label>
+                            <input type="number" class="form-control" id="valorFijo" @bind="ValorDTO.valorFijo" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <div class="form-group">
+                            <label class="required-field" for="rangoInicial">Rango inicial: </label>
+                            <input type="number" class="form-control" id="rangoInicial" @bind="ValorDTO.rangoInicial" required>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <div class="form-group">
+                            <label class="required-field" for="rangoFinal">Rango final: </label>
+                            <input type="number" class="form-control" id="rangoFinal" @bind="ValorDTO.rangoFinal" required>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-4 mb-3">
+                        <label class="required-field" for="unidad">Unidad </label>
+                        <select class="form-control" id="unidad" @onchange="GuardarUnidadSeleccionada" required>
+                            <option value="">Seleccionar unidad</option>
+                            @foreach (var unidad in ListUnidad)
+                            {
+                                <option value="@unidad.codigo">@unidad.descripcion</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-success" @onclick="AgregarNuevaCondicion">Agregar al listado</button>
+            </div>
+
+            <!--Listado de condiciones registradas-->
+            <div class="pt-3">
+                <h6><b>Condiciones operativas registradas</b></h6>
+            </div>
+
+            @if (listadoCondicionesOperativas == null)
+            {
+                <p>Cargando...</p>
+            }
+            else if (listadoCondicionesOperativas.Count == 0)
+            {
+                <p class="pt-3">No se han registrado partes para este equipo</p>
+            }
+            else
+            {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Valor</th>
+                        <th>Rango</th>
+                        <th>Unidad</th>
+                        <th></th>
+                        <th></th>                        
+                    </tr> 
+                </thead>
+                <tbody>
+                    @if (listadoCondicionesOperativas.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="5">
+                                Aún no se han registrado condiciones operativas en este listado
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var condicion in listadoCondicionesOperativas)
+                        {
+                            <tr>
+                                <td>@condicion.id</td>
+                                <td>@condicion.nombre</td>
+                                <td>@condicion.valorFijo</td>
+                                <td>@condicion.rangoCompleto</td>
+                                <td>@condicion.codigoUnidad</td>
+                                <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(condicion)"><i class="oi oi-pencil"></i></button></td>
+                                <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(condicion.id)"><i class="oi oi-x"></i></button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    }
+
+    <!--Modales-->
+    @if (modalEliminar)
+    {
+        <div class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Desea eliminar la condicion operativa con ID @ID?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                        <button type="button" class="btn btn-success" @onclick=BorrarCondicionOperativa>Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Condicion operativa ID @DTOCondicion.id</strong></h5>
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" @bind="DTOCondicion.nombre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fijo">Valor fijo: </label>
+                            <input type="number" class="form-control" id="fijo" @bind="DTOCondicion.valorFijo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inicial">Rango incial: </label>
+                            <input type="number" class="form-control" id="inicial" @bind="DTOCondicion.rangoInicial">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="final">Rango final: </label>
+                            <input type="number" class="form-control" id="final" @bind="DTOCondicion.rangoFinal">
+                        </div>
+
+                        
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Editar condicion </button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private string IdBusqueda;
+    private string unidad;
+    private bool mostrarResultadoBusqueda = false;
+
+    List<CondicionOperativaDTO> listadoCondicionesOperativas = new List<CondicionOperativaDTO>();
+    //DTO para edicion
+    private CondicionOperativaDTO DTOCondicion = new CondicionOperativaDTO();
+
+    //DTOS para capturar informacion de formularios
+    private CondicionInicialDTO CondicionInicialDTO = new CondicionInicialDTO();
+    private CondicionOperativaDTO CondicionOperativaDTO = new CondicionOperativaDTO();
+    private ValorDTO ValorDTO = new ValorDTO();
+
+    //Variables para los modales del listado
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    List<UnidadDTO> ListUnidad { get; set; }
+
+    protected async Task BuscarCondicionInicial(string id)
+    {
+        if (BigInteger.TryParse(id, out BigInteger idFinal))
+        {
+            CondicionInicialService.CondicionInicialDTOSeleccionada = await ParteService.BuscarCondicionInicial(idFinal);
+            if (CondicionInicialService.CondicionInicialDTOSeleccionada !=null)
+            {
+                mostrarResultadoBusqueda = true;
+                //Cargo el listado de condiciones operativas ya creadas
+                listadoCondicionesOperativas = await CondicionInicialService.ListarCondicionesOperativas();
+            }
+            else
+            {
+                mostrarResultadoBusqueda = false;
+            }
+
+        }
+        else
+        {
+            mostrarResultadoBusqueda = false;
+        }
+    }
+
+
+    protected async Task AgregarNuevaCondicion()
+    {
+        //Llamo al servicio que va a agregar la condicion operativa al listado
+        await CondicionInicialService.RegistrarCondicionOperativa(ValorDTO, CondicionOperativaDTO);
+
+        //Cargo el listado de condiciones operativas ya creadas
+        listadoCondicionesOperativas = await CondicionInicialService.ListarCondicionesOperativas();
+
+        //Limpio el formulario
+        CondicionOperativaDTO = new CondicionOperativaDTO();
+        unidad = "";
+        ValorDTO = new ValorDTO();
+
+    }
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    protected async Task BorrarCondicionOperativa()
+    {
+        await CondicionInicialService.BorrarCondicionOperativa(ID);
+        modalEliminar = false;
+        listadoCondicionesOperativas = await CondicionInicialService.ListarCondicionesOperativas();
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    private void AbrirModalEditar(CondicionOperativaDTO condicionOperativaDTO)
+    {
+        modalEditar = true;
+        DTOCondicion = condicionOperativaDTO;
+    }
+
+    protected async Task Guardar()
+    {
+        await CondicionInicialService.EditarCondicionOperativa(DTOCondicion);
+        modalEditar = false;
+        listadoCondicionesOperativas = await CondicionInicialService.ListarCondicionesOperativas();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListUnidad = await CondicionInicialService.ListarUnidades();
+    }
+
+    private void GuardarUnidadSeleccionada(ChangeEventArgs e)
+    {
+        //Guardo el objeto del tercero seleccionado desde el select
+        CondicionOperativaDTO.unidad = CondicionInicialService.BuscarUnidad(e.Value?.ToString(),ListUnidad);
+    }
+}

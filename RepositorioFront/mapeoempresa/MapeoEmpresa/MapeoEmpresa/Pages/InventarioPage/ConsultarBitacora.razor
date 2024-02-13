@@ -1,0 +1,208 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<div class="pt-4 contenedor-bloque">
+    <h3>Bit&aacute;cora actualizaciones de inventario</h3>
+
+    @if (ListaBitacora == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListaBitacora.Count == 0)
+    {
+        <p class="pt-3">No se han registrado actualizaciones de inventario</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Revision</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bitacora in ListaBitacora)
+                {
+                    <tr>
+                        <td>@bitacora.fecha</td>
+                        <td>@bitacora.IdRevision</td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(bitacora)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="col-auto">
+            <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+        </div>
+    }
+</div>
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="required-field" for="fecha">Fecha: </label>
+                        <input type="text" class="form-control" id="fecha" value="@BitacoraDTO.fecha" readonly>
+                    </div>
+
+                    <div class="row">
+                        
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="idRevision">ID Revisión: </label>
+                                <input type="text" class="form-control" id="idRevision" value="@BitacoraDTO.IdRevision" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="idElemento">ID Elemento: </label>
+                                <input type="text" class="form-control" id="idElemento" value="@BitacoraDTO.IdElemento" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombreElemento">Nombre Elemento: </label>
+                        <input type="text" class="form-control" id="nombreElemento" value="@BitacoraDTO.NombreElemento" readonly>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="anterior">Cantidad anterior: </label>
+                                <input type="text" class="form-control" id="anterior" value="@BitacoraDTO.CantidadAnterior" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nueva">Nueva cantidad: </label>
+                                <input type="text" class="form-control" id="nueva" value="@BitacoraDTO.NuevaCantidad" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="idResp">ID Responsable: </label>
+                                <input type="text" class="form-control" id="idResp" value="@BitacoraDTO.IdResponsable" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombreResp">Nombre: </label>
+                                <input type="text" class="form-control" id="nombreResp" value="@BitacoraDTO.NombreResponsable" readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacion">Observaciones: </label>
+                            <textarea class="form-control" id="observacion" rows="5" @bind="BitacoraDTO.Observaciones" readonly></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<BitacoraInventarioDTO> ListaBitacora;
+    private bool modalInformacion = false;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    BitacoraInventarioDTO BitacoraDTO = new BitacoraInventarioDTO();
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoBitacora"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginas = calcularPaginasTotales();
+
+        ListaBitacora = inventarioService.ObtenerBitacoraInventario(identificacionEmpresa,paginaActual, elementosPorPagina);
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        paginaActual = 1;
+        totalPaginas = calcularPaginasTotales();
+        ListaBitacora = inventarioService.ObtenerBitacoraInventario(identificacionEmpresa,paginaActual, elementosPorPagina);
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)inventarioService.ObtenerTotalBitacora(identificacionEmpresa);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListaBitacora = inventarioService.ObtenerBitacoraInventario(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+    private void CerrarModal()
+    {
+        modalInformacion = false;
+    }
+
+    private void AbrirModalInformacion(BitacoraInventarioDTO bitacora)
+    {
+        modalInformacion = true;
+        BitacoraDTO = bitacora;
+    }
+
+}

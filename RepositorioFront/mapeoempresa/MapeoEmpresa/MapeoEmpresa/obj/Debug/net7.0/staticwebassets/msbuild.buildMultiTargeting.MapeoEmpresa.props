@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MapeoEmpresa.props" />
+</Project>

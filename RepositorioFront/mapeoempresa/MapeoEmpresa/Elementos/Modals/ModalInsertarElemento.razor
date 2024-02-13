@@ -1,0 +1,53 @@
+﻿@inherits ComponenteTab
+@inject ElementoService elementoService
+@if(display)
+{
+    <div class="modal fade show" tabindex="-1" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensaje</h5>
+                    <button type="button" class="btn-close" @onclick="Dispose"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="justify-content-center">¿Estás seguro de agregar el elemento?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success mr-5" @onclick="InsertarElemento">Sí</button>
+                    <button class="btn btn-danger" @onclick="Dispose">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool Display = false;
+    public bool Resultado = false;
+    public ElementoInterfazGraficaVentaDTO elementoActual { get; set; } = new ElementoInterfazGraficaVentaDTO();
+
+
+    [Parameter]
+    public EventCallback ConfirmarEvent { get; set; }
+
+    [Parameter]
+    public EventCallback RefrescarEvent { get; set; }
+
+    public void InsertarElemento()
+    {
+        Resultado = elementoService.InsertarElemento(elementoActual);
+        Dispose();
+        ConfirmarAgregar();
+        RefrescarElementos();
+    }
+
+    private void ConfirmarAgregar()
+    {
+        ConfirmarEvent.InvokeAsync();
+    }
+
+    private void RefrescarElementos()
+    {
+        RefrescarEvent.InvokeAsync();
+    }
+}

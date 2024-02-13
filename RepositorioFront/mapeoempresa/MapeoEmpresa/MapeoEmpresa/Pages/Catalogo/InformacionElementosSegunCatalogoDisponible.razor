@@ -1,0 +1,9 @@
+﻿@page "/elementoscatalogo/{Id:int}/{Name}"
+<ElementosSegunCatalogo Id="@Id" Name="@Name"/>
+
+@code{
+    [Parameter]
+    public int Id { get; set; }
+    [Parameter]
+    public String Name { get; set; }
+}

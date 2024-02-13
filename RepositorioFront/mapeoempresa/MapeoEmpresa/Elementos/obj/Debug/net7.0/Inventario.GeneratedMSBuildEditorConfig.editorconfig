@@ -1,0 +1,37 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = Inventario
+build_property.RootNamespace = Inventario
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\Elementos\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\Elementos
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Elementos/Elementos/BodyComponenteElemento.razor]
+build_metadata.AdditionalFiles.TargetPath = RWxlbWVudG9zXEJvZHlDb21wb25lbnRlRWxlbWVudG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Elementos/Elementos/ComponenteElemento.razor]
+build_metadata.AdditionalFiles.TargetPath = RWxlbWVudG9zXENvbXBvbmVudGVFbGVtZW50by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Elementos/Modals/ModalEditarElemento.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXE1vZGFsRWRpdGFyRWxlbWVudG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Elementos/Modals/ModalInsertarElemento.razor]
+build_metadata.AdditionalFiles.TargetPath = TW9kYWxzXE1vZGFsSW5zZXJ0YXJFbGVtZW50by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/Elementos/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 

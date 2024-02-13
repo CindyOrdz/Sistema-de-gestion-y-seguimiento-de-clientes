@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.1.7" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.1.7" />
+    <PackageReference Include="Blazorise.TreeView" Version="1.1.7" />
+    <PackageReference Include="Microsoft.JSInterop" Version="7.0.10" />
+    <PackageReference Include="MySql.Data" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="EntidadesNegocio">
+      <HintPath>..\..\..\..\ÚLTIMO PASANTÍA ACTUALIZAD\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll</HintPath>
+    </Reference>
+    <Reference Include="RegistroEvidencia">
+      <HintPath>..\..\..\..\ÚLTIMO PASANTÍA ACTUALIZAD\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,54 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject ComponenteService ComponenteService;
+
+<div class="col-lg-9 contact-form__wrapper p-5 order-lg-1 border border-3 formDesign">
+    <EditForm Model="equipoDTO" OnValidSubmit="GuardarEquipo">
+        <DataAnnotationsValidator />
+        <div class="row">
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="componente">Componente: </label>
+                    <input type="text" class="form-control" id="componente" value="@ComponenteService.ComponenteSeleccionado.nombre" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control" id="nombre" @bind="equipoDTO.nombre" required>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <div class="form-group">
+                    <label for="descripcion">Descripción: </label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="equipoDTO.descripcion" required></textarea>
+                </div>
+            </div>
+
+            <div class="col-sm-12 mb-3">
+                <button type="submit" name="submit" class="btn btn-primary">Guardar</button>
+            </div>
+
+        </div>
+    </EditForm>
+</div>
+<br />
+<ModalPersonalizado @ref="modalRegistroExitoso"/>
+
+@code {
+    private ModalPersonalizado modalRegistroExitoso;
+    EquipoDTO equipoDTO = new EquipoDTO();
+
+    protected async Task GuardarEquipo()
+    {
+        await ComponenteService.AgregarEquipo(equipoDTO);
+
+        // Limpiar los campos del formulario
+        equipoDTO = new EquipoDTO();
+
+        modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+    }
+
+}

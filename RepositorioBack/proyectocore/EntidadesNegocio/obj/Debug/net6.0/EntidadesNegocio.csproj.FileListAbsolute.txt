@@ -1,0 +1,153 @@
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+D:/ProyectosDeGrado/macati software/Repositorio/ProyectoCore/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/sharo/OneDrive/Escritorio/PASANTÍA/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/santi/Desktop/__/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+C:/Users/57322/Documents/Universidad Johan/Pasantia/ProyectoMacatiSoftware2/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.deps.json
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.pdb
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.AssemblyReference.cache
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfoInputs.cache
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.AssemblyInfo.cs
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CoreCompileInputs.cache
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/refint/EntidadesNegocio.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.pdb
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/ref/EntidadesNegocio.dll
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/RegistroEvidencia.pdb
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CopyComplete
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/RegistroEvidencia.dll
+C:/Users/Lorena/Documents/Unillanos/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/EntidadesNegocio.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/RegistroEvidencia.dll
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/bin/Debug/net6.0/RegistroEvidencia.pdb
+/Users/habi/Documents/Pasantia/proyectocore/EntidadesNegocio/obj/Debug/net6.0/EntidadesNegocio.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.deps.json
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.AssemblyReference.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfoInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\refint\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUALIZADO\proyectocore\EntidadesNegocio\obj\Debug\net6.0\ref\EntidadesNegocio.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.deps.json
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.AssemblyReference.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfoInputs.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfo.cs
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CopyComplete
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\refint\EntidadesNegocio.dll
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\Lorena\Documents\Unillanos\Pasantia\proyectocore\EntidadesNegocio\obj\Debug\net6.0\ref\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.deps.json
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.AssemblyReference.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfoInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfo.cs
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CopyComplete
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\refint\EntidadesNegocio.dll
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\sharo\OneDrive\Escritorio\PASANTÍA ACTUAL\proyectocore\EntidadesNegocio\obj\Debug\net6.0\ref\EntidadesNegocio.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.AssemblyReference.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfoInputs.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfo.cs
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CoreCompileInputs.cache
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\refint\EntidadesNegocio.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.deps.json
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.pdb
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CopyComplete
+C:\Users\57322\Documents\Universidad Johan\Pasantia\ProyectoMacatiSoftware\proyectocore\EntidadesNegocio\obj\Debug\net6.0\ref\EntidadesNegocio.dll
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.AssemblyReference.cache
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfoInputs.cache
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.AssemblyInfo.cs
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CoreCompileInputs.cache
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.deps.json
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.dll
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\EntidadesNegocio.pdb
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.dll
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\bin\Debug\net6.0\RegistroEvidencia.pdb
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.csproj.CopyComplete
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.dll
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\refint\EntidadesNegocio.dll
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\EntidadesNegocio.pdb
+D:\Documents\RepositorioBack\proyectocore\EntidadesNegocio\obj\Debug\net6.0\ref\EntidadesNegocio.dll

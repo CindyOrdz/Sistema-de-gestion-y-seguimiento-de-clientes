@@ -1,0 +1,42 @@
+﻿@inherits ComponenteTab
+@if (display)
+{
+    @if (origen == "page")
+    {
+        <BodyComponenteCarrito @ref="bodyComponenteCarrito"/>
+    }
+    else
+    {
+        <style>
+            .custom-modal-lg {
+                max-width: 80%; /* Personaliza el porcentaje según tu preferencia */
+            }
+        </style>
+        <div class="modal fade show" tabindex="-1" style="display:block; background-color: rgba(0, 0, 0, 0.5);">
+            <div class="modal-dialog custom-modal-lg modal-right">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Mensaje</h5>
+                        <button type="button" class="btn-close" @onclick="Dispose"></button>
+                    </div>
+                    <div class="modal-body">
+                        <BodyComponenteCarrito @ref="bodyComponenteCarrito" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+@code {
+    private BodyComponenteCarrito bodyComponenteCarrito;
+    [Parameter]
+    public string origen { get; set; } = string.Empty;
+    protected override Task OnInitializedAsync()
+    {
+        if (origen == "page")
+        {
+            display = true;
+        }
+        return base.OnInitializedAsync();
+    }
+}

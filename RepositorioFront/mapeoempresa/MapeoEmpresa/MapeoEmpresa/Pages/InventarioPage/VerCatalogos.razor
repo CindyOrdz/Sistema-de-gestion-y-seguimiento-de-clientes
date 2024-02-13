@@ -1,0 +1,178 @@
+﻿@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<div class="pt-4 contenedor-bloque">
+    <h3>Cat&aacute;logos de productos</h3>
+
+    @foreach (var catalogo in Catalogos)
+    {
+        <div class="padding-iconos">
+
+            <div class="pt-2">
+                <div class="flex-container">
+                    <i class="fas fa-book node-icon"> </i>
+                    <a class="nombre-catalogo padding-link" @onclick="(() => MostarProductos(catalogo))">@catalogo.clasificacion</a>
+                </div>
+
+                <hr>
+            </div>
+
+
+            @if (CatalogoActivo != null && CatalogoActivo.clasificacion == catalogo.clasificacion)
+            {
+                <div class="p-2">
+                    @if (elementos == null)
+                    {
+                        <p>Cargando...</p>
+                    }
+                    else if (elementos.Count == 0)
+                    {
+                        <p>No se han registrado elementos para este catálogo</p>
+                    }
+                    else
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Elemento</th>
+                                    <th>Marca</th>
+                                    <th>Referencia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var elemento in elementos)
+                                {
+                                    <tr>
+                                        <td>@elemento.CodigoArticulo</td>
+                                        <td>@elemento.Nombre</td>
+                                        <td>@elemento.Marca</td>
+                                        <td>@elemento.Referencia</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="col-auto">
+                            <Paginacion PaginaActual="paginaActualProductos" PaginasTotales="totalPaginasProductos" Radio="2" PaginaSeleccionada="PaginaSeleccionadaProductos" />
+                        </div>
+                    }
+                </div>
+                <hr />
+            }
+
+        </div>
+    }
+
+    <div class="col-auto">
+        <Paginacion PaginaActual="paginaActualCatalogo" PaginasTotales="totalPaginasCatalogo" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+    </div>
+
+</div>
+
+@code {
+    List<CatalogoInterfazGraficaVentaDTO> Catalogos { get; set; }
+    CatalogoInterfazGraficaVentaDTO CatalogoActivo { get; set; }
+    List<ElementoInterfazGraficaVentaDTO> elementos { get; set; }
+
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    private int paginaActualCatalogo = 1;
+    private int totalPaginasCatalogo = 0;
+    private int elementosPorPaginaCatalogo = 0;
+
+    private int paginaActualProductos = 1;
+    private int totalPaginasProductos = 0;
+    private int elementosPorPaginaProductos = 0;
+    private long idCatalogo = 0;
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPaginaCatalogo = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoCatalogoPorEmpresa"]);
+            elementosPorPaginaProductos = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoElementosCatalogoPorEmpresa"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginasCatalogo = calcularPaginasTotales();
+
+        Catalogos = inventarioService.ObtenerCatalogos(identificacionEmpresa, paginaActualCatalogo, elementosPorPaginaCatalogo);
+    }
+
+    void MostarProductos(CatalogoInterfazGraficaVentaDTO catalog)
+    {
+        idCatalogo = catalog.id;
+        totalPaginasProductos = calcularPaginasTotalesProductos();
+        elementos = inventarioService.ObtenerElementosCatalogo(idCatalogo, paginaActualProductos, elementosPorPaginaProductos);
+
+        if (CatalogoActivo == catalog)
+        {
+            CatalogoActivo = null;
+        }
+        else
+        {
+            CatalogoActivo = catalog;
+        }
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)inventarioService.ObtenerTotalCatalogos(identificacionEmpresa);
+        double resultado = totalElementos / elementosPorPaginaCatalogo;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActualCatalogo = paginaSeleccionada;
+        Catalogos = inventarioService.ObtenerCatalogos(identificacionEmpresa, paginaActualCatalogo, elementosPorPaginaCatalogo);
+    }
+
+    //Pagina para elementos del catalogo
+
+    private int calcularPaginasTotalesProductos()
+    {
+        double totalElementos = (double)inventarioService.ObtenerTotalElementosCatalogo(idCatalogo);
+        double resultado = totalElementos / elementosPorPaginaProductos;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionadaProductos(int paginaSeleccionadaProductos)
+    {
+        paginaActualProductos = paginaSeleccionadaProductos;
+        elementos = inventarioService.ObtenerElementosCatalogo(idCatalogo, paginaActualProductos, elementosPorPaginaProductos);
+    }
+
+}

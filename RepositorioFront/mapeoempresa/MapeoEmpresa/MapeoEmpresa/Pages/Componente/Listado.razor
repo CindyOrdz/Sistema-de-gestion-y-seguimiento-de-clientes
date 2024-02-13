@@ -1,0 +1,204 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject AreaService AreaService;
+@inject ComponenteService ComponenteService;
+
+<div class="contenedor-bloque col-lg-12">
+    @if (ListComponentes == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListComponentes.Count == 0)
+    {
+        <p class="pt-3">No se han registrado componentes para esta área</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in ListComponentes)
+                {
+                    <tr>
+                        <td>@p.id</td>
+                        <td>@p.nombre</td>
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(p)"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id)"><i class="oi oi-x"></i></button></td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div> 
+<br />
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Desea eliminar el componente con ID @ID?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarComponente>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Componente ID @componenteDTO.id</strong></h5>
+
+                    <EditForm Model="componenteDTO">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" @bind="componenteDTO.nombre">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripción: </label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="componenteDTO.descripcion"></textarea>
+                        </div>
+
+
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Editar Componente</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@componenteDTO.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Nombre: </label>
+                                <input type="text" class="form-control" id="nombre" value="@componenteDTO.nombre" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="areaproceso">Área de proceso: </label>
+                        <input type="text" class="form-control" id="areaproceso" value="@AreaService.AreaSeleccionada.nombre" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@componenteDTO.descripcion" readonly />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    List<ComponenteDTO> ListComponentes;
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    ComponenteDTO componenteDTO = new ComponenteDTO();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListComponentes = await AreaService.ListarComponentes();
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarComponente()
+    {
+        await AreaService.BorrarComponentes(ID);
+        modalEliminar = false;
+        ListComponentes = await AreaService.ListarComponentes();
+    }
+
+    protected async Task Guardar()
+    {
+        await AreaService.EditarComponentes(componenteDTO);
+        modalEditar = false;
+        ListComponentes = await AreaService.ListarComponentes();
+    }
+
+    //MODALES
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    private void AbrirModalEditar(ComponenteDTO componente)
+    {
+        modalEditar = true;
+        componenteDTO = componente;
+    }
+
+    private void AbrirModalInformacion(ComponenteDTO componente)
+    {
+        modalInformacion = true;
+        componenteDTO = componente;
+    }
+}

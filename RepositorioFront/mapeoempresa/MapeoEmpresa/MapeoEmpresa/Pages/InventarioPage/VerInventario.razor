@@ -1,0 +1,219 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<div class="pt-4 contenedor-bloque">
+    <h3>Inventario</h3>
+    
+    @if (ListaElementos == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListaElementos.Count == 0)
+    {
+        <p class="pt-3">No se han registrado elementos para esta empresa</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Elemento</th>
+                    <th>Ingresados</th>
+                    <th>Vendidos</th>
+                    <th>Disponible</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var elemento in ListaElementos)
+                {
+                    <tr>
+                        <td>@elemento.CodigoElemento</td>
+                        <td>@elemento.Nombre</td>
+                        <td>@elemento.CantidadAlmacen</td>
+                        <td>@elemento.CantidadVendidos</td>
+                        <td>@elemento.CantidadDisponible</td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(elemento)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="col-auto">
+            <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+        </div>
+    }
+
+</div>
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@elementoDTO.CodigoElemento" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Nombre: </label>
+                                <input type="text" class="form-control" id="nombre" value="@elementoDTO.Nombre" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="marca">Marca: </label>
+                                <input type="text" class="form-control" id="marca" value="@elementoDTO.Marca" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="referencia">Referencia: </label>
+                                <input type="text" class="form-control" id="referencia" value="@elementoDTO.Referencia" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="tipo">Tipo: </label>
+                                <input type="text" class="form-control" id="tipo" value="@elementoDTO.TipoElemento" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="sett">Sett: </label>
+                                <input type="text" class="form-control" id="sett" value="@elementoDTO.Sett" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="ingresados">Ingresados: </label>
+                                <input type="text" class="form-control" id="ingresados" value="@elementoDTO.CantidadAlmacen" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="vendidos">Vendidos: </label>
+                                <input type="text" class="form-control" id="vendidos" value="@elementoDTO.CantidadVendidos" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="disponible">Cant. disponible: </label>
+                        <input type="text" class="form-control" id="disponible" value="@elementoDTO.CantidadDisponible" readonly>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@code {
+    private List<ElementoInventarioDTO> ListaElementos;
+    private ElementoInventarioDTO elementoDTO = new ElementoInventarioDTO();
+    private bool modalInformacion = false;
+
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoInventario"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginas = calcularPaginasTotales();
+
+        ListaElementos = inventarioService.ObtenerInventario(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+    private void CerrarModal()
+    {
+        modalInformacion = false;
+    }
+
+    private void AbrirModalInformacion(ElementoInventarioDTO elemento)
+    {
+        modalInformacion = true;
+        elementoDTO = elemento;
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        paginaActual = 1;
+        totalPaginas = calcularPaginasTotales();
+        ListaElementos = inventarioService.ObtenerInventario(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)inventarioService.ObtenerTotalElementosInventario(identificacionEmpresa);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListaElementos =  inventarioService.ObtenerInventario(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+}

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "3IEvuTzpSsRLHRBthx84eE6v2k5D8zGCl97baVjiqBY=",
+  "Source": "Inventario",
+  "BasePath": "_content/Inventario",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Inventario\\wwwroot",
+      "Source": "Inventario",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\",
+      "BasePath": "_content/Inventario",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\background.png",
+      "SourceId": "Inventario",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\",
+      "BasePath": "_content/Inventario",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "Inventario",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\Elementos\\wwwroot\\",
+      "BasePath": "_content/Inventario",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

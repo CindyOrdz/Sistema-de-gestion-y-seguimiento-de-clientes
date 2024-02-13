@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "cD4K0BnTYBmCaXao8o/Am16N/EvgzpEyIBCkTXHcm8A=",
+  "Source": "GestionDeUsuarios",
+  "BasePath": "_content/GestionDeUsuarios",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "GestionDeUsuarios\\wwwroot",
+      "Source": "GestionDeUsuarios",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\",
+      "BasePath": "_content/GestionDeUsuarios",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\background.png",
+      "SourceId": "GestionDeUsuarios",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\",
+      "BasePath": "_content/GestionDeUsuarios",
+      "RelativePath": "background.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\background.png"
+    },
+    {
+      "Identity": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\exampleJsInterop.js",
+      "SourceId": "GestionDeUsuarios",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Documents\\RepositorioFront\\mapeoempresa\\MapeoEmpresa\\GestionDeUsuarios\\wwwroot\\",
+      "BasePath": "_content/GestionDeUsuarios",
+      "RelativePath": "exampleJsInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\exampleJsInterop.js"
+    }
+  ]
+}

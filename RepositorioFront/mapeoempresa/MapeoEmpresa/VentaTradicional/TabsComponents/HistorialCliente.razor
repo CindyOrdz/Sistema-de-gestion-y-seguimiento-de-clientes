@@ -1,0 +1,440 @@
+﻿@inherits ComponenteTab
+@inject IConfiguration Configuration
+@inject VentaTradicionalService ventaTradicionalService
+
+@if (display)
+{
+    @if (tieneCliente)
+    {
+        <div class="shadow p-3 border border-light rounded-end">
+            <div class="row mt-3">
+                <div class="col"></div>
+                <div class="col-auto">
+                    <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+                </div>
+            </div>
+
+            <AuthorizeView Roles="EMPLEADO" Policy="PoliticaConversionTipoVenta">
+                <Authorized>
+                    <div class="contenedor-bloque">
+                        <span class="btn btn-outline-dark" @onclick="PasarVentaAFactura"><i class="fa-solid fa-file-invoice-dollar fas"></i></span>
+                        <span class="btn btn-outline-dark" @onclick="PasarVentaAOrdenPedido"> <i class="fa-solid fa-box fas"></i></span>
+                        <span class="btn btn-outline-dark" @onclick="AnularVenta"><i class="fa-solid fa-rectangle-xmark fas"></i></span>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+            <div class="contenedor-grid mt-2">
+                <div class="contenedor-tabla mb-3">
+                    <table class="table mb-3">
+                        <thead>
+                            <tr>
+                                @foreach (var elemento in cabeceraTablaVentas)
+                                {
+                                    <th class="text-center">
+                                        <label class="font-txt">@elemento</label>
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < historialCliente.Count; i++)
+                            {
+                                var currentIndex = i;
+                                var ventaHistorialCliente = historialCliente[i];
+
+                                <tr class="cursor-pointer-elemento @historialCliente[i].ClaseCss" @onclick="()=> FijarElemento(currentIndex)">
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.IdVenta
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.NombreResponsable
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.TipoVenta
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.FechaVenta
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.Hora
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (ventaHistorialCliente.FechaAnulacion is null)
+                                        {
+                                            <label>
+
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="font-info-venta cursor-pointer-elemento">
+                                                @ventaHistorialCliente.FechaAnulacion
+                                            </label>
+                                        }
+
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.TipoPago
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.SubTotal.ToString("C")
+                                        </label>
+                                    </td>
+                                    <td class="text-center">
+                                        <label class="font-info-venta cursor-pointer-elemento">
+                                            @ventaHistorialCliente.Total.ToString("C")
+                                        </label>
+                                    </td>
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+        <h1 class="text-center mt-3">Detalle venta Seleccionada</h1>
+
+        <div class="contenedor-grid mt-2">
+            <div class="contenedor-tabla mb-3">
+                <table class="table mb-3">
+                    <thead>
+                        <tr>
+                            @foreach (var elemento in cabeceraDetalle)
+                            {
+                                <th class="text-center">
+                                    <label class="font-txt">@elemento</label>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detalle in detallesVentaFijada)
+                        {
+
+
+                            <tr class="cursor-pointer-elemento">
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Id
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Elemento.Codigo
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Elemento.Nombre
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Elemento.Referencia
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Elemento.Valor.ToString("C")
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Cantidad
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Elemento.Marca
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @detalle.Total.ToString("C")
+                                    </label>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <h1 class="text-center mt-3">Seleccione un cliente</h1>
+
+    }
+
+    
+
+
+
+    <ModalConfirmacion @ref="modalConfirmacion"/>
+}
+
+
+@code {
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    private List<VentaHistorialClienteDTO> historialCliente;
+    private List<string> cabeceraTablaVentas = new List<string> { "ID Venta", "Nombre Responsable","Tipo", "Fecha", "Hora", "Fecha anulacion", "Tipo Pago", "Subtotal", "Total" };
+    private List<string> cabeceraDetalle = new List<string> { "ID Detalle", "Codigo Elemento", "Nombre Elemento", "Referencia Elemento", "Valor", "Cantidad", "Marca", "Total" };
+    private ModalConfirmacion modalConfirmacion;
+    private int indiceFijado = 0;
+    private List<DetalleVentaHistorialClienteDTO> detallesVentaFijada = new List<DetalleVentaHistorialClienteDTO>();
+    private bool seleccionVenta = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+    private bool tieneCliente = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoHistorialCliente"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        if (ventaDTO.Cliente is not null)
+        {
+            tieneCliente = true;
+            totalPaginas = calcularPaginasTotales();
+
+        }
+        return base.OnInitializedAsync();
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        if (ventaDTO.Cliente is not null)
+        {
+            tieneCliente = true;
+            paginaActual = 1;
+            totalPaginas = calcularPaginasTotales();
+            long idEmpresa = ventaDTO.Empresa.Identificacion;
+            long idCliente = ventaDTO.Cliente.Identificacion;
+            historialCliente = ventaTradicionalService.ObtenerHistorialCliente(idEmpresa,idCliente,paginaActual,elementosPorPagina);
+            detallesVentaFijada.Clear();
+        }
+        else
+        {
+            tieneCliente = false;
+
+        }
+
+    }
+
+    private int calcularPaginasTotales()
+    {
+
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        long idCliente = ventaDTO.Cliente.Identificacion;
+        double totalElementos = (double)ventaTradicionalService.ObtenerTotalVentasCliente(idEmpresa, idCliente);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    public void FijarElemento(int index)
+    {
+        seleccionVenta = true;
+
+        if (indiceFijado < historialCliente.Count)
+        {
+            historialCliente[indiceFijado].ClaseCss = string.Empty;
+
+        }
+        indiceFijado = index;
+        historialCliente[index].ClaseCss = "fijar-fila-tabla";
+        detallesVentaFijada = historialCliente[index].Detalles;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        long idCliente = ventaDTO.Cliente.Identificacion;
+        historialCliente = ventaTradicionalService.ObtenerHistorialCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+        detallesVentaFijada.Clear();
+        seleccionVenta = false;
+
+    }
+
+
+    private void PasarVentaAOrdenPedido()
+    {
+        if (historialCliente.Count == 0)
+        {
+            modalConfirmacion.Mensaje = "No hay ventas disponibles";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+
+        var ventaFijada = historialCliente[indiceFijado];
+
+        if (seleccionVenta)
+        {
+            if (ventaFijada.TipoVenta.Equals(COTIZACION))
+            {
+                long idEmpresa = ventaDTO.Empresa.Identificacion;
+                long idCliente = ventaDTO.Cliente.Identificacion;
+                bool resultado = ventaTradicionalService.ConvertirTipoVenta(ventaFijada.IdVenta, ORDEN_PEDIDO, idEmpresa);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = "La venta ha sido convertida a Orden de pedido";
+                    historialCliente = ventaTradicionalService.ObtenerHistorialCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+                    detallesVentaFijada.Clear();
+                    seleccionVenta = false;
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = "Error conversión a orden de pedido";
+
+                }
+
+                modalConfirmacion.Mostrar();
+            }
+            else
+            {
+                modalConfirmacion.Mensaje = "Esta venta no se puede pasar a Orden de pedido";
+                modalConfirmacion.Mostrar();
+            }
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Selecciona una venta";
+            modalConfirmacion.Mostrar();
+        }
+
+    }
+
+    private void PasarVentaAFactura()
+    {
+        if (historialCliente.Count == 0)
+        {
+            modalConfirmacion.Mensaje = "No hay ventas disponibles";
+            modalConfirmacion.Mostrar();
+
+        }
+
+
+        var ventaFijada = historialCliente[indiceFijado];
+        if (seleccionVenta)
+        {
+            if ( ventaFijada.TipoVenta.Equals(COTIZACION) || ventaFijada.TipoVenta.Equals(ORDEN_PEDIDO) && ventaFijada.FechaAnulacion is null)
+            {
+                long idEmpresa = ventaDTO.Empresa.Identificacion;
+                long idCliente = ventaDTO.Cliente.Identificacion;
+                bool resultado = ventaTradicionalService.ConvertirTipoVenta(ventaFijada.IdVenta, FACTURA, idEmpresa);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = "La venta ha sido convertida a Factura";
+                    historialCliente = ventaTradicionalService.ObtenerHistorialCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+                    detallesVentaFijada.Clear();
+                    seleccionVenta = false;
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = "Error conversión factura";
+
+                }
+
+
+            }
+            else
+            {
+                modalConfirmacion.Mensaje = "Esta venta no se puede convertir Factura";
+
+            }
+            modalConfirmacion.Mostrar();
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Selecciona una venta";
+            modalConfirmacion.Mostrar();
+        }
+    }
+
+    private void AnularVenta()
+    {
+        if (historialCliente.Count == 0)
+        {
+            modalConfirmacion.Mensaje = "No hay ventas disponibles";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        var ventaFijada = historialCliente[indiceFijado];
+        if (seleccionVenta)
+        {
+            if ( (ventaFijada.TipoVenta.Equals(POS) || ventaFijada.TipoVenta.Equals(ORDEN_PEDIDO)) && ventaFijada.FechaAnulacion is null)
+            {
+                long idEmpresa = ventaDTO.Empresa.Identificacion;
+                long idCliente = ventaDTO.Cliente.Identificacion;
+                DateOnly fechaAnulacion= DateOnly.FromDateTime(DateTime.Now);
+                bool resultado = ventaTradicionalService.AnularVenta(ventaFijada.IdVenta, fechaAnulacion);
+                if (resultado)
+                {
+                    modalConfirmacion.Mensaje = "La venta ha sido Anulada";
+                    historialCliente = ventaTradicionalService.ObtenerHistorialCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+                    detallesVentaFijada.Clear();
+                    seleccionVenta = false;
+
+                }
+                else
+                {
+                    modalConfirmacion.Mensaje = "Error al anular la venta";
+                }
+            }
+            else
+            {
+                modalConfirmacion.Mensaje = "Esta venta no se puede anular";
+               
+            }
+            modalConfirmacion.Mostrar();
+        }
+        else
+        {
+            modalConfirmacion.Mensaje = "Selecciona una venta";
+            modalConfirmacion.Mostrar();
+        }        
+    }
+
+    private const string COTIZACION = ParametrosTiposVenta.COTIZACION;
+    private const string POS = ParametrosTiposVenta.POS;
+    private const string ORDEN_PEDIDO = ParametrosTiposVenta.ORDEN_PEDIDO;
+    private const string FACTURA = ParametrosTiposVenta.FACTURA;
+
+}

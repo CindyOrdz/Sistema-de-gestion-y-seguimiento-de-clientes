@@ -1,0 +1,200 @@
+﻿@page "/empresa"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaDefinirEmpresa")]
+
+@inject NavigationManager NavigationManager
+@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@using global::Terceros;
+@inject SedeService SedeService;
+@inject PlantaService PlantaService;
+
+<div class="flex-container">
+    <button class="btn" @onclick="ObtenerEmpresa">
+        <i class="oi oi-magnifying-glass"></i>
+    </button>
+    <h1><b>Empresa</b></h1>
+</div>
+
+<div class="col-lg-9 contact-form__wrapper">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="col-titulo">
+                <th colspan="2">Información encontrada</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td class="col-nombre">ID</td>
+                <td>@(empresa != null ? empresa.Identificacion : "")</td>
+
+            </tr>
+            <tr>
+                <td class="col-nombre">Razon social</td>
+                <td>@(empresa != null ? empresa.RazonSocial : "")</td>
+            </tr>
+            <tr>
+                <td class="col-nombre">Telefono</td>
+                <td>@(empresa != null ? empresa.Telefono : "")</td>
+            </tr>
+            <tr>
+                <td class="col-nombre">Direccion</td>
+                <td>@(empresa != null ? empresa.Direccion : "")</td>
+            </tr>
+                
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>
+        <b>Listado de sedes</b>
+    </h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Responsable</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ListaSedes == null)
+            {
+                <tr>
+                    <td colspan="4">Seleccione una empresa para visualizar sus sedes</td>
+                </tr>
+            }
+            else if (ListaSedes.Count == 0)
+            {
+                <tr>
+                    <td colspan="4">No se han registrado sedes para esta empresa</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var p in ListaSedes)
+                {
+                    <tr>
+                        <td>@p.Id</td>
+                        <td>@p.Responsable</td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                        <td><button class="btn btn-success" @onclick="() => Seleccionar(p)">Plantas</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    
+</div>
+
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@SedeDTO.Id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Responsable: </label>
+                                <input type="text" class="form-control" id="nombre" value="@SedeDTO.Responsable" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefonoContacto">Teléfono: </label>
+                        <input type="text" class="form-control" id="telefonoContacto" value="@SedeDTO.Telefono" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailContacto">Email 1: </label>
+                        <input type="email" class="form-control" id="emailContacto" value="@SedeDTO.Email1" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailContacto">Email 2: </label>
+                        <input type="email" class="form-control" id="emailContacto" value="@SedeDTO.Email2" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Dirección: </label>
+                        <input type="text" class="form-control" id="descripcion" value="@SedeDTO.Direccion" readonly />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Departamento: </label>
+                                <input type="text" class="form-control" id="id" value="@SedeDTO.Ubicacion.DepartamentoProvincia.Nombre" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Ciudad: </label>
+                                <input type="text" class="form-control" id="nombre" value="@SedeDTO.Ubicacion.Ciudad.Nombre" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+<ComponenteTerceros @ref="componenteTerceros" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" TipoTercero="@ParametrosComponenteTerceros.CLIENTE" CargarTerceroEvent=" CargarEmpresaDelComponente" />
+@code {
+    private ComponenteTerceros componenteTerceros;
+    private TerceroInterfazGraficaDTO empresa;
+    private List<SedeInterfazGraficaTerceroDTO> ListaSedes;
+    private SedeInterfazGraficaTerceroDTO SedeDTO;
+    private bool modalInformacion = false;
+
+    private void Seleccionar(SedeInterfazGraficaTerceroDTO sede)
+    {
+        SedeService.SedeSeleccionada = sede;
+        SedeService.EmpresaSeleccionada = empresa;
+        PlantaService.ComponenteAnterior = null;
+        NavigationManager.NavigateTo("/pagplanta");
+    }
+
+    private void ObtenerEmpresa()
+    {
+        componenteTerceros.Mostrar();
+    }
+
+    private void CargarEmpresaDelComponente()
+    {
+        empresa = componenteTerceros.TerceroSeleccionado;
+        ListaSedes = empresa.Sedes;
+    }
+
+    private void AbrirModalInformacion(SedeInterfazGraficaTerceroDTO sede)
+    {
+        modalInformacion = true;
+        SedeDTO = sede;
+    }
+
+    private void CerrarModal()
+    {
+        modalInformacion = false;
+    }
+}

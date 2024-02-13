@@ -1,0 +1,251 @@
+﻿@using MapeoEmpresa.Services;
+@using System.Numerics;
+@inject SedeService SedeService;
+@using EntidadesNegocio.EntidadesDto;
+
+<div class="contenedor-bloque col-lg-12">
+    @if (ListadoPlantas == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListadoPlantas.Count == 0)
+    {
+        <p class="pt-3">No se han registrado plantas para esta sede</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in ListadoPlantas)
+                {
+                    <tr>
+                        <td>@p.id</td>
+                        <td>@p.nombre</td>
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(p)"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id)"><i class="oi oi-x"></i></button></td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+<br />
+
+ @if (modalEliminar)
+    {
+        <div class="modal" tabindex="-1" style="display:block">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Desea eliminar la planta con ID @ID?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                        <button type="button" class="btn btn-success" @onclick=BorrarPlanta>Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Planta ID @plantaDTO.id</strong></h5>
+
+                    <EditForm Model="plantaDTO">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" @bind="plantaDTO.nombre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion">Direccion: </label>
+                            <input type="text" class="form-control" id="direccion" @bind="plantaDTO.direccion">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="required-field" for="Contacto">Contacto: </label>
+                            <input type="text" class="form-control" id="Contacto" @bind="plantaDTO.contacto">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Telefono1">Teléfono 1: </label>
+                            <input type="text" class="form-control" id="Telefono1" @bind="plantaDTO.telefono1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Telefono2">Teléfono 2: </label>
+                            <input type="text" class="form-control" id="Telefono2" @bind="plantaDTO.telefono2">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="EmailContacto">Email Contacto: </label>
+                            <input type="email" class="form-control" id="EmailContacto" @bind="plantaDTO.emailContacto">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="EmailInforme">Email Informes: </label>
+                            <input type="email" class="form-control" id="EmailInforme" @bind="plantaDTO.emailInforme">
+                        </div>
+
+
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Editar Planta</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@plantaDTO.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Nombre: </label>
+                                <input type="text" class="form-control" id="nombre" value="@plantaDTO.nombre" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="direccion">Direccion: </label>
+                        <input type="text" class="form-control" id="direccion" value="@plantaDTO.direccion" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Contacto">Contacto: </label>
+                        <input type="text" class="form-control" id="Contacto" value="@plantaDTO.contacto" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono1">Teléfono 1: </label>
+                        <input type="text" class="form-control" id="telefono1" value="@plantaDTO.telefono1" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono2">Teléfono 2: </label>
+                        <input type="text" class="form-control" id="telefono2" value="@plantaDTO.telefono2" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailContacto">Email contacto: </label>
+                        <input type="email" class="form-control" id="emailContacto" value="@plantaDTO.emailContacto" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailInformes">Email informes: </label>
+                        <input type="email" class="form-control" id="emailInformes" value="@plantaDTO.emailInforme" readonly>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    List<PlantaEmpresaClienteDTO> ListadoPlantas;
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    PlantaEmpresaClienteDTO plantaDTO = new PlantaEmpresaClienteDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListadoPlantas = await SedeService.ListarPlantas();
+    }
+ 
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+    protected async Task BorrarPlanta()
+    {
+        await SedeService.BorrarPlanta(ID);
+        modalEliminar = false;
+        ListadoPlantas = await SedeService.ListarPlantas();
+    }
+
+    protected async Task Guardar()
+    {
+        await SedeService.EditarPlanta(plantaDTO);
+        modalEditar = false;
+        ListadoPlantas = await SedeService.ListarPlantas();
+    }
+
+    //MODALES
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    private void AbrirModalEditar(PlantaEmpresaClienteDTO planta)
+    {
+        modalEditar = true;
+        plantaDTO = planta;
+    }
+
+    private void AbrirModalInformacion(PlantaEmpresaClienteDTO planta)
+    {
+        modalInformacion = true;
+        plantaDTO = planta;
+    }
+
+}

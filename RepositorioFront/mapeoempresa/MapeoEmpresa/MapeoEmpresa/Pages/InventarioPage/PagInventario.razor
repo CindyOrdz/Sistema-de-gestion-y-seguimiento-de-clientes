@@ -1,0 +1,89 @@
+﻿@page "/Inventario"
+
+
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaVerInventario")]
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject UsuarioService usuarioService;
+@using ServiciosComponentes.TercerosServices;
+@inject EmpresaService empresaService;
+
+<h1><b>Control de inventario</b></h1>
+
+<div class="col-lg-8 contact-form__wrapper">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="4">Informaci&oacute;n de la empresa</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <strong>ID </strong>
+                </td>
+                <td colspan="2">@identificacionEmpresa</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>Nombre</strong>
+                </td>
+                <td colspan="2">@empresa.RazonSocial</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="pt-2">
+    @foreach (var item in types)
+    {
+        if (Array.IndexOf(types, item) == selected)
+        {
+            <button class="btn btn-secondary">@item.Name</button>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" @onclick="() => selected = Array.IndexOf(types, item)">@item.Name</button>
+        }
+    }
+</div>
+@GetRenderFragment(types[selected])
+
+@code {
+    int selected;
+    ComponentBase[] components = { new VerInventario(), new ConsultarBitacora(),new VerCatalogos() };
+    Type[] types => components.Select(c => c.GetType()).ToArray();
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+    TerceroInterfazGraficaDTO empresa;
+
+    RenderFragment GetRenderFragment(Type type)
+    {
+        RenderFragment renderFragment = renderTreeBuilder =>
+        {
+            renderTreeBuilder.OpenComponent(0, type);
+            renderTreeBuilder.CloseComponent();
+        };
+        return renderFragment;
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        empresa = empresaService.FiltrarEmpresaPorIdentificacion(identificacionEmpresa);
+
+    }
+}

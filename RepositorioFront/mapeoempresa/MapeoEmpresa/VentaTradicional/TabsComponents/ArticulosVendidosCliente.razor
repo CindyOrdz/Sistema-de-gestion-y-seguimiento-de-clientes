@@ -1,0 +1,213 @@
+﻿@inherits ComponenteTab
+@inject VentaTradicionalService ventaTradicionalService
+@inject IConfiguration Configuration
+@if (display)
+{
+    
+    @if (tieneCliente)
+    {
+        <div class="row mt-3">
+            <div class="col"></div>
+            <div class="col-auto">
+                <button class="btn btn-warning me-3" @onclick="MostrarComponenteElementos">Filtrar por Elemento</button>
+            </div>
+            <div class="col-auto">
+                <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+            </div>
+        </div>
+
+        <div class="contenedor-grid mt-3">
+            <div class="contenedor-tabla mb-3">
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            @foreach (var elemento in elementosCabecera)
+                            {
+
+                                <th class="text-center">
+                                    <label class="font-info-venta">@elemento</label>
+                                </th>
+
+                            }
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var venta in ventasCliente)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.IdVenta</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.Fecha</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.Hora</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.NombreElemento</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.ReferenciaElemento</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.CantidadElementos</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.ValorElemento.ToString("C")</label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">@venta.Total.ToString("C")</label>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 class="text-center mt-3">Seleccione un cliente</h1>
+
+    }
+
+}
+<ComponenteElemento origen="@("COMPONENTE")" TraerElementoEvent="AsignarIdElemento" @ref="componenteElemento"/>
+
+@code {
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    private ComponenteElemento componenteElemento;
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+    private string opcionPaginado = TODOS;
+    private long idElemento = 0;
+    private List<ElementoVendidoClienteDTO> ventasCliente = new List<ElementoVendidoClienteDTO>();
+    private List<string> elementosCabecera = new List<string>{
+    "Id Venta","Fecha","Hora","Nombre Elemento","Referencia Elemento","Cantidad","Valor Elemento","Total Venta"
+    };
+    private bool tieneCliente = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoArticulosVendidosCliente"]);
+        }
+        catch (Exception e)  
+        {
+            Console.WriteLine(e);
+        }
+
+        if (ventaDTO.Cliente is not null)
+        {
+            tieneCliente = true;
+            totalPaginas = calcularPaginasTotales();
+
+        }
+
+
+        return base.OnInitializedAsync();
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        if (ventaDTO.Cliente is not null)
+        {
+            tieneCliente = true;
+            opcionPaginado = TODOS;
+            paginaActual = 1;
+            totalPaginas = calcularPaginasTotales();
+            long idEmpresa = ventaDTO.Empresa.Identificacion;
+            long idCliente = ventaDTO.Cliente.Identificacion;
+            ventasCliente = ventaTradicionalService.ObtenerElementosVendidosAlCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+        }
+        else
+        {
+            tieneCliente = false;
+
+        }
+
+    }
+
+    public void CambiarEstado()
+    {
+        StateHasChanged();
+
+    }
+
+
+    private int calcularPaginasTotales()
+    {
+
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        long idCliente = ventaDTO.Cliente.Identificacion;
+        double totalElementos = 0;
+
+        if (opcionPaginado.Equals(TODOS))
+        {
+            totalElementos = (double)ventaTradicionalService.ObtenerTotalDetallesVentaCliente(idEmpresa, idCliente);
+
+        }
+        else if (opcionPaginado.Equals(ID_ELEMENTO))
+        {
+            totalElementos = (double)ventaTradicionalService.ObtenerTotalVentasClientePorElemento(idEmpresa, idCliente, idElemento);
+        }
+
+
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        long idCliente = ventaDTO.Cliente.Identificacion;
+        if (opcionPaginado.Equals(TODOS))
+        {
+            ventasCliente = ventaTradicionalService.ObtenerElementosVendidosAlCliente(idEmpresa, idCliente, paginaActual, elementosPorPagina);
+
+        }
+        else if (opcionPaginado.Equals(ID_ELEMENTO))
+        {
+            ventasCliente = ventaTradicionalService.ObtenerElementosVendidosAlClientePorIdElemento(idEmpresa, idCliente, paginaActual, elementosPorPagina, idElemento);
+        }
+
+
+    }
+
+    private void AsignarIdElemento()
+    {
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        long idCliente = ventaDTO.Cliente.Identificacion;
+        idElemento = componenteElemento.elementoActual.CodigoArticulo;
+        opcionPaginado = ID_ELEMENTO;
+        totalPaginas = calcularPaginasTotales();
+        paginaActual = 1;
+        ventasCliente = ventaTradicionalService.ObtenerElementosVendidosAlClientePorIdElemento(idEmpresa, idCliente, paginaActual, elementosPorPagina, idElemento);
+    }
+
+    private void MostrarComponenteElementos()
+    {
+        componenteElemento.Mostrar();    
+
+    }
+
+    private const string ID_ELEMENTO = "ID_ELEMENTO";
+    private const string TODOS = "TODOS";
+}

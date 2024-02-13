@@ -1,0 +1,359 @@
+﻿@inject RegistroEvidenciaService RegistroService;
+@inject RevisionInventarioService RevisionInventarioService;
+@using EntidadesNegocio.EntidadesDto;
+@using RegistroEvidencia;
+@using System.Numerics;
+
+<div class="col-lg-10 contact-form__wrapper p-5 contenedor-bloque">
+    <h4>Registro de anomal&iacute;as </h4>
+    <EditForm Model="registroDTO" OnValidSubmit="GuardarArchivo">
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="elemento">Elemento:</label>
+                <select id="elemento" class="form-select" @onchange="SeleccionarElemento">
+                    <option>Seleccionar elemento</option>
+                    @foreach (var elemento in ListElementosRevision)
+                    {
+                        <option value="@elemento.CodigoElemento">@elemento.Nombre</option>
+                    } 
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="registroDTO.descripcion" required></textarea>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="tipo">Tipo de archivo:</label>
+                <select id="tipo" class="form-control" @bind="registroDTO.tipo" required>
+                    <option value="">Seleccione tipo de archivo</option>
+                    <option value="@EnumTiposArchivos.Audio">Audio</option>
+                    <option value="@EnumTiposArchivos.Imagen">Imagen</option>
+                    <option value="@EnumTiposArchivos.Video">Video</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="fechaCaptura">Fecha de captura:</label>
+                <input type="datetime-local" class="form-control" id="fechaCaptura" @bind="registroDTO.fechaCaptura" required>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="archivo">Archivo:</label>
+                <div class="input-group mb-3">
+                    <InputFile id="archivo" class="form-control" OnChange="CargarArchivo" required />
+                    <button class="btn btn-sm btn-success" type="submit" >
+                        <i class="oi oi-check"></i>
+                    </button>
+
+                    @if (seleccionError)
+                    {
+                        <div class="alert alert-danger">Debe seleccionar un ID de socio para solicitar el prestamo.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+    <h4>Listado de anomal&iacute;as reportadas</h4>
+    @if (ListAnomaliasReportadas == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListAnomaliasReportadas.Count == 0)
+    {
+        <p class="pt-3">No se han registrado anomal&iacute;as para esta revisi&oacute;n</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Anomalia</th>
+                    <th>Elemento</th>
+                    <th>Registro</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var anomalia in ListAnomaliasReportadas)
+                {
+                    <tr>
+                        <td>@anomalia.IdAnomalia</td>
+                        <td>@anomalia.IdElemento</td>
+                        <td>@anomalia.FechaRegistro</td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(anomalia.IdAnomalia, anomalia.IdEvidencia, anomalia.Ruta)"><i class="oi oi-x"></i></button></td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(anomalia)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="file-container">
+                            @if (anomaliaModal.TipoArchivo == "Imagen")
+                            {
+                                <img src="data:image;base64,@ConvertirArchivoABase64(anomaliaModal.Ruta)" alt="Image" class="file-item" />
+                            }
+                            else if (anomaliaModal.TipoArchivo == "Audio")
+                            {
+                                <audio controls>
+                                    <source src="data:audio/mp3;base64,@ConvertirArchivoABase64(anomaliaModal.Ruta)">
+                                    Su navegador no soporta la etiqueta de audio
+                                </audio>
+                            }
+                            else if (anomaliaModal.TipoArchivo == "Video")
+                            {
+                                <video controls class="file-item">
+                                    <source src="data:video/mp4;base64,@ConvertirArchivoABase64(anomaliaModal.Ruta)">
+                                    Su navegador no soporta la etiqueta de video
+                                </video>
+                            }
+                            else
+                            {
+                                <p class="file-item">No se puede mostrar este tipo de archivo.</p>
+                            }
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID Anomal&iacute;a: </label>
+                                <input type="text" class="form-control" id="id" value="@anomaliaModal.IdAnomalia" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID Elemento: </label>
+                                <input type="text" class="form-control" id="nombre" value="@anomaliaModal.IdElemento" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="fechaCaptura">Fecha Captura: </label>
+                                <input type="text" class="form-control" id="fechaCaptura" value="@anomaliaModal.FechaCaptura" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="fechaRegistro">Fecha Registro: </label>
+                                <input type="text" class="form-control" id="fechaRegistro" value="@anomaliaModal.FechaRegistro" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="nombreArchivo">Nombre Archivo: </label>
+                                <input type="text" class="form-control" id="nombreArchivo" value="@anomaliaModal.NombreArchivo" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="tipo">Tipo Archivo: </label>
+                                <input type="text" class="form-control" id="tipo" value="@anomaliaModal.TipoArchivo" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@anomaliaModal.Descripcion" readonly />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Desea eliminar la anomal&iacute;a con ID @IDAnomalia?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarAnomalia>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<ModalPersonalizado @ref="modalMensaje" />
+
+@code {
+    private IBrowserFile archivo;
+    private BigInteger IDAnomalia = 0;
+    private BigInteger IDEvidencia = 0;
+    private String Ruta = "";
+
+    private RegistroEvidenciaDTO registroDTO = new RegistroEvidenciaDTO();
+    private AnomaliaInventarioDTO anomaliaDTO = new AnomaliaInventarioDTO();
+    private AnomaliaInventarioDTO anomaliaModal = new AnomaliaInventarioDTO();
+    private ElementoInventarioDTO elementoSeleccionado;
+    private ModalPersonalizado modalMensaje;
+
+    private List<ElementoInventarioDTO> ListElementosRevision = new List<ElementoInventarioDTO>();
+    private List<AnomaliaInventarioDTO> ListAnomaliasReportadas;
+
+    private bool seleccionError = false;
+    private bool modalEliminar = false;
+    private bool modalInformacion = false;
+
+
+    private void CargarArchivo(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            archivo = e.File;
+            registroDTO.nombre = System.IO.Path.GetFileNameWithoutExtension(archivo.Name);
+            registroDTO.extension = System.IO.Path.GetExtension(archivo.Name);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar el archivo: {ex.Message}");
+        }
+    }
+
+
+    private async Task GuardarArchivo()
+    {
+        if (elementoSeleccionado != null) //Verifica que se haya seleccionado un elemento
+        {
+            anomaliaDTO.Descripcion = registroDTO.descripcion;
+            anomaliaDTO.Elemento = elementoSeleccionado;
+            anomaliaDTO.Revision = RevisionInventarioService.RevisionSeleccionada;
+
+
+
+            if (archivo != null && archivo.Size <= 20971520)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    Stream stream = archivo.OpenReadStream(20971520); // El limite esta en 20MB
+                    await stream.CopyToAsync(memoryStream);
+                    byte[] buffer = memoryStream.ToArray();
+                    RegistroService.registro = new(buffer, registroDTO.extension, registroDTO.tipo, registroDTO.nombre, registroDTO.fechaCaptura);
+                    int idAnomalia = await RevisionInventarioService.GuardarAnomalia(anomaliaDTO);
+                    await RegistroService.GuardarArchivoAnomalia(RevisionInventarioService.RevisionSeleccionada.id, idAnomalia);
+
+                    //Limpiar elementos y DTOS
+                    seleccionError = false;
+                    registroDTO = new RegistroEvidenciaDTO();
+                    anomaliaDTO = new AnomaliaInventarioDTO();
+                    elementoSeleccionado = null;
+
+                    //Actualiza el listado de anomalias
+                    ListAnomaliasReportadas = await RevisionInventarioService.ObtenerEvidenciaAnomalias();
+                    registroDTO.fechaCaptura = DateTime.Now;
+                }
+
+                modalMensaje.Mostrar("El registro se realizo correctamente");
+            }
+            else
+            {
+                modalMensaje.Mostrar("El archivo cargado supera el limite de 20MB, por favor seleccione otro.");
+            }
+        }
+        else
+        {
+            seleccionError = true;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        registroDTO.fechaCaptura = DateTime.Now;
+        ListElementosRevision = await RevisionInventarioService.ObtenerElementosRevision();
+        ListAnomaliasReportadas = await RevisionInventarioService.ObtenerEvidenciaAnomalias();
+    }
+
+    private void SeleccionarElemento(ChangeEventArgs e)
+    {
+        if (long.TryParse(e.Value.ToString(), out long elementoId))
+        {
+            // Busca el elemento correspondiente en la lista por su Id
+            elementoSeleccionado = ListElementosRevision.FirstOrDefault(elemento => elemento.CodigoElemento == elementoId);
+        }
+
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;        
+        modalInformacion = false;
+    }
+
+    protected async Task BorrarAnomalia()
+    {
+        await RegistroService.BorrarEvidencia(IDEvidencia, Ruta);
+        await RevisionInventarioService.EliminarAnomalia(IDAnomalia);
+        modalEliminar = false;
+        ListAnomaliasReportadas = await RevisionInventarioService.ObtenerEvidenciaAnomalias();
+    }
+
+    //MODALES
+    private void AbrirModalBorrar(BigInteger idAnomalia, BigInteger idEvidencia, String ruta)
+    {
+        modalEliminar = true;
+        IDAnomalia = idAnomalia;
+        IDEvidencia = idEvidencia;
+        Ruta = ruta;
+    }
+
+    private void AbrirModalInformacion(AnomaliaInventarioDTO anomalia)
+    {
+        modalInformacion = true;
+        anomaliaModal = anomalia;
+    }
+
+    private string ConvertirArchivoABase64(string rutaArchivo)
+    {
+        byte[] archivoBytes = System.IO.File.ReadAllBytes(rutaArchivo);
+        string archivoBase64 = Convert.ToBase64String(archivoBytes);
+        return archivoBase64;
+    }
+}
+

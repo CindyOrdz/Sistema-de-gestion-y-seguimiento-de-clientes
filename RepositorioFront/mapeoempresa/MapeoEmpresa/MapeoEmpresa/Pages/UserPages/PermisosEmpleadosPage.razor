@@ -1,0 +1,3 @@
+﻿@page "/permisos_empleados"
+@attribute [Authorize(Roles = "EMPRESA", Policy = "PoliticaConfiguracionPermisosEmpleados")]
+<PemisosEmpleados />

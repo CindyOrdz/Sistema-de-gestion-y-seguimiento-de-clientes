@@ -1,0 +1,172 @@
+﻿@page "/pagRevision"
+@attribute [Authorize(Roles = "EMPLEADO", Policy = "PoliticaRealizarRevisionInventario")]
+
+@inject NavigationManager NavigationManager
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService RevisionService;
+
+
+<PageTitle>Visita</PageTitle>
+<div class="flex-container">
+    <button class="btn" @onclick="Retroceder">
+        <i class="fas fa-circle-chevron-left"></i>
+    </button>
+    <h1><b>Información revisi&oacute;n  ID @revision.id</b></h1>
+</div>
+
+<div class="col-lg-10 contact-form__wrapper pt-2 contenedor-bloque">
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de inicio: </label>
+                <input type="text" class="form-control" id="fechaInicio" value="@revision.fechaInicio" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaFinaliza">Fecha de finalización: </label>
+                @if (revision.fechaFinalizacion == DateTime.MinValue)
+                {
+                    <input type="text" class="form-control" id="fechaFinaliza" value="Pendiente" readonly>
+                }
+                else
+                {
+                    <input type="text" class="form-control" id="fechaFinaliza" value="@revision.fechaFinalizacion" readonly>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaCreacion">Fecha de creación: </label>
+                <input type="text" class="form-control" id="fechaCreacion" value="@revision.fechaCreacion" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="estado">Estado: </label>
+                <input type="text" class="form-control" id="estado" value="@revision.estado" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="idResponsable">ID responsable: </label>
+                <input type="text" class="form-control" id="idResponsable" value="@revision.idResponsable" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="nombreResponsable">Nombre responsable: </label>
+                <input type="text" class="form-control" id="nombreResponsable" value="@revision.nombreResponsable" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-12 mb-3">
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" value="@revision.descripcion" readonly></textarea>
+        </div>
+    </div>
+
+    <div class="col-sm-12 mb-3">
+        <button class="btn btn-success" @onclick="ConfirmarOperacion">
+            <i class="oi oi-circle-check"></i> Finalizar Revision
+        </button>
+    </div>
+
+</div>
+
+<div class="pt-2">
+    @foreach (var item in types)
+    {
+        if (Array.IndexOf(types, item) == selected)
+        {
+            <button class="btn btn-secondary">@item.Name</button>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary" @onclick="() => selected = Array.IndexOf(types, item)">@item.Name</button>
+        }
+    }
+</div>
+@GetRenderFragment(types[selected])
+
+@if (modalConfirmacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar operación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Esta seguro que desea finalizar la revisión? Recuerde que no podrá hacer mas cambios si acepta.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=FinalizarRevision>Finalizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    int selected;
+    ComponentBase[] components = { new ActualizarInventario(),new RegistrarEvidencia(), new ReportarAnomalia() };
+    Type[] types => components.Select(c => c.GetType()).ToArray();
+    RevisionInventarioDTO revision = new RevisionInventarioDTO();
+    private bool modalConfirmacion = false;
+
+    RenderFragment GetRenderFragment(Type type)
+    {
+        RenderFragment renderFragment = renderTreeBuilder =>
+        {
+            renderTreeBuilder.OpenComponent(0, type);
+            renderTreeBuilder.CloseComponent();
+        };
+        return renderFragment;
+    }
+
+    private void Retroceder()
+    {
+        NavigationManager.NavigateTo("/GestionarRevision");
+    }
+
+    protected override void OnInitialized()
+    {
+        revision = RevisionService.RevisionSeleccionada;
+    }
+
+    private async Task FinalizarRevision()
+    {
+        await RevisionService.FinalizarRevision();
+        modalConfirmacion = false;
+        NavigationManager.NavigateTo("/GestionarRevision");
+    }
+
+    private void ConfirmarOperacion()
+    {
+        modalConfirmacion = true;
+    }
+
+    private void CerrarModal()
+    {
+        modalConfirmacion = false;
+    }
+
+}
+

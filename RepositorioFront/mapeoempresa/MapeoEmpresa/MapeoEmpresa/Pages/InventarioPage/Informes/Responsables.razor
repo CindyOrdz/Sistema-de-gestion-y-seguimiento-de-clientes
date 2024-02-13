@@ -1,0 +1,71 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject UsuarioService usuarioService;
+
+<div class="pt-4">
+    <h4>Cantidad de revisiones por responsable asignadas para este mes</h4>
+
+    @if (ListaRevisiones == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListaRevisiones.Count == 0)
+    {
+        <p class="pt-3">No se han registrado revisiones este mes</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID responsable</th>
+                    <th>Nombre</th>
+                    <th>Revisiones asignadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var revision in ListaRevisiones)
+                {
+                    <tr>
+                        <td>@revision.idResponsable</td>
+                        <td>@revision.nombreResponsable</td>
+                        <td>@revision.cantidad</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+
+</div>
+
+
+@code {
+    private List<RevisionInventarioDTO> ListaRevisiones;
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        ListaRevisiones = await inventarioService.RevisionesPorResponsable(identificacionEmpresa);
+    }
+}
+
+

@@ -1,0 +1,173 @@
+﻿@inherits ComponenteTab
+@inject IConfiguration Configuration
+@inject VentaTradicionalService ventaTradicionalService
+@if (display)
+{
+    @if (ElementoSeleccionado)
+    {
+        <div class="row mt-3">
+            <div class="col"></div>
+            <div class="col-auto">
+                <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+            </div>
+        </div>
+
+        <div class="contenedor-grid mt-2">
+            <div class="contenedor-tabla mb-3">
+                <table class="table mb-3">
+                    <thead>
+                        <tr>
+                            @foreach (var elemento in cabeceraTablaVentas)
+                            {
+                                <th class="text-center">
+                                    <label class="font-txt">@elemento</label>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var venta in historialVentas)
+                        {
+
+
+                            <tr class="cursor-pointer-elemento">
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.IdVenta
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.FechaVenta
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.Hora
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.NombreResponsable
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.NombreCliente
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.NombreElemento
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.ReferenciaElemento
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.CantidadElementos
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.ValorElemento.ToString("C")
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <label class="font-info-venta cursor-pointer-elemento">
+                                        @venta.TipoVenta
+                                    </label>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    }
+    else
+    {
+     
+        <h1 class="text-center mt-3">Seleccione un elemento del detalle</h1>
+        
+    }
+
+    
+
+
+    <ModalConfirmacion />
+}
+
+
+@code {
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    public long CodigoElemento { get; set; }
+    public bool ElementoSeleccionado { get; set; } = false;
+    private List<HistorialVentasPorElementoDTO> historialVentas;
+    private List<string> cabeceraTablaVentas = new List<string> { "ID Venta", "Fecha", "Hora", "Nombre responsable", "Nombre Cliente", "Nombre Elemento", "Referencia Elemento", "Cantidad", "Valor Elemento", "Tipo venta" };
+    private ModalConfirmacion modalConfirmacion;
+
+
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoHistorialVentasPorArticulo"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+
+        return base.OnInitializedAsync();
+    }
+
+    public void InicializarDatosParaPaginado()
+    {
+        if (ElementoSeleccionado)
+        {
+            paginaActual = 1;
+            totalPaginas = calcularPaginasTotales();
+            long idEmpresa = ventaDTO.Empresa.Identificacion;
+            historialVentas = ventaTradicionalService.ObtenerHistorialPorElemento(idEmpresa, paginaActual,elementosPorPagina ,CodigoElemento);
+        }
+
+    }
+
+    private int calcularPaginasTotales()
+    {
+
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        double totalElementos = (double)ventaTradicionalService.ObtenerTotalHistorialVentasPorElemento(idEmpresa, CodigoElemento);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        long idEmpresa = ventaDTO.Empresa.Identificacion;
+        historialVentas = ventaTradicionalService.ObtenerHistorialPorElemento(idEmpresa, paginaActual, elementosPorPagina, CodigoElemento);
+
+    }
+    
+}

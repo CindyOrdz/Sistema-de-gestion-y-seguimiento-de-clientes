@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1tt/MF8kcRPVIxYQ8rzsaj9D+83S1PhYUUQUzHj6jfD7AVQd/27a6x+q6E8RNALqP4BAASCw8hE3tSw3ojC0tA==",
+  "success": true,
+  "projectFilePath": "D:\\Documents\\RepositorioBack\\proyectocore\\EntidadesNegocio\\EntidadesNegocio.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Lorena\\.nuget\\packages\\mysqlconnector\\2.2.7\\mysqlconnector.2.2.7.nupkg.sha512"
+  ],
+  "logs": []
+}

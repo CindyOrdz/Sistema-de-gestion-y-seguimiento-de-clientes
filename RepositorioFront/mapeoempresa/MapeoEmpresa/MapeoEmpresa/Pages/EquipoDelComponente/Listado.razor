@@ -1,0 +1,225 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject ComponenteService ComponenteService;
+@inject EquipoService EquipoService;
+
+<div class="contenedor-bloque col-lg-12">
+    @if (ListEquipos == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListEquipos.Count == 0)
+    {
+        <p class="pt-3">No se han registrado equipos para este componente</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in ListEquipos)
+                {
+                    <tr>
+                        <td>@p.id</td>
+                        <td>@p.nombre</td>
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(p)"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id)"><i class="oi oi-x"></i></button></td>
+                        <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+<br />
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Desea eliminar el equipo con ID @ID?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarEquipo>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Equipo ID @equipoDTO.id</strong></h5>
+
+                    <EditForm Model="equipoDTO">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="nombre">Nombre: </label>
+                            <input type="text" class="form-control" id="nombre" @bind="equipoDTO.nombre">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripción: </label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="equipoDTO.descripcion"></textarea>
+                        </div>
+
+
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Editar Equipo</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">ID: </label>
+                                <input type="text" class="form-control" id="id" value="@equipoDTO.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="nombre">Nombre: </label>
+                                <input type="text" class="form-control" id="nombre" value="@equipoDTO.nombre" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="areaproceso">Componente: </label>
+                        <input type="text" class="form-control" id="areaproceso" value="@ComponenteService.ComponenteSeleccionado.nombre" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@equipoDTO.descripcion" readonly />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+    List<EquipoDTO> ListEquipos { get; set; }
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    EquipoDTO equipoDTO = new EquipoDTO();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListEquipos = await ComponenteService.ListarEquipos();
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarEquipo()
+    {
+        await ComponenteService.BorrarEquipos(ID);
+        modalEliminar = false;
+        ListEquipos = await ComponenteService.ListarEquipos();
+    }
+
+    protected async Task Guardar()
+    {
+        await ComponenteService.EditarEquipo(equipoDTO);
+        modalEditar = false;
+        ListEquipos = await ComponenteService.ListarEquipos();
+    }
+    
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    private void AbrirModalEditar(EquipoDTO equipo)
+    {
+        modalEditar = true;
+        equipoDTO = equipo;
+    }
+
+    private void AbrirModalInformacion(EquipoDTO equipo)
+    {
+        modalInformacion = true;
+        equipoDTO = equipo;
+    }
+
+    //protected override void OnInitialized()
+    //{
+    //    ListEquipos = ComponenteService.ObtenerListaEquipos();
+    //}
+
+    //private void BorrarEquipo()
+    //{
+    //    ComponenteService.BorrarEquipo(ID);
+    //    modalEliminar = false;
+    //    ListEquipos = ComponenteService.ObtenerListaEquipos();
+    //}
+
+    //private void Guardar()
+    //{
+    //    ComponenteService.EditarEquipo(equipoDTO);
+    //    modalEditar = false;
+    //    ListEquipos = ComponenteService.ObtenerListaEquipos();
+    //}
+
+    
+}

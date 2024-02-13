@@ -1,0 +1,527 @@
+﻿@inject ImpuestoService impuestoService
+@inject ClienteService clienteService
+@inject EmpresaService empresaService
+@inject EmpleadoService empleadoService
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject VentaTradicionalService ventaTradicionalService
+
+<EditForm Model="ventaDTO" OnValidSubmit="GuardarVenta">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="shadow-sm p-3 rounded">
+        <div class="row">
+            <div class="col-md-9">
+                <span class="color-span me-2">F3 - BUSCAR</span>
+                <span class="color-span me-2">ALT - ELIMINAR DETALLE</span>
+                <span class="color-span me-2">F7 - VENDER CON MENOR PRECIO</span>
+                <span class="color-span me-2">F8 - SOLICITAR A LA BODEGA</span>
+                <span class="color-span me-2">F9 - ELEMENTOS SOLICITADOS?</span>
+                <span class="color-span me-2">F10 - CANCELAR SOLICITUD A LA BODEGA</span>
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-floppy-disk"></i></button>
+                <span class="btn btn-outline-dark"><i class="fa-solid fa-file-circle-plus"></i></span>
+                <span class="btn btn-outline-dark"><i class="fa-regular fa-folder-open"></i></span>
+                <span class="btn btn-outline-dark"><i class="fa-solid fa-right-from-bracket"></i></span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="shadow p-2 rounded border border-light mt-3">
+
+
+
+        <div class="row">
+
+            <div class="col-md-3 mt-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text" for="id_venta">ID</span>
+                    <input type="text" class="form-control" id="id_venta" @bind-value = "ventaDTO.IdVentaTransaccion" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-3 mt-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text" for="fecha_venta">Fecha</span>
+                    <input type="text" class="form-control" value="@ventaDTO.FechaVenta" id="fecha_venta" disabled>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 mt-3">
+                <div class="contenedor-info-sm input-group">
+                    <div class="radio-info-venta">
+                        <Input type="radio" id="cotizacion" class="form-check-input me-2" name="tipo-venta" value="@COTIZACION" checked="@(tipoVenta.Equals(COTIZACION))" @onclick="()=>CargarTipoVenta(COTIZACION)" />
+                        <label class="font-info-venta" for="cotizacion">Cotización</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" class="form-check-input me-2" id="pos" name="tipo-venta" value="@POS" checked="@(tipoVenta.Equals(POS))" @onclick="()=>CargarTipoVenta(POS)" />
+                        <label class="font-info-venta" for="pos">POS</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" class="form-check-input me-2" id="orden_de_pedido" name="tipo-venta" value="@ORDEN_PEDIDO" checked="@(tipoVenta.Equals(ORDEN_PEDIDO))" @onclick="()=>CargarTipoVenta(ORDEN_PEDIDO)" />
+                        <label class="font-info-venta" for="orden_de_pedido">Orden de pedido</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" class="form-check-input me-2" id="factura" name="tipo-venta" value="@FACTURA" checked="@(tipoVenta.Equals(FACTURA))" @onclick="()=>CargarTipoVenta(FACTURA)" />
+                        <label class="font-info-venta" for="factura">Factura</label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-md-2 mt-2">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text" for="iva_venta">IVA</span>
+                    <input type="text" class="form-control text-center" @bind-value="ventaDTO.IVA" id="iva_venta" disabled>
+                </div>
+            </div>
+
+            <div class="col-md-6 mt-3">
+                <div class="contenedor-info-sm-top">
+                    <label class="txt-top font-txt">Precios</label>
+                    <div class="radio-info-venta">
+                        <input type="radio" id="no-discr-iva" class="form-check-input" name="tipo-precio" value="@NO_DISCRIMINAR_IVA" checked="@(tipoPrecio.Equals(NO_DISCRIMINAR_IVA))" @onclick="()=>CargarTipoPrecio(NO_DISCRIMINAR_IVA)" />
+                        <label class="font-info-venta" for="no-discr-iva">No discriminar IVA</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" id="discr-iva" class="form-check-input" name="tipo-precio" value="@DISCRIMINAR_IVA" checked="@(tipoPrecio.Equals(DISCRIMINAR_IVA))" @onclick="()=>CargarTipoPrecio(DISCRIMINAR_IVA)" />
+                        <label class="font-info-venta" for="discr-iva">Discriminar IVA</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" id="normal" class="form-check-input" name="tipo-precio" value="@NORMAL" checked="@(tipoPrecio.Equals(NORMAL))" @onclick="()=>CargarTipoPrecio(NORMAL)" />
+                        <label class="font-info-venta" for="normal">Normal</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4 mt-3 m-0">
+                <div class="contenedor-info-sm">
+                    <div class="radio-info-venta">
+                        <input type="radio" id="pago_contado" class="form-check-input" name="tipo-pago" value="@PAGO_CONTADO" checked="@(tipoPago.Equals(PAGO_CONTADO))" @onclick="()=>CargarTipoPago(PAGO_CONTADO)" />
+                        <label class="font-info-venta" for="pago_contado">Pago de contado</label>
+                    </div>
+                    <div class="radio-info-venta">
+                        <input type="radio" id="pago_credito" class="form-check-input" name="tipo-pago" value="@PAGO_CREDITO" checked="@(tipoPago.Equals(PAGO_CREDITO))" @onclick="()=>CargarTipoPago(PAGO_CREDITO)" />
+                        <label class="font-info-venta" for="pago_credito">Pago con credito</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-9 mt-3">
+                <div class="input-group input-group-sm">
+                    <label class="input-group-text">Cliente</label>
+                    <InputNumber class="form-control form-control-sm inp-cliente" id="id-cliente" @bind-Value="identificacionCliente" @onblur="() => CargarCliente()" />
+                    <InputText class="form-control form-control-sm" disabled @bind-Value="nombreCliente" />
+                    <span class="btn btn-outline-dark form-control-sm" @onclick="MostrarComponenteTerceros"><i class="fa-solid fa-user"></i></span>
+                </div>
+            </div>
+
+            <div class="col-md-3 mt-3">
+                <div class="contenedor-info-sm-top">
+                    <label class="txt-top font-txt">Destino del producto</label>
+                    <select class="form-select form-select-sm" @onchange="ObtenerDestino">
+                        @foreach (var destino in destinos)
+                        {
+                            <option value="@destino">@destino</option>
+
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-md-6 mt-3">
+                <div class="contenedor-info-sm-top">
+                    <label class="txt-top font-txt">Empresa</label>
+                    <label class="form-label">@ventaDTO.Empresa.RazonSocial</label>
+                </div>
+            </div>
+
+            <div class="col-md-6 mt-3">
+                <div class="contenedor-info-sm-top">
+                    <label class="txt-top font-txt">Atendido por</label>
+                    <select class="form-select form-select-sm" @onchange="ObtenerEmpleadoVenta" @onclick="NotificarCambioEmpleadoVenta2">
+                        @foreach (var empleado in empleados)
+                        {
+                            @if (!EmpleadoCambiado && rolEmpleado && usuarioInfoDTO.Identificacion == empleado.Identificacion)
+                            {
+
+                                <option value="@empleado.Identificacion" selected>
+                                    @($"{empleado.Nombre1} {empleado.Nombre2} {empleado.Apellido1} {empleado.Apellido2}")
+                                </option>
+
+                            }
+                            else
+                            {
+
+                                <option value="@empleado.Identificacion">
+                                    @($"{empleado.Nombre1} {empleado.Nombre2} {empleado.Apellido1} {empleado.Apellido2}")
+                                </option>
+                            }
+
+
+                        }
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 mt-3">
+                <div class="input-group input-group-sm">
+                    <label class="input-group-text">Orden</label>
+                    <InputTextArea class="form-control" @bind-Value="@ventaDTO.DescripcionOrden"></InputTextArea>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ValidationMessage For="()=> ventaDTO.DescripcionOrden" class="font-error"></ValidationMessage>
+            </div>
+        </div>
+
+    </div>
+</EditForm>
+<ModalConfirmacion @ref="modalConfirmacion"  />
+<ModalResumenVenta @ref="modalResumenVenta" ConfirmarAccionEvent="ConfirmacionVenta" VentaDTO="ventaDTO"/>
+<ComponenteTerceros @ref="componenteTerceros" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" TipoTercero="@ParametrosComponenteTerceros.CLIENTE" CargarTerceroEvent="CargarClienteDesdeComponenteTerceros" />
+
+
+@code{
+    [CascadingParameter(Name = "ventaDTO")]
+    public VentaInterfazGraficaVentaDTO ventaDTO { get; set; }
+    [Parameter]
+    public EventCallback InicializarDetallesImpuestoDescuentosYTotalesVentaEvent { get; set; }
+    [Parameter]
+    public EventCallback InicializarDatosPaginacionEvent { get; set; }
+    private ModalConfirmacion modalConfirmacion;
+    private ModalResumenVenta modalResumenVenta;
+    private ModalAlerta modalAlerta;
+    private ComponenteTerceros componenteTerceros;
+    private List<EmpleadoInterfazGraficaVentaDTO> empleados;
+    private List<string> destinos = new List<string> { "Nacional", "Internacional" };
+    private List<EmpresaInterfazGraficaVentaDTO> empresas;
+    private TerceroInterfazGraficaDTO clienteSeleccionado;
+    private EmpresaInterfazGraficaVentaDTO empresaSeleccionada;
+    private EmpleadoInterfazGraficaVentaDTO empleadoSeleccionado;
+    private int indiceAnteriorEmpleadoSeleccionado;
+    private string destinoSeleccionado = "Nacional";
+
+    private string nombreCliente = string.Empty;
+    private long identificacionCliente = 0;
+    private long identificacionEmpleado = 0;
+    private long nitEmpresa = 0;
+    private string tipoVenta = COTIZACION;
+    private string tipoPago = PAGO_CONTADO;
+    private string tipoPrecio = NO_DISCRIMINAR_IVA;
+
+    private long identificacionEmpresa = 0;
+    private UsuarioInfoDTO usuarioInfoDTO = new UsuarioInfoDTO();
+    private bool EmpleadoCambiado = false;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+
+
+    protected override Task OnInitializedAsync()
+    {
+
+
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        usuarioInfoDTO = usuarioService.ObtenerInformacionPorUsuario(usuario);
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        empresaSeleccionada = empresaService.ObtenerEmpresaPorIdentificacion(identificacionEmpresa);
+        empleados = empleadoService.ObtenerEmpleadosDeEmpresa(identificacionEmpresa);
+        empresas = Repository.ObtenerEmpresas();
+
+        if (rolEmpresa)
+        {
+            if (empleados.Count > 0)
+            {
+                empleadoSeleccionado = empleados[0];
+            }
+
+        }
+
+        if (rolEmpleado)
+        {
+            empleadoSeleccionado = empleados.FirstOrDefault(empl => empl.Identificacion == usuarioInfoDTO.Identificacion);
+            indiceAnteriorEmpleadoSeleccionado = empleados.FindIndex(emp => emp.Identificacion == empleadoSeleccionado.Identificacion);
+        }
+
+
+
+        ventaDTO.DestinoProducto = destinoSeleccionado;
+        ventaDTO.FechaVenta = DateOnly.FromDateTime(DateTime.Now);
+        ventaDTO.Empresa = empresaSeleccionada;
+        ventaDTO.Empleado = empleadoSeleccionado;
+        ventaDTO.TipoVenta = tipoVenta;
+        ventaDTO.TipoPago = tipoPago;
+        ventaDTO.TipoPrecio = tipoPrecio;
+
+        return base.OnInitializedAsync();
+    }
+
+    private void GuardarVenta()
+    {
+        if (ventaDTO.Cliente is null)
+        {
+            modalConfirmacion.Mensaje = "Debe seleccionar un cliente";
+            modalConfirmacion.Mostrar();
+            return;
+        }
+
+        if (ventaDTO.DetallesVenta.Count == 1)
+        {
+            modalConfirmacion.Mensaje = "Debe crear por lo menos un detalle para la venta";
+            modalConfirmacion.Mostrar();
+            return;
+
+        }
+
+        var resulatado = ValidarDetalleVenta();
+        if (resulatado)
+        {
+            modalConfirmacion.Mensaje = "Verifique los detalles, ningún detalle puede tener una cantidad negativa o un precio menor a cero";
+            modalConfirmacion.Mostrar();
+            return;
+
+        }
+
+
+
+        ventaDTO.Hora = TimeOnly.FromDateTime(DateTime.Now);
+        modalResumenVenta.InicializarResumenVenta();
+        modalResumenVenta.Mostrar();
+    }
+
+    private bool ValidarDetalleVenta()
+    {
+        var detallesVenta = ventaDTO.DetallesVenta.Take(ventaDTO.DetallesVenta.Count - 1);
+        var resultado = detallesVenta.Any(det => det.CantidadSolicitada <= 0 || det.Elemento.ValorUnitario <= 0);
+
+        return resultado;
+    }
+
+    private void ConfirmacionVenta(bool confirmacion)
+    {
+        if (confirmacion)
+        {
+            var ventaAGuardar = Mapper.ClonarVentaInterfazGraficaVentaDTO(ventaDTO);
+            bool resultado = ventaTradicionalService.InsertarVentaTradicional(ventaAGuardar);
+
+            if (resultado)
+            {
+                InicializarInformacionVenta();
+                InicializarDetallesImpuestoDescuentosYTotalesVentaEvent.InvokeAsync();
+                InicializarDatosPaginacionEvent.InvokeAsync();
+                modalConfirmacion.Mensaje = "Se ha guardado la venta";
+
+            }
+            else
+            {
+                modalConfirmacion.Mensaje = "No se ha guardado la venta";
+
+            }
+
+            modalConfirmacion.Mostrar();
+
+        }
+
+    }
+
+
+    private void ObtenerEmpleadoVenta(ChangeEventArgs e)
+    {
+        identificacionEmpleado = long.Parse(e.Value.ToString());
+        if (ventaDTO is not null && empleados is not null)
+        {
+
+            empleadoSeleccionado = empleados.FirstOrDefault(emp => emp.Identificacion == identificacionEmpleado);
+            ventaDTO.Empleado = empleadoSeleccionado;
+
+        }
+    }
+
+    private void NotificarCambioEmpleadoVenta(bool seleccion)
+    {
+        if (rolEmpleado && !EmpleadoCambiado)
+        {
+            if (seleccion)
+            {
+                EmpleadoCambiado = true;
+            }
+            else
+            {
+                empleadoSeleccionado = empleados[indiceAnteriorEmpleadoSeleccionado];
+                ventaDTO.Empleado = empleadoSeleccionado;
+            }
+            StateHasChanged();
+        }
+
+
+    }
+
+    private void NotificarCambioEmpleadoVenta2()
+    {
+        if (rolEmpleado && !EmpleadoCambiado)
+        {
+            EmpleadoCambiado = true;
+            modalConfirmacion.Mensaje = "Ten cuidado, Puedes cambiar a un empleado diferente a esta cuenta";
+            modalConfirmacion.Mostrar();
+        }
+
+
+    }
+
+    private void ObtenerEmpresaVenta(ChangeEventArgs e)
+    {
+        nitEmpresa = long.Parse(e.Value.ToString());
+        if (ventaDTO is not null && empresas is not null)
+        {
+            empresaSeleccionada = empresas.FirstOrDefault(empresa => empresa.Identificacion == nitEmpresa);
+            ventaDTO.Empresa = empresaSeleccionada;
+            InicializarDetallesImpuestoDescuentosYTotalesVentaEvent.InvokeAsync();
+        }
+
+    }
+
+    private void ObtenerDestino(ChangeEventArgs e)
+    {
+        destinoSeleccionado = e.Value.ToString();
+        ventaDTO.DestinoProducto = destinoSeleccionado;
+
+    }
+
+    private void CargarCliente()
+    {
+        clienteSeleccionado = clienteService.FiltrarClientePorIdentificacion(identificacionCliente, identificacionEmpresa);
+        if (clienteSeleccionado is not null)
+        {
+            ventaDTO.Cliente = clienteSeleccionado;
+            nombreCliente = $"{clienteSeleccionado.Nombre1} {clienteSeleccionado.Nombre2} {clienteSeleccionado.Apellido1} {clienteSeleccionado.Apellido2} {clienteSeleccionado.RazonSocial}";
+        }
+        else
+        {
+            nombreCliente = string.Empty;
+            identificacionCliente = 0;
+
+        }
+
+    }
+
+    private void CargarClienteDesdeComponenteTerceros()
+    {
+
+        clienteSeleccionado = componenteTerceros.TerceroSeleccionado;
+        if (clienteSeleccionado is not null)
+        {
+            ventaDTO.Cliente = clienteSeleccionado;
+            nombreCliente = $"{clienteSeleccionado.Nombre1} {clienteSeleccionado.Nombre2} {clienteSeleccionado.Apellido1} {clienteSeleccionado.Apellido2} {clienteSeleccionado.RazonSocial}";
+            identificacionCliente = clienteSeleccionado.Identificacion;
+            ventaDTO.Cliente.Impuestos = impuestoService.ObtenerImpuestosDelCliente(identificacionCliente, identificacionEmpresa);
+            InicializarDatosPaginacionEvent.InvokeAsync();
+            InicializarDetallesImpuestoDescuentosYTotalesVentaEvent.InvokeAsync();
+        }
+    }
+
+    private void CargarTipoVenta(string tipoVentaInput)
+    {
+        tipoVenta = tipoVentaInput;
+        ventaDTO.TipoVenta = tipoVenta;
+
+    }
+
+    private void CargarTipoPago(string tipoPagoInput)
+    {
+        tipoPago = tipoPagoInput;
+        ventaDTO.TipoPago = tipoPago;
+
+    }
+
+    private void CargarTipoPrecio(string tipoPrecioInput)
+    {
+        tipoPrecio = tipoPrecioInput;
+        ventaDTO.TipoPrecio = tipoPrecioInput;
+
+    }
+
+    private void MostrarComponenteTerceros()
+    {
+        componenteTerceros.Mostrar();
+
+    }
+
+
+
+    public void InicializarInformacionVenta()
+    {
+        tipoVenta = COTIZACION;
+        tipoPago = PAGO_CONTADO;
+        tipoPrecio = NO_DISCRIMINAR_IVA;
+        ventaDTO.Empresa = empresaSeleccionada;
+        ventaDTO.Empleado = empleadoSeleccionado;
+        ventaDTO.TipoVenta = tipoVenta;
+        ventaDTO.TipoPago = tipoPago;
+        ventaDTO.TipoPrecio = tipoPrecio;
+        clienteSeleccionado = null;
+        ventaDTO.Cliente = clienteSeleccionado;
+        ventaDTO.FechaVenta = DateOnly.FromDateTime(DateTime.Now);
+        identificacionCliente = 0;
+        nombreCliente = string.Empty;
+        ventaDTO.ValorCheque = 0;
+        ventaDTO.ValorCredito = 0;
+        ventaDTO.ValorEfectivo = 0;
+        ventaDTO.ValorTarjeta = 0;
+        ventaDTO.Descuento = 0;
+        ventaDTO.PorcentajeDescuento = 0;
+        ventaDTO.DescripcionOrden = string.Empty;
+        StateHasChanged();
+    }
+
+    private const string COTIZACION = ParametrosTiposVenta.COTIZACION;
+    private const string POS = ParametrosTiposVenta.POS;
+    private const string ORDEN_PEDIDO = ParametrosTiposVenta.ORDEN_PEDIDO;
+    private const string FACTURA = ParametrosTiposVenta.FACTURA;
+
+    private const string PAGO_CONTADO = ParametrosTiposVenta.PAGO_CONTADO;
+    private const string PAGO_CREDITO = ParametrosTiposVenta.PAGO_CREDITO;
+
+    private const string NO_DISCRIMINAR_IVA = ParametrosTiposVenta.NO_DISCRIMINAR_IVA;
+    private const string DISCRIMINAR_IVA = ParametrosTiposVenta.DISCRIMINAR_IVA;
+    private const string NORMAL = ParametrosTiposVenta.NORMAL;
+
+
+
+}
+

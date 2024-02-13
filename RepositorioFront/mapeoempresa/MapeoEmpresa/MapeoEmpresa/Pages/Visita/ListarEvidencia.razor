@@ -1,0 +1,180 @@
+﻿@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@inject RegistroEvidenciaService RegistroService;
+
+<h4><b>Listado de evidencia cargada</b></h4>
+
+@if (ListEvidencia == null)
+{
+    <p>Cargando...</p>
+}
+else if (ListEvidencia.Count == 0)
+{
+    <p class="pt-3">No se ha registrado evidencia para esta visita</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in ListEvidencia)
+            {
+                <tr>
+                    <td>@p.id</td>
+                    <td>@p.nombre@p.extension</td>
+                    <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(p.id, p.rutaRelativa)"><i class="oi oi-x"></i></button></td>
+                    <td><buton class="btn btn-info" @onclick="() => AbrirModalInformacion(p)"><i class="oi oi-info"></i></buton></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Desea eliminar el archivo @ID?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarEvidencia>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="file-container">
+                        @if (registroDTO.tipo == "Imagen")
+                        {
+                            <img src="data:image;base64,@ConvertirArchivoABase64(registroDTO.rutaRelativa)" alt="Image" class="file-item" />
+                        }
+                        else if (registroDTO.tipo == "Audio")
+                        {
+                            <audio controls >
+                                <source src="data:audio/mp3;base64,@ConvertirArchivoABase64(registroDTO.rutaRelativa)">
+                                Su navegador no soporta la etiqueta de audio
+                            </audio>
+                        }
+                        else if (registroDTO.tipo == "Video")
+                        {
+                            <video controls class="file-item">
+                                <source src="data:video/mp4;base64,@ConvertirArchivoABase64(registroDTO.rutaRelativa)">
+                                Su navegador no soporta la etiqueta de video
+                            </video>
+                        }
+                        else
+                        {
+                            <p class="file-item">No se puede mostrar este tipo de archivo.</p>
+                        }
+                    </div>
+
+                    <div class="form-group pt-2">
+                        <label for="nombre">Nombre: </label>
+                        <input type="text" class="form-control" id="nombre" value="@registroDTO.nombre" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="extension">Extension: </label>
+                        <input type="text" class="form-control" id="extension" value="@registroDTO.extension" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo">Tipo: </label>
+                        <input type="text" class="form-control" id="tipo" value="@registroDTO.tipo" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaRegistro">Fecha registro: </label>
+                        <input type="text" class="form-control" id="fechaRegistro" value="@registroDTO.fechaRegistro" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaCaptura">Fecha captura: </label>
+                        <input type="text" class="form-control" id="fechaCaptura" value="@registroDTO.fechaCaptura" readonly>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    List<RegistroEvidenciaDTO> ListEvidencia;
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+    private string Ruta = "";
+    RegistroEvidenciaDTO registroDTO = new RegistroEvidenciaDTO();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListEvidencia = await RegistroService.ListarEvidencia();
+    }
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarEvidencia()
+    {
+        await RegistroService.BorrarEvidencia(ID, Ruta);
+        modalEliminar = false;
+        ListEvidencia = await RegistroService.ListarEvidencia();
+    }
+
+    //MODALES
+
+    private void AbrirModalBorrar(BigInteger id, string ruta)
+    {
+        modalEliminar = true;
+        ID = id;
+        Ruta = ruta;
+    }
+
+    private void AbrirModalInformacion(RegistroEvidenciaDTO registro)
+    {
+        modalInformacion = true;
+        registroDTO = registro;
+    }
+
+    private string ConvertirArchivoABase64(string rutaArchivo)
+    {
+        byte[] archivoBytes = System.IO.File.ReadAllBytes(rutaArchivo);
+        string archivoBase64 = Convert.ToBase64String(archivoBytes);
+        return archivoBase64;
+    }
+
+}

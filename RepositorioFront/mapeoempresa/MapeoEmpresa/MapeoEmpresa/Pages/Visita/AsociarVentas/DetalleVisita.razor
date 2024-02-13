@@ -1,0 +1,123 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject VisitaService VisitaService;
+
+
+<h3>Detalle visita seleccionada</h3>
+<br />
+<div class="col-lg-10 contact-form__wrapper pt-2 contenedor-info-sm-top pt-4">
+    <label class="txt-top font-txt">Información)</label>
+     <div class="row">
+
+         <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="idVisita">ID visita: </label>
+                <input type="text" class="form-control" id="idVisita" value=" @((visita.id == 0) ? "" : visita.id)" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaCreacion">Fecha de creación: </label>
+                <input type="text" class="form-control" id="fechaCreacion" value="@((visita.fechaCreacion == DateTime.MinValue) ? "" : visita.fechaCreacion.ToString())" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de inicio: </label>
+                <input type="text" class="form-control" id="fechaInicio" value="@((visita.fechaInicio == DateTime.MinValue) ? "" : visita.fechaInicio.ToString())" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="fechaFinaliza">Fecha de finalización: </label>
+                <input type="text" class="form-control" id="fechaFinaliza" value="@((visita.fechaFinaliza == DateTime.MinValue) ? "" : visita.fechaFinaliza.ToString())" readonly>
+            </div>
+        </div>
+
+    </div>
+    
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="ventaAsociada">ID venta asociada: </label>
+                <input type="text" class="form-control" id="ventaAsociada" value="@((visita.idVentaAsociada == 0) ? "Pendiente" : visita.idVentaAsociada)" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="cantidadDias">Cantidad de días: </label>
+                <input type="text" class="form-control" id="cantidadDias" value="@((visita.cantidadDias == 0) ? "" : visita.cantidadDias)" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="contactoEmpresa">Contacto de empresa: </label>
+                <input type="text" class="form-control" id="contactoEmpresa" value="@((visita.contactoEmpresa == null) ? "" : visita.contactoEmpresa)" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="empresaCliente">Nombre empresa cliente: </label>
+                <input type="text" class="form-control" id="empresaCliente" value="@((visita.empresaCliente == null) ? "" : visita.empresaCliente)" readonly>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="sedeCliente">Nombre sede cliente: </label>
+                <input type="text" class="form-control" id="sedeCliente" value="@((visita.sedeCliente == 0) ? "" : visita.sedeCliente)" readonly>
+            </div>
+        </div>
+
+        <div class="col-sm-6 mb-3">
+            <div class="form-group">
+                <label for="plantaCliente">Nombre planta cliente: </label>
+                <input type="text" class="form-control" id="plantaCliente" value="@((visita.plantaCliente == null) ? "" : visita.plantaCliente)" readonly>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+@code {
+    [Parameter]
+    public int Key { get; set; }
+
+    VisitaDTO visita = new VisitaDTO();
+
+    protected override void OnParametersSet()
+    {
+        if (VisitaService.VisitaSeleccionadaAsociarVenta != null)
+        {
+            visita = VisitaService.VisitaSeleccionadaAsociarVenta;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        visita.fechaCreacion = DateTime.MinValue; 
+        visita.fechaFinaliza = DateTime.MinValue;
+        visita.fechaInicio = DateTime.MinValue;
+    }
+
+}
+
+

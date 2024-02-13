@@ -1,0 +1,514 @@
+﻿@page "/ProgramarRevision"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaAgendarRevisionInventario")]
+
+@using System.Numerics;
+@using EntidadesNegocio.EntidadesDto;
+@using EntidadesNegocio.InterfazGraficaBlazorDTO.InterfazGraficaVentaDTO.Inventario;
+@inject RevisionInventarioService inventarioService;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UsuarioService usuarioService
+@inject IConfiguration Configuration
+
+<PageTitle>Programar revisión</PageTitle>
+
+<h1><b>Revisi&oacute;n de inventario</b></h1>
+
+<div class="col-lg-9 contact-form__wrapper p-3 order-lg-1 border border-3 formDesign">
+    <h6><b>Programar revisi&oacute;n</b></h6>
+    <EditForm Model="revisionDTO">
+        <DataAnnotationsValidator />
+        
+        <div class="row">
+
+            <div class="col-sm-10 mb-3">
+                <div class="form-group">
+                    <label for="responsable">Responsable: </label>
+                    <input type="text" class="form-control" id="responsable" @bind="nombreCompleto" readonly>
+                </div>
+            </div>
+            <div class="col-sm-2 mb-3">
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-light" @onclick="ObtenerEmpleado"><i class="oi oi-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="fechaInicio">Fecha de revision:</label>
+                <input type="datetime-local" class="form-control" id="fechaInicio" @bind="revisionDTO.fechaInicio" required>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="5" @bind="revisionDTO.descripcion" required></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="flex-container">
+                    <button class="btn btn-light" @onclick="ObtenerElemento"><i class="oi oi-magnifying-glass"></i></button>
+                    <h6>Elementos para revisión:</h6>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (listaElementosSeleccionados.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3" class="pt-3">Seleccione un elemento para revisión</td>
+                            </tr>
+                        
+                        }else{
+                            @foreach (var elementoSeleccionado in listaElementosSeleccionados)
+                            {
+                                <tr>
+                                    <td>@elementoSeleccionado.CodigoArticulo</td>
+                                    <td>@elementoSeleccionado.Nombre</td>
+                                    <td><button class="btn btn-danger" @onclick="() => EliminarElemento(elementoSeleccionado)"><i class="oi oi-x"></i></button></td>
+                                </tr>
+                            }
+                        }
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mb-3">
+            @if (alerta)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error: </strong> Asegúrese de seleccionar un responsable y al menos un elemento.
+                </div>
+            }
+            <button type="submit" @onclick="AgendarRevision" class="btn btn-primary">Guardar</button>
+        </div>
+
+        
+    </EditForm>
+</div>
+
+<h6 class="pt-4">
+    <b>Listado de revisiones programadas</b>
+</h6>
+
+@if (ListRevisionesProgramadas == null)
+{
+    <p>Cargando...</p>
+}
+else if (ListRevisionesProgramadas.Count == 0)
+{
+    <p class="pt-3">No se han programado revisiones de inventario</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha Revision</th>
+                <th>Estado</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var revision in ListRevisionesProgramadas)
+            {
+                <tr>
+                    <td>@revision.id</td>
+                    <td>@revision.fechaInicio</td>
+                    <td><strong>@revision.estado</strong></td>
+                    @if(revision.estado != "Finalizada")
+                    {
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(revision)"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="() => AbrirModalBorrar(revision.id)"><i class="oi oi-x"></i></button></td>
+                    }else{
+                        <td><button class="btn btn-primary" @onclick="AlertaOpcionInactiva"><i class="oi oi-pencil"></i></button></td>
+                        <td><button class="btn btn-danger" @onclick="AlertaOpcionInactiva"><i class="oi oi-x"></i></button></td>
+                    }
+                    
+                    <td><button class="btn btn-info" @onclick="() => AbrirModalInformacion(revision)"><i class="oi oi-info"></i></button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="col-auto">
+        <Paginacion PaginaActual="paginaActual" PaginasTotales="totalPaginas" Radio="2" PaginaSeleccionada="PaginaSeleccionada" />
+    </div>
+} 
+
+@if (modalEliminar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>¿Desea eliminar la agenda con ID @ID?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+                    <button type="button" class="btn btn-success" @onclick=BorrarAgenda>Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualización de datos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Revision ID @RevisionDTO.id</strong></h5>
+
+                    <EditForm Model="RevisionDTO">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="fechaInicio">Fecha de inicio: </label>
+                            <input type="datetime-local" class="form-control" id="fechaInicio" @bind="RevisionDTO.fechaInicio">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion: </label>
+                            <textarea class="form-control" id="descripcion" rows="5" @bind="RevisionDTO.descripcion"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10 mb-3">
+                                <div class="form-group">
+                                    <label for="responsable">Responsable Actual: </label>
+                                    <input type="text" class="form-control" id="responsable" @bind="RevisionDTO.nombreResponsable" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 mb-3">
+                                <div class="form-group">
+                                    <br />
+                                    <button class="btn btn-light" @onclick="MostrarEditarResponsable"><i class="oi oi-pencil"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (mostrarSegundoLabel)
+                        {
+                            <div class="row">
+                                <div class="col-sm-10 mb-3">
+                                    <div class="form-group">
+                                        <label for="responsable">Nuevo responsable: </label>
+                                        <input type="text" class="form-control" id="responsable" @bind="nombreCompleto" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 mb-3">
+                                    <div class="form-group">
+                                        <br />
+                                        <button class="btn btn-light" @onclick="ObtenerEmpleado"><i class="oi oi-magnifying-glass"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+                        <br /><button type="submit" class="btn btn-primary" @onclick=Guardar>Editar Revision</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (modalInformacion)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Información registrada</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="id">ID revision: </label>
+                                <input type="text" class="form-control" id="id" value="@RevisionDTO.id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="fechaCreacion">Fecha de creación: </label>
+                                <input type="text" class="form-control" id="fechaCreacion" value="@RevisionDTO.fechaCreacion" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 mb-3">
+                            <div class="form-group">
+                                <label for="idResponsable">ID responsable: </label>
+                                <input type="text" class="form-control" id="idResponsable" value="@RevisionDTO.idResponsable" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 mb-3">
+                            <div class="form-group">
+                                <label for="responsable">Nombre: </label>
+                                <input type="text" class="form-control" id="responsable" value="@RevisionDTO.nombreResponsable" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaInicio">Fecha de inicio: </label>
+                        <input type="text" class="form-control" id="fechaInicio" value="@RevisionDTO.fechaInicio" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion: </label>
+                        <textarea class="form-control" id="descripcion" rows="5" value="@RevisionDTO.descripcion" readonly></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estado">Estado: </label>
+                        <input type="text" class="form-control" id="estado" value="@RevisionDTO.estado" readonly>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<ModalPersonalizado @ref="modalRegistroExitoso" />
+<ComponenteTerceros @ref="componenteTerceros" Origen="@ParametrosComponenteTerceros.COMPONENTE_MODAL" TipoTercero="@ParametrosComponenteTerceros.EMPLEADO" CargarTerceroEvent=" CargarEmpleadoDelComponente" />
+<ComponenteElemento origen=@("detalleventa") @ref="componenteElemento" TraerElementoEvent="CargarElementoSeleccionado" />
+@code {
+
+    private ModalPersonalizado modalRegistroExitoso;
+    RevisionInventarioDTO revisionDTO = new RevisionInventarioDTO();
+    private List<RevisionInventarioDTO> ListRevisionesProgramadas;
+    private bool modalEliminar = false;
+    private bool modalEditar = false;
+    private bool modalInformacion = false;
+    private BigInteger ID = 0;
+
+    RevisionInventarioDTO RevisionDTO = new RevisionInventarioDTO();
+    private ComponenteTerceros componenteTerceros;
+    private TerceroInterfazGraficaDTO empleado;
+    private String nombreCompleto = "";
+    private bool botonResponsablePresionado = false;
+    private bool alerta = false;
+
+    private bool mostrarSegundoLabel = false;
+    private ComponenteElemento componenteElemento;
+    private ElementoInterfazGraficaVentaDTO elementoSeleccionado;
+    private List<ElementoInterfazGraficaVentaDTO> listaElementosSeleccionados = new List<ElementoInterfazGraficaVentaDTO>();
+
+    private long identificacionEmpresa = 0;
+    private bool rolEmpresa = false;
+    private bool rolEmpleado = false;
+
+    private int paginaActual = 1;
+    private int totalPaginas = 0;
+    private int elementosPorPagina = 0;
+
+    private void MostrarEditarResponsable()
+    {
+        mostrarSegundoLabel = !mostrarSegundoLabel;
+    }
+
+    private async Task AgendarRevision()
+    {
+        if (botonResponsablePresionado && listaElementosSeleccionados.Count != 0)
+        {
+            revisionDTO.elementosRevisados = listaElementosSeleccionados;
+            await inventarioService.AgendarRevision(revisionDTO, empleado);
+
+            //Limpiar los campos del formulario
+            listaElementosSeleccionados = new List<ElementoInterfazGraficaVentaDTO>();
+            revisionDTO = new RevisionInventarioDTO();
+            revisionDTO.fechaInicio = DateTime.Now;
+            nombreCompleto = "";
+            empleado = null;
+            botonResponsablePresionado = false;
+            alerta = false;
+
+            ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, 1, elementosPorPagina);
+            modalRegistroExitoso.Mostrar("El registro se realizo correctamente");
+        }
+        else
+        {
+            alerta = true;
+        }
+
+    }
+
+    protected override void OnInitialized()
+    {
+        var authenticationState = AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var usuario = authenticationState.Result.User.Identity.Name;
+        rolEmpresa = authenticationState.Result.User.IsInRole("EMPRESA");
+        rolEmpleado = authenticationState.Result.User.IsInRole("EMPLEADO");
+        if (rolEmpresa)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuario(usuario);
+        }
+
+        if (rolEmpleado)
+        {
+            identificacionEmpresa = usuarioService.ObtenerIdentificacionEmpresaPorUsuarioEmpleado(usuario);
+        }
+
+        try
+        {
+            elementosPorPagina = int.Parse(Configuration["ConfiguracionesPaginado:PaginadoListadoRevisiones"]);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        totalPaginas = calcularPaginasTotales();
+
+
+        ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, paginaActual, elementosPorPagina);
+
+        // Inicializa los campos de fecha y hora con los valores actuales
+        revisionDTO.fechaInicio = DateTime.Now;        
+    }
+
+    //LLAMADOS A MÉTODOS EN SERVICE
+
+    protected async Task BorrarAgenda()
+    {
+        await inventarioService.BorrarRevision(ID);
+        modalEliminar = false;
+        ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+    protected async Task Guardar()
+    {
+        await inventarioService.EditarRevision(RevisionDTO, empleado);
+        modalEditar = false;
+        ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, paginaActual, elementosPorPagina);
+        nombreCompleto = "";
+    }
+
+    //MODALES
+
+    private void CerrarModal()
+    {
+        modalEliminar = false;
+        modalEditar = false;
+        modalInformacion = false;
+        mostrarSegundoLabel = false;
+    }
+
+    private void AbrirModalBorrar(BigInteger id)
+    {
+        modalEliminar = true;
+        ID = id;
+    }
+
+    private void AbrirModalEditar(RevisionInventarioDTO revision)
+    {
+        modalEditar = true;
+        RevisionDTO = revision;
+    }
+
+    private void AbrirModalInformacion(RevisionInventarioDTO revision)
+    {
+        modalInformacion = true;
+        RevisionDTO = revision;
+    }
+
+    private void ObtenerEmpleado()
+    {
+        componenteTerceros.Mostrar();
+    }
+
+    private void ObtenerElemento()
+    {
+        componenteElemento.Mostrar();
+    }
+
+    private void CargarEmpleadoDelComponente()
+    {
+        empleado = componenteTerceros.TerceroSeleccionado;
+        nombreCompleto = $"{empleado.Nombre1} {empleado.Nombre2} {empleado.Apellido1} {empleado.Apellido2}";
+        botonResponsablePresionado = true;
+    }
+
+    private void CargarElementoSeleccionado()
+    {
+        elementoSeleccionado = componenteElemento.elementoActual;
+        listaElementosSeleccionados.Add(elementoSeleccionado);        
+    }
+
+    private void EliminarElemento(ElementoInterfazGraficaVentaDTO elemento)
+    {
+        listaElementosSeleccionados.Remove(elemento);
+    }
+
+    private void AlertaOpcionInactiva()
+    {
+        modalRegistroExitoso.Mostrar("Esta opción se encuentra inactiva porque la revision ya finalizó");
+    }
+
+    //Paginado
+    public void InicializarDatosParaPaginado()
+    {
+        paginaActual = 1;
+        totalPaginas = calcularPaginasTotales();
+        ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+    private int calcularPaginasTotales()
+    {
+        double totalElementos = (double)inventarioService.ObtenerTotaRevisiones(identificacionEmpresa);
+        double resultado = totalElementos / elementosPorPagina;
+        bool tieneParteDecimal = resultado != Math.Floor(resultado);
+        if (tieneParteDecimal)
+        {
+            resultado += 1;
+        }
+        return (int)resultado;
+    }
+
+    private void PaginaSeleccionada(int paginaSeleccionada)
+    {
+        paginaActual = paginaSeleccionada;
+        ListRevisionesProgramadas = inventarioService.ListarRevisiones(identificacionEmpresa, paginaActual, elementosPorPagina);
+    }
+
+}

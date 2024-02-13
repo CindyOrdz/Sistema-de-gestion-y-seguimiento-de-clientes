@@ -1,0 +1,337 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MapeoEmpresa
+build_property.RootNamespace = MapeoEmpresa
+build_property.ProjectDir = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Documents\RepositorioFront\mapeoempresa\MapeoEmpresa\MapeoEmpresa
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/AgendaVisita/CrearVisita.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWdlbmRhVmlzaXRhXENyZWFyVmlzaXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/AgendaVisita/DetallesVisita.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWdlbmRhVmlzaXRhXERldGFsbGVzVmlzaXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/AgendaVisita/GestionarVisitas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWdlbmRhVmlzaXRhXEdlc3Rpb25hclZpc2l0YXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/CrearArea.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxDcmVhckFyZWEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Area/PagArea.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXJlYVxQYWdBcmVhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CarritoCompras/PagCarrito.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2Fycml0b0NvbXByYXNcUGFnQ2Fycml0by5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Catalogo/CatalogosDisponibles.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ29cQ2F0YWxvZ29zRGlzcG9uaWJsZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Catalogo/CrearCatalogo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ29cQ3JlYXJDYXRhbG9nby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Catalogo/ElementosSegunCatalogoDisponible.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ29cRWxlbWVudG9zU2VndW5DYXRhbG9nb0Rpc3BvbmlibGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Catalogo/InformacionElementosSegunCatalogoDisponible.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ29cSW5mb3JtYWNpb25FbGVtZW50b3NTZWd1bkNhdGFsb2dvRGlzcG9uaWJsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/CrearComponente.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxDcmVhckNvbXBvbmVudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Componente/PagComponente.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50ZVxQYWdDb21wb25lbnRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesIniciales/CrearListado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNJbmljaWFsZXNcQ3JlYXJMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesIniciales/GestionarCondiciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNJbmljaWFsZXNcR2VzdGlvbmFyQ29uZGljaW9uZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/CondicionesIniciales/PagCondicionesOperativas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uZGljaW9uZXNJbmljaWFsZXNcUGFnQ29uZGljaW9uZXNPcGVyYXRpdmFzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Elementos/ElementosDisponibles.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWxlbWVudG9zXEVsZW1lbnRvc0Rpc3BvbmlibGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Empresa/Empresa.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRW1wcmVzYVxFbXByZXNhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/CrearEquipo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxDcmVhckVxdWlwby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxMaXN0YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/PagEquipo.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxQYWdFcXVpcG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/EquipoDelComponente/RegistroMedidas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXF1aXBvRGVsQ29tcG9uZW50ZVxSZWdpc3Ryb01lZGlkYXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/ImpuestosYDescuentos/ComponenteImpuestosCliente.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW1wdWVzdG9zWURlc2N1ZW50b3NcQ29tcG9uZW50ZUltcHVlc3Rvc0NsaWVudGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/ImpuestosYDescuentos/DescuentosClientesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW1wdWVzdG9zWURlc2N1ZW50b3NcRGVzY3VlbnRvc0NsaWVudGVzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/ConsultarBitacora.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcQ29uc3VsdGFyQml0YWNvcmEucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Informes/Anomalias.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcSW5mb3JtZXNcQW5vbWFsaWFzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Informes/PagInformes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcSW5mb3JtZXNcUGFnSW5mb3JtZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Informes/Responsables.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcSW5mb3JtZXNcUmVzcG9uc2FibGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/PagInventario.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUGFnSW52ZW50YXJpby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/ActualizarInventario.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cQWN0dWFsaXphckludmVudGFyaW8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/GestionarRevision.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cR2VzdGlvbmFyUmV2aXNpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/PagRevision.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cUGFnUmV2aXNpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/ProgramarRevision.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cUHJvZ3JhbWFyUmV2aXNpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/RegistrarEvidencia.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cUmVnaXN0cmFyRXZpZGVuY2lhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/Revision/ReportarAnomalia.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcUmV2aXNpb25cUmVwb3J0YXJBbm9tYWxpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/VerCatalogos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcVmVyQ2F0YWxvZ29zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/InventarioPage/VerInventario.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50YXJpb1BhZ2VcVmVySW52ZW50YXJpby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/MapaDeProcesos/PagMapaDeProcesos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwYURlUHJvY2Vzb3NcUGFnTWFwYURlUHJvY2Vzb3MucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/ModalPersonalizado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kYWxQZXJzb25hbGl6YWRvLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/CrearParte.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcQ3JlYXJQYXJ0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcTGlzdGFkby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Parte/PagParte.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFydGVcUGFnUGFydGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/CrearPlanta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXENyZWFyUGxhbnRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/Listado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXExpc3RhZG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Planta/PagPlanta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGxhbnRhXFBhZ1BsYW50YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/TercerosPage/MisClientes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVyY2Vyb3NQYWdlXE1pc0NsaWVudGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/TercerosPage/MisEmpleados.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVyY2Vyb3NQYWdlXE1pc0VtcGxlYWRvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/TercerosPage/MisEmpresas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVyY2Vyb3NQYWdlXE1pc0VtcHJlc2FzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/ChatPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXENoYXRQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/ErrorLoginPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXEVycm9yTG9naW5QYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/IndexUserPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXEluZGV4VXNlclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/LoginPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXExvZ2luUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/LoginPage2.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXExvZ2luUGFnZTIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/PermisosEmpleadosPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXFBlcm1pc29zRW1wbGVhZG9zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/UserPages/PermisosEmpresaPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlclBhZ2VzXFBlcm1pc29zRW1wcmVzYVBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Ventas/VentaPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVudGFzXFZlbnRhUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/AsociarVentas/AsociarVenta.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEFzb2NpYXJWZW50YXNcQXNvY2lhclZlbnRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/AsociarVentas/DetalleVisita.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEFzb2NpYXJWZW50YXNcRGV0YWxsZVZpc2l0YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/AsociarVentas/PagPrincipal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEFzb2NpYXJWZW50YXNcUGFnUHJpbmNpcGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/CargarEvidencia.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXENhcmdhckV2aWRlbmNpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/CondicionesOperativas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXENvbmRpY2lvbmVzT3BlcmF0aXZhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/CondicionesReales/CrearListado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXENvbmRpY2lvbmVzUmVhbGVzXENyZWFyTGlzdGFkby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/CondicionesReales/GestionarCondiciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXENvbmRpY2lvbmVzUmVhbGVzXEdlc3Rpb25hckNvbmRpY2lvbmVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/CondicionesReales/PagCondicionesReales.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXENvbmRpY2lvbmVzUmVhbGVzXFBhZ0NvbmRpY2lvbmVzUmVhbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/HistorialVentas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEhpc3RvcmlhbFZlbnRhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/InformesVisita/Elementos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEluZm9ybWVzVmlzaXRhXEVsZW1lbnRvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/InformesVisita/PagInformesVisita.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEluZm9ybWVzVmlzaXRhXFBhZ0luZm9ybWVzVmlzaXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/InformesVisita/Responsables.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXEluZm9ybWVzVmlzaXRhXFJlc3BvbnNhYmxlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/ListarEvidencia.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXExpc3RhckV2aWRlbmNpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Visita/PagVisita.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmlzaXRhXFBhZ1Zpc2l0YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/EnlacesLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVubGFjZXNMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-6q8wnreh06
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-t0cad2rwkv
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Documents/RepositorioFront/mapeoempresa/MapeoEmpresa/MapeoEmpresa/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 

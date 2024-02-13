@@ -1,0 +1,118 @@
+﻿@using EntidadesNegocio.EntidadesDto;
+@inject RevisionInventarioService RevisionService;
+
+<div class="col-lg-10 contact-form__wrapper p-5 contenedor-bloque">
+    <h4>Actualizaci&oacute;n de elementos asignados</h4>
+    @if (ListElementosRevision == null)
+    {
+        <p>Cargando...</p>
+    }
+    else if (ListElementosRevision.Count == 0)
+    {
+        <p class="pt-3">No se han registrado áreas para esta planta</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Referencia</th>
+                    <th>Disponible</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in ListElementosRevision)
+                {
+                    <tr>
+                        <td>@p.CodigoElemento</td>
+                        <td>@p.Nombre</td>
+                        <td>@p.Marca</td>
+                        <td>@p.Referencia</td>
+                        <td>@p.CantidadDisponible</td>
+                        <td><button class="btn btn-primary" @onclick="() => AbrirModalEditar(p)"><i class="oi oi-pencil"></i></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+
+@if (modalEditar)
+{
+    <div class="modal" tabindex="-1" style="display:block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar cantidad disponible</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CerrarModal></button>
+                </div>
+                <div class="modal-body">
+                    <h5><strong>Elemento ID @bitacora.IdElemento</strong></h5>
+
+                    <EditForm Model="bitacora">
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="cantidad">Nueva cantidad disponible: </label>
+                            <input type="number" class="form-control" id="cantidad" @bind="bitacora.NuevaCantidad">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones: </label>
+                            <textarea class="form-control" id="observaciones" rows="5" @bind="bitacora.Observaciones"></textarea>
+                        </div>
+
+
+                        <br /> <button type="submit" class="btn btn-primary" @onclick=Guardar>Actualizar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CerrarModal>Cancelar</button>
+
+                    </EditForm>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private List<ElementoInventarioDTO> ListElementosRevision;
+    private bool modalEditar = false;
+    private BitacoraInventarioDTO bitacora = new BitacoraInventarioDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListElementosRevision = await RevisionService.ObtenerElementosRevision();
+    }
+
+    private void AbrirModalEditar(ElementoInventarioDTO elemento)
+    {
+        modalEditar = true;
+        bitacora.CantidadAnterior = elemento.CantidadDisponible;
+        bitacora.IdElemento = elemento.CodigoElemento;
+        bitacora.IdRevision = RevisionService.RevisionSeleccionada.id;
+
+    }
+
+    private void CerrarModal()
+    {
+        modalEditar = false;
+    }
+
+    protected async Task Guardar()
+    {
+        await RevisionService.EditarCantidad(bitacora.IdElemento, bitacora.NuevaCantidad);
+        await RevisionService.ActualizarBitacora(bitacora);
+        modalEditar = false;
+        bitacora = new BitacoraInventarioDTO();
+        ListElementosRevision = await RevisionService.ObtenerElementosRevision();
+    }
+
+}

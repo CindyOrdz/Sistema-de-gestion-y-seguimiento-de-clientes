@@ -1,0 +1,66 @@
+﻿@page "/login2"
+@page "/login2/{ErrorMessage}"
+@inject NavigationManager navManager
+@inject HttpClient httpClient
+
+
+<h3>Login</h3>
+
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <div class="text-danger">@ErrorMessage</div>
+
+}
+
+
+<div class="contenedor-login">
+
+    <EditForm class="formulario" Model="userDTO" OnValidSubmit="LoguearUsuario">
+        <DataAnnotationsValidator />
+        <h1 class="titulo-login">Inicio de sesión</h1>
+        <div class="input-contenedor">
+            <i class="fas fa-user icon"></i>
+            <InputText class="input-login" @bind-Value="userDTO.Email" placeholder="Usuario" required />
+
+        </div>
+
+        <div class="input-contenedor">
+            <i class="fas fa-key icon"></i>
+            <input class="input-login" type="password" @bind-value="userDTO.Password"  placeholder="Contraseña" required />
+
+        </div>
+        <input type="submit" name="BtnLogin" value="Ingresar" class="button">
+    </EditForm>
+
+</div>
+
+
+<ModalConfirmacion @ref="modalConfirmacion"/>
+
+@code {
+
+    [Parameter]
+    public string ErrorMessage { get; set; }
+    public UserDTO userDTO { get; set; } = new UserDTO();
+    private ModalConfirmacion modalConfirmacion;
+
+
+    private void LoguearUsuario()
+    {
+
+        string url = "https://localhost:7062/Login/account2";
+
+        // Crea un formulario con los datos que deseas enviar
+        var formData = new FormUrlEncodedContent(new[]
+        {
+            new KeyValuePair<string, string>("usuario", userDTO.Email),
+            new KeyValuePair<string, string>("clave", userDTO.Password)
+    });
+
+        // Realiza la solicitud POST
+       httpClient.PostAsync(url, formData);
+
+    }
+
+
+}

@@ -1,0 +1,4 @@
+﻿@page "/elementos_disponibles"
+@attribute [Authorize(Roles = "EMPRESA,EMPLEADO", Policy = "PoliticaFiltradoElementos")]
+
+<ComponenteElemento origen=@("page") />

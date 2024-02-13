@@ -1,0 +1,150 @@
+﻿@inject CatalogoService catalogoService
+@inherits ComponenteTab
+<style>
+    .card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .carrito-banner {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .carrito-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 24px;
+        line-height: 50px;
+        transition: background-color 0.3s ease;
+    }
+
+        .carrito-button:hover {
+            background-color: #0056b3;
+        }
+
+    .carrito-icon {
+        max-width: 100%;
+        max-height: 100%;
+    }
+</style>
+
+
+<div class="carrito-banner">
+    <a href="/carrito_compras">
+        <button class="btn btn-primary ml-3 carrito-button">
+            <i class="fas fa-shopping-cart"></i>
+        </button>
+    </a>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" class="form-control" @bind="textoBusqueda" placeholder="¿Qué buscas hoy?" />
+                <button class="btn btn-primary" @onclick="RealizarBusqueda">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        @if (catalogos.Count != 0)
+        {
+            @for (int i = 0; i < catalogos.Count; i++)
+            {
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="border text-center p-3">
+                                <a href="/elementoscatalogo/@catalogos[i].id/@catalogos[i].clasificacion"><h2>@catalogos[i].clasificacion</h2></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                //@for (int j = 0; j < 3; j++)
+                @foreach (var e in catalogos[i]._elementos.Take(3))
+                {
+
+                    <div class="col-md-4">
+                        <div class="card">
+                            <a href="/informacionelemento/@e.CodigoArticulo">
+                                <img src="https://www.grupomansion.com/9293-thickbox_default/televisor-exclusiv-50-4k-led-smart-tv-android-e50v2ua.jpg" alt="Imagen" class="card-img-top">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">@e.Nombre</h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+        else
+        {
+            <div class="container-fluid h-100">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">No se han encontrado productos :(</h5>
+                                <p class="card-text">Lo sentimos, no hemos encontrado productos que coincidan con su búsqueda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@code {
+    private List<CatalogoInterfazGraficaVentaDTO>? catalogos;
+    private List<CatalogoInterfazGraficaVentaDTO>? catalogosAux;
+    private String textoBusqueda = string.Empty;
+    private int conteo = 0;
+
+
+    private void RealizarBusqueda()
+    {
+        catalogos.Clear();
+        catalogosAux.Clear();
+        if (textoBusqueda != string.Empty)
+        {
+            catalogosAux = catalogoService.ObtenerCatalogos();
+            catalogos = catalogosAux
+        .Where(c => c.clasificacion.ToLower().Contains(textoBusqueda.ToLower()) ||
+                    c._elementos.Any(e => e.Nombre.ToLower().Contains(textoBusqueda.ToLower())))
+        .ToList();
+        }
+        Refrescar();
+    }
+    protected override Task OnInitializedAsync()
+    {
+        catalogos = catalogoService.ObtenerCatalogos();
+        catalogosAux = catalogoService.ObtenerCatalogos();
+        return base.OnInitializedAsync();
+    }
+    private void Refrescar()
+    {
+        Mostrar();
+    }
+}
